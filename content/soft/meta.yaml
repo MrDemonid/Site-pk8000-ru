@@ -1,0 +1,23 @@
+title: "Софт"
+icon: "diskette.png"
+order: 5
+children:
+  - title: "Игры"
+    icon: "games_control.png"
+    children:
+      - title: "Все"
+        endpoint: "/api/v1/soft/games/all"
+      - title: "Аркады"
+        endpoint: "/api/v1/soft/games/arcade"
+      - title: "Гонки"
+        endpoint: "/api/v1/soft/games/car"
+      - title: "Спортивные"
+        endpoint: "/api/v1/soft/games/sport"
+      - title: "Логические"
+        endpoint: "/api/v1/soft/games/logic"
+      - title: "Обучающие"
+        endpoint: "/api/v1/soft/games/edu"
+      - title: "Остальные"
+        endpoint: "/api/v1/soft/games/other"
+  - title: "Системные"
+    endpoint: "/api/v1/soft/system"

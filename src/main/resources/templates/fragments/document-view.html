@@ -1,0 +1,10 @@
+<!-- fragments/document.html -->
+<div th:fragment="documentView">
+    <article class="document-article">
+
+        <section class="doc-body" th:utext="${content}">
+            <!-- тело документа, HTML -->
+        </section>
+
+    </article>
+</div>

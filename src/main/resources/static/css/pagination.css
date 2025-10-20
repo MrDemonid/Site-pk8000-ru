@@ -1,0 +1,152 @@
+.pagination-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1em 0;
+    flex-wrap: wrap;
+    gap: 1em;
+    border-top: 1px solid #ccc;
+    margin-top: 2em;
+    font-family: Arial, sans-serif;
+}
+
+.pagination-buttons {
+    display: flex;
+    gap: 0.4em;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.pagination-buttons button,
+.pagination-buttons span.page-number {
+    width: 2.5em;
+    height: 2.5em;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    line-height: 1;
+    font-size: 0.95em;
+    border: 1px solid #ccc;
+    background-color: #fafafa;
+    color: #333;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s, box-shadow 0.2s;
+}
+
+.pagination-buttons button:hover:not(:disabled),
+.pagination-buttons .page-number:hover {
+    background-color: #e6f0ff;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+}
+
+.pagination-buttons button:disabled {
+    opacity: 0.5;
+    cursor: default;
+}
+
+.pagination-buttons .active-page {
+    font-weight: bold;
+    background-color: #d0e8ff;
+    border-color: #90c5ff;
+    color: #004080;
+    pointer-events: none;
+}
+
+.pagination-arrow-icon {
+    width: 1.2em;
+    height: 1.2em;
+    fill: currentColor;
+}
+
+/*
+    Стили для меню выбора размера страниц.
+ */
+.page-size-dropdown {
+    position: relative;
+    display: inline-block;
+    font-size: 0.95em;
+}
+
+.dropdown-toggle {
+    width: auto;
+    height: 2.5em;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4em;
+    padding: 0 0.8em;
+    border: 1px solid #ccc;
+    background-color: #fafafa;
+    color: #333;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s, box-shadow 0.2s;
+}
+
+.dropdown-toggle:hover {
+    background-color: #e6f0ff;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 110%;
+    left: 0;
+    z-index: 1000;
+    display: none;
+    flex-direction: column;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    min-width: 100%;
+}
+
+.dropdown-menu.open {
+    display: flex;
+}
+
+.dropdown-menu button {
+    padding: 0.6em 1em;
+    border: none;
+    background-color: transparent;
+    text-align: left;
+    width: 100%;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.dropdown-menu button:hover {
+    background-color: #f0f8ff;
+}
+
+.dropdown-menu .active {
+    font-weight: bold;
+    color: #004080;
+}
+
+/*для стрелки*/
+.dropdown-toggle {
+    width: auto;
+    height: 2.5em;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4em;
+    padding: 0 0.8em;
+    border: 1px solid #ccc;
+    background-color: #fafafa;
+    color: #333;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s, box-shadow 0.2s;
+}
+
+.dropdown-arrow {
+    width: 1em;
+    height: 1em;
+    stroke: currentColor;
+    display: inline-block;
+}

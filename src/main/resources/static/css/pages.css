@@ -1,0 +1,161 @@
+.document-article {
+    max-width: 1400px;      /* иначе на больших экранах растянется */
+    width: 96%;
+    margin: 0 auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.document-article header {
+    border-bottom: 1px solid #e0e0e0;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+}
+
+.document-article h1 {
+    font-size: 1.8em;
+    margin-bottom: 5px;
+}
+
+.document-article .doc-meta {
+    font-size: 0.9em;
+    color: #666;
+}
+
+/* Задаем фонт для всего текста */
+.doc-body {
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+/* Задаем отступы для начала параграфов */
+.doc-body p {
+    text-indent: 2em;
+    margin: 0;
+}
+/* И небольшой отступ сверху для идущих подряд параграфов */
+.doc-body p + p {
+    margin-top: 0.2em;
+}
+/* На случай если не нужен отступ в начале параграфа */
+.doc-body p.no-indent {
+    text-indent: 0;
+    margin: 0;
+}
+
+/* Надчеркивание над словами (для активного низкого уровня сигнала) */
+.doc-body .signal-low {
+    position: relative;
+    font-family: "Consolas", monospace;
+    font-weight: 500;
+    padding-top: 0.01em;
+}
+.doc-body .signal-low::before {
+    content: "";
+    position: absolute;
+    top: 0.01em;
+    left: 0;
+    right: 0;
+    border-top: 1px solid currentColor;
+}
+
+
+/*!* Стили для тегов <code> (`текст` в markdown) *!*/
+/*.doc-body code {*/
+/*    font-family: "Fira Code", "Courier New", monospace;*/
+/*    background-color: #90d3d3;*/
+/*    color: #ba1057;*/
+/*    !*padding: 0.1em 0.3em;*!*/
+/*    border-radius: 4px;*/
+/*    font-size: 0.95em;*/
+/*}*/
+
+.doc-body h2, .doc-body h3 {
+    margin-top: 1.5em;
+}
+
+/*Стили для таблиц */
+table {
+    border-collapse: collapse; /* чтобы линии не дублировались */
+}
+
+table, th, td {
+    border: 1px solid #333; /* цвет линии */
+    padding: 4px 8px;       /* немного отступов */
+}
+
+/* Стили для изображений */
+/* --- Ограничение размеров изображений в markdown --- */
+.doc-body img {
+    max-width: 100%;       /* не выходит за контейнер */
+    height: auto;          /* сохраняет пропорции */
+    display: block;        /* убирает лишние пробелы */
+    margin: 1em auto;      /* центрирует */
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    cursor: default;
+    transition: transform 0.2s ease;
+}
+
+/* А если в абзаце два и более изображений подряд — превращаем его в сетку */
+.doc-body p:has(> img:nth-child(2)) {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1em;
+    justify-items: center;
+}
+
+/* Изображения внутри такой группы занимают всю ширину ячейки */
+.doc-body p:has(> img:nth-child(2)) > img {
+    margin: 0;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+
+/* --- Оверлей для увеличения --- */
+.img-viewer {
+    display: none;              /* невидим по умолчанию */
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+/* --- Увеличенное изображение --- */
+.img-viewer img {
+    width: auto;
+    height: auto;
+    max-width: 90vw;
+    max-height: 90vh;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.6);
+    cursor: zoom-out;
+    animation: zoomIn 0.25s ease;
+}
+
+@keyframes zoomIn {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+/*
+Используется, если JS добавил класс .image-row
+Замена :has для более старых браузеров.
+*/
+.doc-body p.image-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1em;
+    justify-items: center;
+}
+
+.doc-body p.image-row > img {
+    margin: 0;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+}

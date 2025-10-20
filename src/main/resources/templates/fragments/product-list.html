@@ -1,0 +1,24 @@
+<div th:fragment="productList">
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th><th>Название</th><th>Категория</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="product : ${products}">
+            <td th:text="${product.id}"></td>
+            <td th:text="${product.name}"></td>
+            <td th:text="${product.category}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- пагинация -->
+    <div class="pagination-container">
+        <div th:replace="~{fragments/pagination :: pageSizeSelector(pageData=${pageData})}"></div>
+        <th:block th:if="${pageData.totalPages > 1}">
+            <div th:replace="~{fragments/pagination :: paginationControls(pageData=${pageData}, pageButtons=${pageButtons})}"></div>
+        </th:block>
+    </div>
+</div>

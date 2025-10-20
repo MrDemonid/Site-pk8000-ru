@@ -1,0 +1,4 @@
+title: "Обратная связь"
+icon: "phone.png"
+endpoint: "/api/v1/page"
+order: 99

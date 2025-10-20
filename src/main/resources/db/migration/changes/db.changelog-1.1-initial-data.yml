@@ -1,0 +1,126 @@
+databaseChangeLog:
+  - changeSet:
+      id: insert-categories-1
+      author: andrey
+      preConditions:
+        onFail: MARK_RAN
+        sqlCheck:
+          expectedResult: "0"
+          sql: "SELECT COUNT(*) FROM categories WHERE id=${CATEGORY_ARCADE}"
+      changes:
+        - insert:
+            tableName: categories
+            columns:
+              - column:
+                  name: id
+                  valueNumeric: ${CATEGORY_ARCADE}
+              - column: { name: name, value: "Аркады"}
+              - column: { name: description, value: "Быстрые динамичные игры с простым управлением"}
+
+  - changeSet:
+      id: insert-categories-2
+      author: andrey
+      preConditions:
+        onFail: MARK_RAN
+        sqlCheck:
+          expectedResult: "0"
+          sql: "SELECT COUNT(*) FROM categories WHERE id=${CATEGORY_RACING}"
+      changes:
+        - insert:
+            tableName: categories
+            columns:
+              - column:
+                  name: id
+                  valueNumeric: ${CATEGORY_RACING}
+              - column: { name: name, value: "Гонки"}
+              - column: { name: description, value: "Гоночные игры"}
+
+  - changeSet:
+      id: insert-categories-3
+      author: andrey
+      preConditions:
+        onFail: MARK_RAN
+        sqlCheck:
+          expectedResult: "0"
+          sql: "SELECT COUNT(*) FROM categories WHERE id=${CATEGORY_SPORT}"
+      changes:
+        - insert:
+            tableName: categories
+            columns:
+              - column:
+                  name: id
+                  valueNumeric: ${CATEGORY_SPORT}
+              - column: { name: name, value: "Спортивные"}
+              - column: { name: description, value: "Спортивные игры"}
+
+  - changeSet:
+      id: insert-categories-4
+      author: andrey
+      preConditions:
+        onFail: MARK_RAN
+        sqlCheck:
+          expectedResult: "0"
+          sql: "SELECT COUNT(*) FROM categories WHERE id=${CATEGORY_LOGIC}"
+      changes:
+        - insert:
+            tableName: categories
+            columns:
+              - column:
+                  name: id
+                  valueNumeric: ${CATEGORY_LOGIC}
+              - column: { name: name, value: "Логические"}
+              - column: { name: description, value: "Развивающие игры на логику"}
+
+  - changeSet:
+      id: insert-categories-5
+      author: andrey
+      preConditions:
+        onFail: MARK_RAN
+        sqlCheck:
+          expectedResult: "0"
+          sql: "SELECT COUNT(*) FROM categories WHERE id=${CATEGORY_EDU}"
+      changes:
+        - insert:
+            tableName: categories
+            columns:
+              - column:
+                  name: id
+                  valueNumeric: ${CATEGORY_EDU}
+              - column: { name: name, value: "Обучающие"}
+              - column: { name: description, value: "Учебные и познавательные программы"}
+
+  - changeSet:
+      id: insert-categories-6
+      author: andrey
+      preConditions:
+        onFail: MARK_RAN
+        sqlCheck:
+          expectedResult: "0"
+          sql: "SELECT COUNT(*) FROM categories WHERE id=${CATEGORY_OTHER}"
+      changes:
+        - insert:
+            tableName: categories
+            columns:
+              - column:
+                  name: id
+                  valueNumeric: ${CATEGORY_OTHER}
+              - column: { name: name, value: "Остальные"}
+              - column: { name: description, value: "Игры не подходящие ни под один из разделов"}
+
+  - changeSet:
+      id: insert-categories-7
+      author: andrey
+      preConditions:
+        onFail: MARK_RAN
+        sqlCheck:
+          expectedResult: "0"
+          sql: "SELECT COUNT(*) FROM categories WHERE id=${CATEGORY_PROGRAMMING}"
+      changes:
+        - insert:
+            tableName: categories
+            columns:
+              - column:
+                  name: id
+                  valueNumeric: ${CATEGORY_PROGRAMMING}
+              - column: { name: name, value: "Программирование"}
+              - column: { name: description, value: "Средства разработки кода, компиляторы, интерпретаторы, библиотеки"}

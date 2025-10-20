@@ -1,0 +1,4 @@
+title: "Главная"
+icon: "home.png"
+endpoint: "/api/v1/index"
+order: 1

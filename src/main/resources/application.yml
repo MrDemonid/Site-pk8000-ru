@@ -1,0 +1,90 @@
+server:
+  port: ${PK8000_WEB-SERVER_PORT:9000}
+  forward-headers-strategy: framework
+
+spring:
+  application:
+    name: "pk8000.ru"
+
+  output.ansi.enabled: ALWAYS
+
+  security:
+    oauth2:
+      client:
+        provider:
+          keycloak:
+            issuer-uri: ${app.config.auth-server-url}/realms/${app.config.realm-name}
+        registration:
+          client-pk8000-ru-id:
+            provider: keycloak
+            client-id: client_pk8000_ru_id
+            client-secret: ${PK8000_CLIENT_SECRET:Erl7FMQ1oefm4W1SXBSpNR7IzfOu6QAg}
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+            authorization-grant-type: authorization_code
+            scope: openid,email
+  #            32oZ9BzySG6ONXJzFyUbnEnLdHTsU5vd
+#      resourceserver:
+#        jwt:
+#          jwk-set-uri: ${app.config.auth-server-url}/realms/${app.config.realm-name}/protocol/openid-connect/certs
+
+  # SQL database
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/catalog_db
+    username: ${MYSQL_USER:admin}
+    password: ${MYSQL_PASSWORD:admin}
+  # Spring Jpa Hibernate
+  jpa:
+    properties:
+      hibernate:
+        hbm2ddl:
+          auto: none
+        show_sql: false
+        format_sql: true
+        highlight_sql: true
+    generate-ddl: false
+    defer-datasource-initialization: false
+    open-in-view: false
+  # автозапуск скриптов 'schema.sql' и 'data.sql'
+  sql:
+    init:
+      mode: never           # не нужен
+
+  # миграции
+  liquibase:
+    change-log: classpath:db/migration/db.changelog-master.yaml
+    enabled: true
+    drop-first: false
+    parameters:
+      CATEGORY_ARCADE: ${menu.category.ARCADE}
+      CATEGORY_RACING: ${menu.category.RACING}
+      CATEGORY_SPORT: ${menu.category.SPORT}
+      CATEGORY_LOGIC: ${menu.category.LOGIC}
+      CATEGORY_EDU: ${menu.category.EDU}
+      CATEGORY_OTHER: ${menu.category.OTHER}
+      CATEGORY_PROGRAMMING: ${menu.category.PROGRAMMING}
+
+# Настройки приложения
+app:
+  config:
+    realm-name: site-pk8000-ru-realm
+    auth-server-url: ${PK8000_OAUTH2_ISSUER_URI:http://localhost:8080}
+    cookie-anon-id: ${PK8000_ANON_ID_CLAIM:ANON_ID}     # в этом поле куки хранят ID не аутентифицированного пользователя
+    claim-user-id: ${PK8000_USER_ID_CLAIM:user_id}      # поле в токене, хранящее ID пользователя
+    icon-path: ${PK8000_APP_ICON_PATH:./images/icons/}
+    content-path: ${PK8000_CONTENT_PATH:./content/}     # директория меню
+    attache-dir: ${PK8000_ATTACHE_DIR:attache}          # виртуальный каталог для аттачей
+    static-endpoint: /api/v1/page                       # эндпоинт для рендеринга статических страниц
+
+
+menu:
+  meta-file: "meta.yaml"
+  index-file: "index.md"
+  category:
+    ARCADE: 1
+    RACING: 2
+    SPORT: 3
+    LOGIC: 4
+    EDU: 5
+    OTHER: 6
+    PROGRAMMING: 7

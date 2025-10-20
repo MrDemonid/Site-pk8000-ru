@@ -1,0 +1,16 @@
+databaseChangeLog:
+  - include:
+      file: changes/db.changelog-1.0-catalog-schema.yml
+      relativeToChangelogFile: true
+
+  - include:
+      file: changes/db.changelog-1.0-products-schema.yml
+      relativeToChangelogFile: true
+
+  - include:
+      file: changes/db.changelog-1.0-pages-schema.yml
+      relativeToChangelogFile: true
+
+  - include:
+      file: changes/db.changelog-1.1-initial-data.yml
+      relativeToChangelogFile: true

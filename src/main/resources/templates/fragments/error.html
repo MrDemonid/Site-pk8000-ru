@@ -1,0 +1,7 @@
+<!-- fragments/error.html -->
+<div th:fragment="errorFragment" class="error-container">
+    <h2>Произошла ошибка</h2>
+    <p th:text="${error.message}">Описание ошибки</p>
+    <p><small th:text="'Код: ' + ${error.errorCode} + ', статус: ' + ${error.status}"></small></p>
+    <p><small th:text="'URL: ' + ${error.path}"></small></p>
+</div>

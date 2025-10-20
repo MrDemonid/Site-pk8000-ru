@@ -1,0 +1,25 @@
+databaseChangeLog:
+  - changeSet:
+      id: catalog-schema-1
+      author: andrey
+      changes:
+        - createTable:
+            schemaName: catalog_db
+            tableName: categories
+            tableOptions: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci"
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+#                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: VARCHAR(128)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: description
+                  type: VARCHAR(512)

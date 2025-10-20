@@ -1,0 +1,63 @@
+<div th:fragment="pageSizeSelector(pageData)">
+    <div class="page-size-dropdown" id="pageSizeDropdown">
+        <button type="button" class="dropdown-toggle" onclick="toggleDropdownMenu()">
+            На странице: <span th:text="${pageData.size}">10</span>
+            <svg class="dropdown-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                <path d="M6 8l4 4 4-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+        </button>
+        <div class="dropdown-menu" id="pageSizeMenu">
+            <button type="button"
+                    th:classappend="${pageData.size == 10} ? 'active'"
+                    onclick="changePageSizeValue(10)">10</button>
+            <button type="button"
+                    th:classappend="${pageData.size == 20} ? 'active'"
+                    onclick="changePageSizeValue(20)">20</button>
+            <button type="button"
+                    th:classappend="${pageData.size == 50} ? 'active'"
+                    onclick="changePageSizeValue(50)">50</button>
+        </div>
+    </div>
+</div>
+
+
+<div th:fragment="paginationControls(pageData, pageButtons)">
+    <div class="pagination-buttons">
+        <!-- Назад -->
+        <button type="button"
+                th:disabled="${!pageData.hasPrevious()}"
+                th:attr="data-page=${pageData.number - 1}"
+                onclick="goToPage(this.dataset.page)">
+            <svg class="arrow-icon">
+                <use th:xlink:href="@{'/icons/arrow-left.svg#icon'}"></use>
+            </svg>
+        </button>
+
+        <!-- Номера страниц -->
+        <span th:each="btn : ${pageButtons}">
+            <span th:if="${btn.ellipsis}" class="page-number" th:text="${btn.label}">...</span>
+
+            <span th:if="${!btn.ellipsis} and ${btn.active}"
+                  class="page-number active-page"
+                  th:text="${btn.label}">1</span>
+
+            <button th:if="${!btn.ellipsis} and ${!btn.active}"
+                    type="button"
+                    class="page-number"
+                    th:text="${btn.label}"
+                    th:attr="data-page=${btn.page}"
+                    onclick="goToPage(this.dataset.page)">
+            </button>
+        </span>
+
+        <!-- Вперед -->
+        <button type="button"
+                th:disabled="${!pageData.hasNext()}"
+                th:attr="data-page=${pageData.number + 1}"
+                onclick="goToPage(this.dataset.page)">
+            <svg class="arrow-icon">
+                <use th:xlink:href="@{'/icons/arrow-right.svg#icon'}"></use>
+            </svg>
+        </button>
+    </div>
+</div>
