@@ -1,10 +1,10 @@
 package mr.demonid.pk8000.ru.services;
 
 import com.vladsch.flexmark.ast.*;
-import com.vladsch.flexmark.html.*;
-import com.vladsch.flexmark.html.renderer.*;
-import com.vladsch.flexmark.util.ast.*;
-import com.vladsch.flexmark.util.html.*;
+import com.vladsch.flexmark.html.AttributeProvider;
+import com.vladsch.flexmark.html.renderer.AttributablePart;
+import com.vladsch.flexmark.util.ast.Node;
+import com.vladsch.flexmark.util.html.MutableAttributes;
 import com.vladsch.flexmark.util.sequence.BasedSequence;
 import mr.demonid.pk8000.ru.configs.AppConfiguration;
 import mr.demonid.pk8000.ru.util.PathUtil;

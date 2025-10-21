@@ -1,4 +1,4 @@
 title: "Главная"
 icon: "home.png"
-endpoint: "/api/v1/index"
+endpoint: "/api/v1/page"
 order: 1

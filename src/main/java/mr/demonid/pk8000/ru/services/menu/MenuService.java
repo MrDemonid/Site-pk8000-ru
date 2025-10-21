@@ -48,7 +48,7 @@ public class MenuService {
                     .filter(Objects::nonNull)
                     .sorted(Comparator.comparingInt(MenuItem::getOrder))
                     .toList();
-            assignIds(menu);
+//            assignIds(menu);
             return menu;
         } catch (IOException e) {
             log.error(e.getMessage(), e);
@@ -103,8 +103,8 @@ public class MenuService {
     }
 
     private void assignIdsRecursive(MenuItem item, AtomicLong counter) {
-        if (item.getId() == null) {
-            item.setId("menu-" + counter.getAndIncrement());
+        if (item.getMenuId() == null) {
+            item.setMenuId("menu-" + counter.getAndIncrement());
         }
         if (item.getChildren() != null) {
             item.getChildren().forEach(child -> assignIdsRecursive(child, counter));

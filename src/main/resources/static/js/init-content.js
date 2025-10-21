@@ -1,3 +1,4 @@
+// ========================== init-content.js ==========================
 document.addEventListener('DOMContentLoaded', () => {
     const nav = performance.getEntriesByType("navigation")[0];
     const isReload = nav && nav.type === "reload"; // true только если F5/Ctrl+R
@@ -37,6 +38,46 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 });
+
+// TODO: доработать.
+// document.addEventListener('DOMContentLoaded', () => {
+//     const nav = performance.getEntriesByType("navigation")[0];
+//     const isReload = nav && nav.type === "reload"; // true только если F5/Ctrl+R
+//
+//     const contentDiv = document.getElementById('content');
+//     const initialPath = contentDiv.dataset.initialPath; // например: /api/v1/page?path=main
+//     const savedUrl = sessionStorage.getItem('activeMenuUrl') || null;
+//
+//     console.log("initialPath: ", initialPath);
+//     console.log("savedUrl = ", savedUrl);
+//
+//     let urlToLoad = initialPath;
+//
+//     // --- исправленный блок ---
+//     if (isReload && savedUrl) {
+//         urlToLoad = savedUrl;
+//     }
+//     // --------------------------
+//
+//     console.log("urlToLoad: ", urlToLoad);
+//
+//     if (urlToLoad) {
+//         fetch(urlToLoad, { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+//             .then(res => res.text())
+//             .then(html => {
+//                 contentDiv.innerHTML = html;
+//                 history.replaceState(null, '', urlToLoad);
+//                 if (isReload) restoreActiveMenu();
+//             })
+//             .catch(err => {
+//                 contentDiv.innerHTML = '<p style="color:red;">Ошибка загрузки страницы.</p>';
+//                 console.error(err);
+//             });
+//     } else if (isReload) {
+//         restoreActiveMenu();
+//     }
+// });
+
 
 window.addEventListener('popstate', () => {
     // синхронизируем инпуты с текущим URL

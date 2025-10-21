@@ -46,7 +46,6 @@ function syncSearchInputs() {
 function loadContentAjax(anchor) {
     let href = anchor.getAttribute('href');
     const path = anchor.dataset.path;
-    const id = anchor.dataset.menuId;
     const searchId = anchor.dataset.searchId;
 
 
@@ -83,13 +82,7 @@ function loadContentAjax(anchor) {
     }
     sessionStorage.setItem('searchValues', JSON.stringify(searchValues));
     // сохраняем активный пункт меню
-    if (id) {
-        sessionStorage.setItem('activeMenuId', id);
-        sessionStorage.setItem('activeMenuUrl', url.pathname + url.search);
-    } else {
-        sessionStorage.removeItem('activeMenuId');
-        sessionStorage.removeItem('activeMenuUrl');
-    }
+    sessionStorage.setItem('activeMenuUrl', url.pathname + url.search);
 
     // делаем AJAX-запрос
     fetch(url.pathname + url.search, { headers: { 'X-Requested-With': 'XMLHttpRequest' } })

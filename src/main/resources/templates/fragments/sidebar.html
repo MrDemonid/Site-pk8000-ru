@@ -12,16 +12,15 @@
 
 <!-- Рекурсивный фрагмент -->
 <div th:fragment="menuitem(item)">
-    <!-- Специальный элемент типа input -->
     <div th:if="${item.type == 'input'}" class="menu-search-box">
-<!--        <form class="menu-search-form" onsubmit="return searchSoftSection(this)">-->
+        <!-- Специальный элемент типа input -->
         <form class="menu-search-form" onsubmit="return searchSoftSection(this)">
             <img th:if="${item.icon != null}" th:src="@{/icons/{icon}(icon=${item.icon})}"
                  alt="🔍" class="menu-icon clickable-icon"
                  onclick="this.closest('form').requestSubmit()" />
 
             <input type="text"
-                   th:attr="id=${item.id}, placeholder=${item.placeholder}"
+                   th:attr="id=${item.menuId}, placeholder=${item.placeholder}"
                    class="menu-search-input" />
         </form>
     </div>
@@ -37,7 +36,7 @@
     <a th:if="${item.type != 'input' and (item.children == null or #lists.isEmpty(item.children))}"
        th:href="@{${item.endpoint}}"
        onclick="return loadContentAjax(this)"
-       th:attr="data-title=${item.title}, data-menu-id=${item.id}, data-path=${item.path}, data-search-id=${item.searchId}">
+       th:attr="data-title=${item.title}, data-path=${item.path}, data-search-id=${item.searchId}">
         <img th:if="${item.icon != null}" th:src="@{/icons/{icon}(icon=${item.icon})}" alt="" class="menu-icon">
         <span th:text="${item.title}"></span>
     </a>

@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @AllArgsConstructor
 @RequestMapping("/api/v1")
 @Log4j2
-public class PageController {
+public class PageStaticController {
 
     private final PageService pageService;
 
@@ -29,4 +29,6 @@ public class PageController {
         model.addAttribute("content", pageService.getPage(path));
         return "fragments/document-view :: documentView";
     }
+
+
 }
