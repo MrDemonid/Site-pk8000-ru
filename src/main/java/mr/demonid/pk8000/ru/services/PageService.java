@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import mr.demonid.pk8000.ru.configs.AppConfiguration;
 import mr.demonid.pk8000.ru.services.menu.MenuProperties;
+import mr.demonid.pk8000.ru.services.staticpage.MarkdownService;
 import mr.demonid.pk8000.ru.util.PathUtil;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;

@@ -11,8 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProductFilter {
+public class SoftFilter {
     private Long categoryId;
-    private String productName;
-    private String description;
+    private String searchText;
 }

@@ -164,15 +164,15 @@
 
 
 
-[board_top]: ./images/hdd-top-rev-1_0.png
-[board_bottom]: ./images/hdd-bottom-rev-1_0.png
-[scheme_board]: ./images/schema-hdd-rev-1_0.png
-[scheme_board_spec]: ./images/schema-hdd-rev-1_0-power.png
-[jumpers]: ./images/jumpers.jpg
-[layout_board]: ./images/hdd-layout-rev-1_0.png
-[fix_1]: ./images/fix_1.png
-[fix_2]: ./images/fix_2_1.png
-[fix_3]: ./images/fix_2_2.png
+[board_top]: images/hdd-top-rev-1_0.png
+[board_bottom]: images/hdd-bottom-rev-1_0.png
+[scheme_board]: images/schema-hdd-rev-1_0.png
+[scheme_board_spec]: images/schema-hdd-rev-1_0-power.png
+[jumpers]: images/jumpers.jpg
+[layout_board]: images/hdd-layout-rev-1_0.png
+[fix_1]: images/fix_1.png
+[fix_2]: images/fix_2_1.png
+[fix_3]: images/fix_2_2.png
 
-[original_scheme]: ./files/hdd-vv55-rev-1_0.zip
+[original_scheme]: files/hdd-vv55-rev-1_0.zip
 

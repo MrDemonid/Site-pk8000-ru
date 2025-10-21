@@ -1,4 +1,4 @@
-package mr.demonid.pk8000.ru.services;
+package mr.demonid.pk8000.ru.services.staticpage;
 
 import com.vladsch.flexmark.html.AttributeProvider;
 import com.vladsch.flexmark.html.AttributeProviderFactory;

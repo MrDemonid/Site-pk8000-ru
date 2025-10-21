@@ -65,16 +65,20 @@ spring:
       CATEGORY_PROGRAMMING: ${menu.category.PROGRAMMING}
 
 # Настройки приложения
+# виртуальные пути необходимо разрешить в SecurityFilterChain.
 app:
   config:
     realm-name: site-pk8000-ru-realm
     auth-server-url: ${PK8000_OAUTH2_ISSUER_URI:http://localhost:8080}
-    cookie-anon-id: ${PK8000_ANON_ID_CLAIM:ANON_ID}     # в этом поле куки хранят ID не аутентифицированного пользователя
-    claim-user-id: ${PK8000_USER_ID_CLAIM:user_id}      # поле в токене, хранящее ID пользователя
-    icon-path: ${PK8000_APP_ICON_PATH:./images/icons/}
-    content-path: ${PK8000_CONTENT_PATH:./content/}     # директория меню
-    attache-dir: ${PK8000_ATTACHE_DIR:attache}          # виртуальный каталог для аттачей
-    static-endpoint: /api/v1/page                       # эндпоинт для рендеринга статических страниц
+    static-endpoint: /api/v1/page                                 # эндпоинт для рендеринга статических страниц
+    content-path: ${PK8000_CONTENT_PATH:./content/menu/}          # директория меню
+    attache-url: ${PK8000_ATTACHE_URL:attache}                    # виртуальный каталог для аттачей статичных страниц (в html)
+    menu-icon-path: ${PK8000_APP_ICON_PATH:./content/menu-icons/} # директория иконок меню
+    menu-icon-url: ${PK8000_APP_ICON_URL:menu/icons}                   # виртуальный каталог иконок меню (в html)
+    soft-images-path: ${PK8000_SOFT_IMAGES_PATH:./content/soft/images/}  # директория картинок софта
+    soft-images-url: ${PK8000_SOFT_IMAGES_URL:soft/images}        # виртуальный каталог картинок софта (в html)
+    soft-files-path: ${PK8000_SOFT_ATTACHE_PATH:./content/soft/files/} # директория файлов софта
+    soft-files-url: ${PK8000_SOFT_ATTACHE_URL:soft/files}         # виртуальный каталог софта (в html)
 
 
 menu:

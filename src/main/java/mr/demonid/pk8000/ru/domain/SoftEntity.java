@@ -16,7 +16,7 @@ import java.util.Objects;
 @Setter
 @ToString
 @Table(name = "products")
-public class Product {
+public class SoftEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -50,7 +50,7 @@ public class Product {
     private LocalDateTime createAt;
 
 
-    public Product(String name, String shortDescription, String description, CategoryEntity category, List<String> newImageFiles, List<String> newArchiveFiles) {
+    public SoftEntity(String name, String shortDescription, String description, CategoryEntity category, List<String> newImageFiles, List<String> newArchiveFiles) {
         this.id = null;
         this.name = name;
         this.shortDescription = shortDescription;
@@ -61,7 +61,7 @@ public class Product {
     }
 
 
-    public Product() {
+    public SoftEntity() {
         this(null, null, null, null, new ArrayList<>(), null);
     }
 
@@ -70,11 +70,11 @@ public class Product {
     public boolean equals(Object o) {
         if (this == o)
             return true;
-        if (!(o instanceof Product product))
+        if (!(o instanceof SoftEntity softEntity))
             return false;
-        if (id == null || product.id == null)
+        if (id == null || softEntity.id == null)
             return false;
-        return Objects.equals(id, product.id);
+        return Objects.equals(id, softEntity.id);
     }
 
     @Override

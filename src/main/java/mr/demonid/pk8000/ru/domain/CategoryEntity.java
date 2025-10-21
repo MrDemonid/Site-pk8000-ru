@@ -23,6 +23,7 @@ public class CategoryEntity {
     @Column(unique = false, nullable = true, length = 512)
     private String description;
 
+
     public CategoryEntity(String name, String description) {
         this.name = name;
         this.description = description;

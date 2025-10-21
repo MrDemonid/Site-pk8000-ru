@@ -16,6 +16,9 @@ import org.springframework.security.web.SecurityFilterChain;
 @AllArgsConstructor
 public class SecurityConfig {
 
+    private AppConfiguration config;
+
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -25,8 +28,14 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET,"/", "/index").permitAll()
                         .requestMatchers(HttpMethod.GET,"/api/v1/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/images/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/css/**", "/icons/**", "/img/**", "/js/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/attache/**").permitAll()
+                        .requestMatchers(HttpMethod.GET,
+                                "/css/**",
+                                "/icons/**",
+                                "/js/**",
+                                "/" + config.getMenuIconUrl() + "/**",
+                                "/" + config.getAttacheUrl() + "/**",
+                                "/" + config.getSoftImagesUrl() + "/**",
+                                "/" + config.getSoftFilesUrl() + "/**").permitAll()
                         .anyRequest().authenticated()  // Остальные требуют аутентификации
                 )
 //                .anonymous(Customizer.withDefaults()) // Включение анонимных пользователей
@@ -37,7 +46,7 @@ public class SecurityConfig {
                 )
                 .logout(logout -> logout
                         .logoutUrl("/api/v1/logout")                // URL выхода
-                        .logoutSuccessUrl("/api/v1/catalog/index")  // куда редиректить после выхода
+                        .logoutSuccessUrl("/")                      // куда редиректить после выхода
                         .invalidateHttpSession(true)
                         .deleteCookies("JSESSIONID", "ANON_ID")     // удаляем нужные куки
                         .clearAuthentication(true)

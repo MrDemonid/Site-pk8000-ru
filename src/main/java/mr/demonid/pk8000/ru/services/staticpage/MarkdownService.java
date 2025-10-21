@@ -1,4 +1,4 @@
-package mr.demonid.pk8000.ru.services;
+package mr.demonid.pk8000.ru.services.staticpage;
 
 import com.vladsch.flexmark.ext.attributes.AttributesExtension;
 import com.vladsch.flexmark.ext.autolink.AutolinkExtension;

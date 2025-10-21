@@ -6,10 +6,10 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="product : ${products}">
-            <td th:text="${product.id}"></td>
-            <td th:text="${product.name}"></td>
-            <td th:text="${product.category}"></td>
+        <tr th:each="softEntity : ${products}">
+            <td th:text="${softEntity.id}"></td>
+            <td th:text="${softEntity.name}"></td>
+            <td th:text="${softEntity.category}"></td>
         </tr>
         </tbody>
     </table>

@@ -8,9 +8,5 @@ databaseChangeLog:
       relativeToChangelogFile: true
 
   - include:
-      file: changes/db.changelog-1.0-pages-schema.yml
-      relativeToChangelogFile: true
-
-  - include:
       file: changes/db.changelog-1.1-initial-data.yml
       relativeToChangelogFile: true

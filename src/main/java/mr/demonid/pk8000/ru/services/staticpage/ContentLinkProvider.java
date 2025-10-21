@@ -1,4 +1,4 @@
-package mr.demonid.pk8000.ru.services;
+package mr.demonid.pk8000.ru.services.staticpage;
 
 import com.vladsch.flexmark.ast.*;
 import com.vladsch.flexmark.html.AttributeProvider;
@@ -75,7 +75,7 @@ public class ContentLinkProvider implements AttributeProvider {
 
     private void setAttache(MutableAttributes attributes, String url, String dest) {
         Path path = Path.of(
-                        config.getAttacheDir().replaceFirst("^/", ""),
+                        config.getAttacheUrl().replaceFirst("^/", ""),
                         contentPath.replaceFirst("^/", ""),
                         url.replaceFirst("^/", ""))
                 .normalize();

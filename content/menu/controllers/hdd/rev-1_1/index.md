@@ -24,7 +24,7 @@
 Само решение проблемы, а также назначение перемычек можно посмотреть [здесь](../rev-1_0/index.md)
 
 
-[board_top]: ./images/HDD_Ctrl_1_1.jpg
-[scheme_board]: ./images/schema-hdd-rev-1_1.png
-[scheme_board_spec]: ./images/schema-hdd-rev-1_1-power.png
-[layout_board]: ./images/hdd-layout-rev-1_1.png
+[board_top]: images/HDD_Ctrl_1_1.jpg
+[scheme_board]: images/schema-hdd-rev-1_1.png
+[scheme_board_spec]: images/schema-hdd-rev-1_1-power.png
+[layout_board]: images/hdd-layout-rev-1_1.png
