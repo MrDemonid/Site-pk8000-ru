@@ -69,7 +69,7 @@ public class MenuService {
         }
         item.setPath(PathUtil.normalize(root.relativize(folder).normalize().toString(), false));
 
-        log.info("Loaded menu item: title={}, endpoint={}, path={}, isadmin={}", item.getTitle(), item.getEndpoint(), item.getPath(), item.isAdminOnly());
+//        log.info("Loaded menu item: title={}, endpoint={}, path={}, isadmin={}", item.getTitle(), item.getEndpoint(), item.getPath(), item.isAdminOnly());
 
         // рекурсивно добавляем подкаталоги
         try (Stream<Path> files = Files.list(folder)) {

@@ -7,6 +7,7 @@ import mr.demonid.pk8000.ru.domain.CategoryEntity;
 import mr.demonid.pk8000.ru.domain.SoftEntity;
 import mr.demonid.pk8000.ru.dto.SoftRequest;
 import mr.demonid.pk8000.ru.dto.SoftResponse;
+import mr.demonid.pk8000.ru.util.PathUtil;
 import org.springframework.stereotype.Service;
 
 import java.nio.file.Paths;
@@ -34,7 +35,7 @@ public class SoftMapper {
                 entity.getShortDescription(),
                 entity.getDescription(),
                 toImageLinks(entity.getId(), entity.getImageFiles()),
-                toAttacheLinks(entity.getId(), entity.getImageFiles())
+                toAttacheLinks(entity.getId(), entity.getArchiveFiles())
         );
     }
 
@@ -60,7 +61,7 @@ public class SoftMapper {
         return names.stream()
                 .filter(Objects::nonNull)
                 .filter(Predicate.not(String::isBlank))
-                .map(e -> Paths.get("/pk8000/api/catalog/images", id.toString(), e).toString())
+                .map(e -> PathUtil.normalize(Paths.get(config.getSoftImagesUrl(), id.toString(), e).toString(), true))
                 .toList();
     }
 
@@ -71,8 +72,9 @@ public class SoftMapper {
         return names.stream()
                 .filter(Objects::nonNull)
                 .filter(Predicate.not(String::isBlank))
-                .map(e -> Paths.get("/pk8000/api/catalog/images", id.toString(), e).toString())
+                .map(e -> PathUtil.normalize(Paths.get(config.getSoftFilesUrl(), id.toString(), e).toString(), true))
                 .toList();
     }
 
 }
+

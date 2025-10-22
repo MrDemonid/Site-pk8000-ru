@@ -1,0 +1,171 @@
+/* Стили для сетки товаров */
+.product-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: flex-start;
+    margin-bottom: 20px;
+}
+
+.product-item {
+    width: calc(25% - 10px);
+    box-sizing: border-box;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    /*border: 1px solid #ddd;*/
+    padding: 10px;
+    text-align: center;
+    background-color: #f9f9f9;
+    margin-bottom: 10px;
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.product-item:hover {
+    transform: scale(1.05); /* Немного увеличиваем карточку */
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); /* Добавляем тень */
+}
+
+.product-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: flex-start;
+}
+.product-item {
+    width: calc(25% - 10px); /* Ширина для четырёх товаров в строке */
+    box-sizing: border-box;
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+    background-color: #f9f9f9;
+    margin-bottom: 10px;
+}
+.product-image {
+    width: 100%;
+    height: auto;
+    /*height: 150px;*/
+    object-fit: cover;
+    object-position: center;
+    cursor: zoom-in;
+}
+.product-title {
+    font-size: 1.1em;
+    margin: 10px 0;
+    font-weight: bold;
+}
+.product-price {
+    color: #007b00;
+    font-size: 1.1em;
+}
+.product-stock {
+    font-size: 0.9em;
+    color: #555;
+}
+.quantity-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 5px 0;
+}
+.quantity-controls button {
+    width: 30px;
+    height: 30px;
+    font-size: 1.2em;
+    cursor: pointer;
+}
+.buy-button {
+    background-color: #007bff;
+    color: #fff;
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px;
+}
+.product-description {
+    font-size: 0.85em;
+    color: #666;
+    margin-top: 10px;
+    height: 50px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 10;
+    -webkit-box-orient: vertical;
+}
+
+/* Адаптивные стили для разных экранов */
+@media (max-width: 992px) {
+    .product-item {
+        width: calc(33.33% - 10px); /* Три товара в строке */
+    }
+}
+@media (max-width: 768px) {
+    .product-item {
+        width: calc(50% - 10px); /* Два товара в строке */
+    }
+}
+@media (max-width: 576px) {
+    .product-item {
+        width: 100%; /* Один товар в строке для мобильных устройств */
+    }
+}
+
+/* Контент товаров */
+.content-product {
+    flex-grow: 1;
+    padding: 20px;
+}
+
+.product-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+
+/* Таблица товаров в админке */
+.product-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.product-table th, .product-table td {
+    padding: 8px;
+    border: 1px solid #ccc;
+    vertical-align: top;
+}
+
+.product-table input, .product-table textarea {
+    box-sizing: border-box;
+}
+
+.product-table textarea {
+    resize: vertical;
+}
+
+.product-image.hidden {
+    display: none;
+}
+
+
+
+.image-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.zoom-icon {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    padding: 4px 6px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 14px;
+    pointer-events: none; /* Чтобы клики шли сквозь лупу на изображение */
+}
+

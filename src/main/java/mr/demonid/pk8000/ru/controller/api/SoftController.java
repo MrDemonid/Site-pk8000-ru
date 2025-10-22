@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import mr.demonid.pk8000.ru.controller.test.Product;
 import mr.demonid.pk8000.ru.domain.CategoryType;
+import mr.demonid.pk8000.ru.dto.SoftResponse;
 import mr.demonid.pk8000.ru.services.AdminServiceImpl;
 import mr.demonid.pk8000.ru.services.menu.MenuProperties;
 import mr.demonid.pk8000.ru.util.pagenate.PaginationHelper;
@@ -100,7 +101,12 @@ public class SoftController {
             @RequestParam(defaultValue = "") String q,
             Model model, Authentication auth, HttpServletRequest request) {
 
-        return retFragment("Soft", "System", pageable, q, model);
+        Page<SoftResponse> soft = adminService.getAllProducts(null, pageable);
+        System.out.println("-- soft: " + soft.getContent());
+        model.addAttribute("softList", soft.getContent());
+        return "fragments/soft-list :: softListFragment";
+
+//        return retFragment("Soft", "System", pageable, q, model);
     }
 
 

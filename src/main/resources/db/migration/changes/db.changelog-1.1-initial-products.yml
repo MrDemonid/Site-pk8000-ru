@@ -1,0 +1,274 @@
+databaseChangeLog:
+  - changeSet:
+      id: insert-products-1
+      author: andrey
+      changes:
+        - insert:
+            tableName: products
+            columns:
+              - column: { name: name, value: "Клад" }
+              - column: { name: short_description, value: "-" }
+              - column: { name: description, value: "-" }
+              - column:
+                  name: category_id
+                  valueNumeric: ${CATEGORY_ARCADE}
+
+        - insert:
+            tableName: products
+            columns:
+              - column: { name: name, value: "Пилот" }
+              - column: { name: short_description, value: "-" }
+              - column: { name: description, value: "-" }
+              - column:
+                  name: category_id
+                  valueNumeric: ${CATEGORY_ARCADE}
+
+        - insert:
+            tableName: products
+            columns:
+              - column: { name: name, value: "Питон (Фотон)" }
+              - column: { name: short_description, value: "-" }
+              - column: { name: description, value: "-" }
+              - column:
+                  name: category_id
+                  valueNumeric: ${CATEGORY_ARCADE}
+
+        - insert:
+            tableName: products
+            columns:
+              - column: { name: name, value: "Угадай число" }
+              - column: { name: short_description, value: "-" }
+              - column: { name: description, value: "-" }
+              - column:
+                  name: category_id
+                  valueNumeric: ${CATEGORY_LOGIC}
+
+        - insert:
+            tableName: products
+            columns:
+              - column: { name: name, value: "Тяп-ляп" }
+              - column: { name: short_description, value: "-" }
+              - column: { name: description, value: "-" }
+              - column:
+                  name: category_id
+                  valueNumeric: ${CATEGORY_ARCADE}
+
+        - insert:
+            tableName: products
+            columns:
+              - column: { name: name, value: "Тест" }
+              - column: { name: short_description, value: "-" }
+              - column: { name: description, value: "-" }
+              - column:
+                  name: category_id
+                  valueNumeric: ${CATEGORY_PROGRAMMING}
+
+        - insert:
+            tableName: products
+            columns:
+              - column: { name: name, value: "Минер" }
+              - column: { name: short_description, value: "-" }
+              - column: { name: description, value: "-" }
+              - column:
+                  name: category_id
+                  valueNumeric: ${CATEGORY_LOGIC}
+
+        - insert:
+            tableName: products
+            columns:
+              - column: { name: name, value: "Морской бой" }
+              - column: { name: short_description, value: "-" }
+              - column: { name: description, value: "-" }
+              - column:
+                  name: category_id
+                  valueNumeric: ${CATEGORY_LOGIC}
+
+        - insert:
+            tableName: products
+            columns:
+              - column: { name: name, value: "Автодром" }
+              - column: { name: short_description, value: "-" }
+              - column: { name: description, value: "-" }
+              - column:
+                  name: category_id
+                  valueNumeric: ${CATEGORY_RACING}
+
+        - insert:
+            tableName: products
+            columns:
+              - column: { name: name, value: "Сура" }
+              - column: { name: short_description, value: "-" }
+              - column: { name: description, value: "-" }
+              - column:
+                  name: category_id
+                  valueNumeric: ${CATEGORY_OTHER}
+
+        - insert:
+            tableName: products
+            columns:
+              - column: { name: name, value: "Танец" }
+              - column: { name: short_description, value: "-" }
+              - column: { name: description, value: "-" }
+              - column:
+                  name: category_id
+                  valueNumeric: ${CATEGORY_OTHER}
+
+        - insert:
+            tableName: products
+            columns:
+              - column: { name: name, value: "Шахматы" }
+              - column: { name: short_description, value: "-" }
+              - column: { name: description, value: "-" }
+              - column:
+                  name: category_id
+                  valueNumeric: ${CATEGORY_LOGIC}
+
+        - insert:
+            tableName: products
+            columns:
+              - column: { name: name, value: "Пожарник" }
+              - column: { name: short_description, value: "-" }
+              - column: { name: description, value: "-" }
+              - column:
+                  name: category_id
+                  valueNumeric: ${CATEGORY_ARCADE}
+
+        - insert:
+            tableName: products
+            columns:
+              - column: { name: name, value: "Тест-Хобби" }
+              - column: { name: short_description, value: "-" }
+              - column: { name: description, value: "-" }
+              - column:
+                  name: category_id
+                  valueNumeric: ${CATEGORY_PROGRAMMING}
+
+        - insert:
+            tableName: products
+            columns:
+              - column: { name: name, value: "Алибаба" }
+              - column: { name: short_description, value: "-" }
+              - column: { name: description, value: "-" }
+              - column:
+                  name: category_id
+                  valueNumeric: ${CATEGORY_ARCADE}
+
+        - insert:
+            tableName: products
+            columns:
+              - column: { name: name, value: "Binary land" }
+              - column: { name: short_description, value: "-" }
+              - column: { name: description, value: "-" }
+              - column:
+                  name: category_id
+                  valueNumeric: ${CATEGORY_ARCADE}
+
+        - insert:
+            tableName: products
+            columns:
+              - column: { name: name, value: "Crux" }
+              - column: { name: short_description, value: "-" }
+              - column: { name: description, value: "-" }
+              - column:
+                  name: category_id
+                  valueNumeric: ${CATEGORY_LOGIC}
+
+        - insert:
+            tableName: products
+            columns:
+              - column: { name: name, value: "Кобра" }
+              - column: { name: short_description, value: "-" }
+              - column: { name: description, value: "-" }
+              - column:
+                  name: category_id
+                  valueNumeric: ${CATEGORY_ARCADE}
+
+        - insert:
+            tableName: products
+            columns:
+              - column: { name: name, value: "Boulder dash" }
+              - column: { name: short_description, value: "-" }
+              - column: { name: description, value: "-" }
+              - column:
+                  name: category_id
+                  valueNumeric: ${CATEGORY_ARCADE}
+
+        - insert:
+            tableName: products
+            columns:
+              - column: { name: name, value: "Bomber man" }
+              - column: { name: short_description, value: "-" }
+              - column: { name: description, value: "-" }
+              - column:
+                  name: category_id
+                  valueNumeric: ${CATEGORY_ARCADE}
+
+        - insert:
+            tableName: products
+            columns:
+              - column: { name: name, value: "File manager" }
+              - column: { name: short_description, value: "-" }
+              - column: { name: description, value: "-" }
+              - column:
+                  name: category_id
+                  valueNumeric: ${CATEGORY_PROGRAMMING}
+
+        - insert:
+            tableName: products
+            columns:
+              - column: { name: name, value: "Image view" }
+              - column: { name: short_description, value: "-" }
+              - column: { name: description, value: "-" }
+              - column:
+                  name: category_id
+                  valueNumeric: ${CATEGORY_PROGRAMMING}
+
+        - insert:
+            tableName: products
+            columns:
+              - column: { name: name, value: "STC Player" }
+              - column: { name: short_description, value: "-" }
+              - column: { name: description, value: "-" }
+              - column:
+                  name: category_id
+                  valueNumeric: ${CATEGORY_PROGRAMMING}
+
+        - insert:
+            tableName: products
+            columns:
+              - column: { name: name, value: "Питон" }
+              - column: { name: short_description, value: "-" }
+              - column: { name: description, value: "-" }
+              - column:
+                  name: category_id
+                  valueNumeric: ${CATEGORY_ARCADE}
+
+        - insert:
+            tableName: products
+            columns:
+              - column: { name: name, value: "Двигалка" }
+              - column: { name: short_description, value: "-" }
+              - column: { name: description, value: "-" }
+              - column:
+                  name: category_id
+                  valueNumeric: ${CATEGORY_PROGRAMMING}
+
+        - insert:
+            tableName: products
+            columns:
+              - column: { name: name, value: "Bolder dash" }
+              - column: { name: short_description, value: "-" }
+              - column: { name: description, value: "-" }
+              - column:
+                  name: category_id
+                  valueNumeric: ${CATEGORY_ARCADE}
+
+        - insert:
+            tableName: products
+            columns:
+              - column: { name: name, value: "High way" }
+              - column: { name: short_description, value: "-" }
+              - column: { name: description, value: "-" }
+              - column:
+                  name: category_id
+                  valueNumeric: ${CATEGORY_RACING}
