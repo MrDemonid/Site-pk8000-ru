@@ -3,11 +3,14 @@ package mr.demonid.pk8000.ru.services.mappers;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import mr.demonid.pk8000.ru.configs.AppConfiguration;
+import mr.demonid.pk8000.ru.domain.CategoryEntity;
 import mr.demonid.pk8000.ru.domain.SoftEntity;
+import mr.demonid.pk8000.ru.dto.SoftRequest;
 import mr.demonid.pk8000.ru.dto.SoftResponse;
 import org.springframework.stereotype.Service;
 
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Predicate;
@@ -34,6 +37,21 @@ public class SoftMapper {
                 toAttacheLinks(entity.getId(), entity.getImageFiles())
         );
     }
+
+    /**
+     * Создает новую сущность.
+     */
+    public SoftEntity toEntity(SoftRequest response, CategoryEntity categoryEntity) {
+        return new SoftEntity(
+                response.name(),
+                response.shortDescription(),
+                response.description(),
+                categoryEntity,
+                new ArrayList<>(),
+                new ArrayList<>()
+        );
+    }
+
 
     /**
      * Конвертирует имена изображений в ссылки.

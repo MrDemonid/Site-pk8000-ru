@@ -1,0 +1,54 @@
+<!-- fragments/soft-list.html -->
+<div th:fragment="softListEdit(softList, categories)">
+    <form id="soft-list-form">
+
+        <!-- Заголовок -->
+        <div class="soft-header">
+            <div class="col name">Название</div>
+            <div class="col category">Категория</div>
+            <div class="col short-desc">Краткое описание</div>
+            <div class="col description">Описание</div>
+            <div class="col archives">Файлы</div>
+            <div class="col actions">Действия</div>
+        </div>
+
+        <!-- Список элементов -->
+        <div th:each="soft, iterStat : ${softList}" class="soft-item-inline" th:data-id="${soft.id}">
+            <input type="text" th:name="'softList[' + ${iterStat.index} + '].name'"
+                   th:value="${soft.name}" placeholder="Название" class="soft-field name"/>
+
+            <select th:name="'softList[' + ${iterStat.index} + '].category'" class="soft-field category">
+                <option th:each="cat : ${categories}"
+                        th:value="${cat.ordinal()}"
+                        th:text="${cat.displayName}"
+                        th:selected="${cat.ordinal() == soft.category}"></option>
+            </select>
+
+            <input type="text" th:name="'softList[' + ${iterStat.index} + '].shortDescription'"
+                   th:value="${soft.shortDescription}" placeholder="Краткое описание" class="soft-field short-desc"/>
+
+            <textarea th:name="'softList[' + ${iterStat.index} + '].description'"
+                      rows="3" class="soft-field description">[[${soft.description}]]</textarea>
+
+            <div class="soft-buttons archives">
+                <button type="button" class="add-image" th:data-index="${iterStat.index}">
+                    <img src="/menu/icons/gallery.png" alt="images"/>
+                </button>
+                <button type="button" class="add-archive" th:data-index="${iterStat.index}">
+                    <img src="/menu/icons/archive.png" alt="archive"/>
+                </button>
+            </div>
+
+            <div class="soft-buttons actions">
+                <button type="button" class="save-soft" th:data-index="${iterStat.index}">
+                    <img src="/menu/icons/save.png" alt="save"/>
+                </button>
+                <button type="button" class="delete-soft" th:data-index="${iterStat.index}">
+                    <img src="/menu/icons/delete.png" alt="delete"/>
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+
+

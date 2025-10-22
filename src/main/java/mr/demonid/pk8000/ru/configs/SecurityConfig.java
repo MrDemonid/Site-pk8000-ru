@@ -36,6 +36,7 @@ public class SecurityConfig {
                                 "/" + config.getAttacheUrl() + "/**",
                                 "/" + config.getSoftImagesUrl() + "/**",
                                 "/" + config.getSoftFilesUrl() + "/**").permitAll()
+                        .requestMatchers("/api/v1/admin/**").hasAnyRole("ADMIN", "DEVELOPER")
                         .anyRequest().authenticated()  // Остальные требуют аутентификации
                 )
 //                .anonymous(Customizer.withDefaults()) // Включение анонимных пользователей

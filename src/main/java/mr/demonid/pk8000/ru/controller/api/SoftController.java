@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import mr.demonid.pk8000.ru.controller.test.Product;
 import mr.demonid.pk8000.ru.domain.CategoryType;
+import mr.demonid.pk8000.ru.services.AdminServiceImpl;
 import mr.demonid.pk8000.ru.services.menu.MenuProperties;
 import mr.demonid.pk8000.ru.util.pagenate.PaginationHelper;
 import org.springframework.data.domain.Page;
@@ -91,11 +92,14 @@ public class SoftController {
         return makeGameFragment(CategoryType.OTHER, pageable, q, model);
     }
 
+    private AdminServiceImpl adminService;
+
     @GetMapping("/soft/system")
     public String func24(
             @PageableDefault(size = 10, page = 0, direction = Sort.Direction.ASC) Pageable pageable,
             @RequestParam(defaultValue = "") String q,
             Model model, Authentication auth, HttpServletRequest request) {
+
         return retFragment("Soft", "System", pageable, q, model);
     }
 

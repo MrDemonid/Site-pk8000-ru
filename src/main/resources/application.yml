@@ -79,6 +79,7 @@ app:
     soft-images-url: ${PK8000_SOFT_IMAGES_URL:soft/images}        # виртуальный каталог картинок софта (в html)
     soft-files-path: ${PK8000_SOFT_ATTACHE_PATH:./content/soft/files/} # директория файлов софта
     soft-files-url: ${PK8000_SOFT_ATTACHE_URL:soft/files}         # виртуальный каталог софта (в html)
+    temp-directory: ${PK8000_TEMP_DIRECTORY:./content/temp}
 
 
 menu:

@@ -23,4 +23,6 @@ public class AppConfiguration {
     private String softImagesUrl;       // виртуальный каталог картинок софта (для html)
     private String softFilesPath;       // каталог файлов софта
     private String softFilesUrl;        // виртуальный каталог файлов софта (для html)
+
+    private String tempDirectory;
 }

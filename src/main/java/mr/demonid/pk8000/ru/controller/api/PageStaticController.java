@@ -23,9 +23,12 @@ public class PageStaticController {
 
 
     @GetMapping("/page")
-    String page(@RequestParam String path, Model model) {
+    String page(@RequestParam(value = "path", required = false) String path, Model model) {
 //        path = URLDecoder.decode(path, StandardCharsets.UTF_8);
         System.out.println("GET /PAGE?path=" + path);
+        if (path == null) {
+            path = "main";
+        }
         model.addAttribute("content", pageService.getPage(path));
         return "fragments/document-view :: documentView";
     }

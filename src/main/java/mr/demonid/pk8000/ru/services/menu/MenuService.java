@@ -18,7 +18,6 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Stream;
 
 @Service
@@ -48,7 +47,6 @@ public class MenuService {
                     .filter(Objects::nonNull)
                     .sorted(Comparator.comparingInt(MenuItem::getOrder))
                     .toList();
-//            assignIds(menu);
             return menu;
         } catch (IOException e) {
             log.error(e.getMessage(), e);
@@ -71,7 +69,7 @@ public class MenuService {
         }
         item.setPath(PathUtil.normalize(root.relativize(folder).normalize().toString(), false));
 
-        log.info("Loaded menu item: title={}, endpoint={}, path={}", item.getTitle(), item.getEndpoint(), item.getPath());
+        log.info("Loaded menu item: title={}, endpoint={}, path={}, isadmin={}", item.getTitle(), item.getEndpoint(), item.getPath(), item.isAdminOnly());
 
         // рекурсивно добавляем подкаталоги
         try (Stream<Path> files = Files.list(folder)) {
@@ -94,21 +92,21 @@ public class MenuService {
     }
 
 
-    /*
-    Присвоение всем пунктам меню уникального идентификатора.
-     */
-    private void assignIds(List<MenuItem> menu) {
-        AtomicLong counter = new AtomicLong(1);
-        menu.forEach(item -> assignIdsRecursive(item, counter));
-    }
-
-    private void assignIdsRecursive(MenuItem item, AtomicLong counter) {
-        if (item.getMenuId() == null) {
-            item.setMenuId("menu-" + counter.getAndIncrement());
-        }
-        if (item.getChildren() != null) {
-            item.getChildren().forEach(child -> assignIdsRecursive(child, counter));
-        }
-    }
+//    /*
+//    Присвоение всем пунктам меню уникального идентификатора.
+//     */
+//    private void assignIds(List<MenuItem> menu) {
+//        AtomicLong counter = new AtomicLong(1);
+//        menu.forEach(item -> assignIdsRecursive(item, counter));
+//    }
+//
+//    private void assignIdsRecursive(MenuItem item, AtomicLong counter) {
+//        if (item.getMenuId() == null) {
+//            item.setMenuId("menu-" + counter.getAndIncrement());
+//        }
+//        if (item.getChildren() != null) {
+//            item.getChildren().forEach(child -> assignIdsRecursive(child, counter));
+//        }
+//    }
 
 }

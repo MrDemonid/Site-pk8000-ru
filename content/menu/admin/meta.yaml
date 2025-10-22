@@ -1,0 +1,12 @@
+title: "Админка"
+icon: "admin.png"
+order: 99
+adminOnly: true
+children:
+  - title: "Софт"
+    endpoint: "/api/v1/admin/soft"
+    adminOnly: true
+  - title: "Остальное"
+    endpoint: "/api/v1/admin/documents"
+    adminOnly: true
+
