@@ -47,17 +47,6 @@ public class AdminServiceImpl {
 
 
     /**
-     * Возвращает постраничный список товаров для админки.
-     * TODO: доделать фильтр!
-     */
-    @Transactional(readOnly = true)
-    public Page<SoftResponse> getAllProducts(SoftFilter softFilter, Pageable pageable) {
-        Page<SoftEntity> items = softRepository.findAll(pageable);
-        return items.map(softMapper::toResponse);
-    }
-
-
-    /**
      * Добавляет в БД новый продукт (программу).
      * На этом этапе не учитываются списки файлов и изображений,
      * их можно добавить потом.

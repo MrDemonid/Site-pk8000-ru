@@ -8,6 +8,7 @@ import mr.demonid.pk8000.ru.dto.SoftResponse;
 import mr.demonid.pk8000.ru.dto.SoftUpdateRequest;
 import mr.demonid.pk8000.ru.dto.filters.SoftFilter;
 import mr.demonid.pk8000.ru.services.AdminServiceImpl;
+import mr.demonid.pk8000.ru.services.SoftService;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -21,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class ApiAdminController {
 
     private AdminServiceImpl adminService;
+    private SoftService softService;
 
 
     /**
@@ -29,7 +31,7 @@ public class ApiAdminController {
     @PreAuthorize("hasAnyRole('ADMIN', 'DEVELOPER')")
     @PostMapping("/read")
     public ResponseEntity<PageDTO<SoftResponse>> getAllProducts(@RequestBody SoftFilter filter, Pageable pageable) {
-        return ResponseEntity.ok(new PageDTO<>(adminService.getAllProducts(filter, pageable)));
+        return ResponseEntity.ok(new PageDTO<>(softService.getAllProducts(filter, pageable)));
     }
 
 
