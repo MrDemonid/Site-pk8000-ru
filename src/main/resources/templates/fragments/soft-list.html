@@ -44,4 +44,13 @@
             </div> <!-- /product-item -->
         </div> <!-- /product-grid -->
     </main>
+
+    <!-- пагинация -->
+    <div class="pagination-container">
+        <div th:replace="~{fragments/pagination :: pageSizeSelector(pageData=${pageData})}"></div>
+        <th:block th:if="${pageData.totalPages > 1}">
+            <div th:replace="~{fragments/pagination :: paginationControls(pageData=${pageData}, pageButtons=${pageButtons})}"></div>
+        </th:block>
+    </div>
+
 </div>

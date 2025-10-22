@@ -96,19 +96,55 @@ databaseChangeLog:
         onFail: MARK_RAN
         sqlCheck:
           expectedResult: "0"
-          sql: "SELECT COUNT(*) FROM categories WHERE id=${CATEGORY_OTHER}"
+          sql: "SELECT COUNT(*) FROM categories WHERE id=${CATEGORY_OTHER_GAMES}"
       changes:
         - insert:
             tableName: categories
             columns:
               - column:
                   name: id
-                  valueNumeric: ${CATEGORY_OTHER}
+                  valueNumeric: ${CATEGORY_OTHER_GAMES}
               - column: { name: name, value: "Остальные"}
               - column: { name: description, value: "Игры не подходящие ни под один из разделов"}
 
   - changeSet:
       id: insert-categories-7
+      author: andrey
+      preConditions:
+        onFail: MARK_RAN
+        sqlCheck:
+          expectedResult: "0"
+          sql: "SELECT COUNT(*) FROM categories WHERE id=${CATEGORY_TOOLS}"
+      changes:
+        - insert:
+            tableName: categories
+            columns:
+              - column:
+                  name: id
+                  valueNumeric: ${CATEGORY_TOOLS}
+              - column: { name: name, value: "Утилиты"}
+              - column: { name: description, value: "Различные утилиты на все случаи жизни"}
+
+  - changeSet:
+      id: insert-categories-8
+      author: andrey
+      preConditions:
+        onFail: MARK_RAN
+        sqlCheck:
+          expectedResult: "0"
+          sql: "SELECT COUNT(*) FROM categories WHERE id=${CATEGORY_SYSTEM}"
+      changes:
+        - insert:
+            tableName: categories
+            columns:
+              - column:
+                  name: id
+                  valueNumeric: ${CATEGORY_SYSTEM}
+              - column: { name: name, value: "Системные"}
+              - column: { name: description, value: "Утилиты для работы на системном уровне"}
+
+  - changeSet:
+      id: insert-categories-9
       author: andrey
       preConditions:
         onFail: MARK_RAN
@@ -124,3 +160,21 @@ databaseChangeLog:
                   valueNumeric: ${CATEGORY_PROGRAMMING}
               - column: { name: name, value: "Программирование"}
               - column: { name: description, value: "Средства разработки кода, компиляторы, интерпретаторы, библиотеки"}
+
+  - changeSet:
+      id: insert-categories-10
+      author: andrey
+      preConditions:
+        onFail: MARK_RAN
+        sqlCheck:
+          expectedResult: "0"
+          sql: "SELECT COUNT(*) FROM categories WHERE id=${CATEGORY_OTHER_SOFTWARE}"
+      changes:
+        - insert:
+            tableName: categories
+            columns:
+              - column:
+                  name: id
+                  valueNumeric: ${CATEGORY_OTHER_SOFTWARE}
+              - column: { name: name, value: "Остальные"}
+              - column: { name: description, value: "Программы, не попадающие ни под одну из категорий"}

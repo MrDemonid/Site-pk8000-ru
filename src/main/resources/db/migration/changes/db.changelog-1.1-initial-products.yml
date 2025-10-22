@@ -61,7 +61,7 @@ databaseChangeLog:
               - column: { name: description, value: "-" }
               - column:
                   name: category_id
-                  valueNumeric: ${CATEGORY_PROGRAMMING}
+                  valueNumeric: ${CATEGORY_TOOLS}
 
         - insert:
             tableName: products
@@ -101,7 +101,7 @@ databaseChangeLog:
               - column: { name: description, value: "-" }
               - column:
                   name: category_id
-                  valueNumeric: ${CATEGORY_OTHER}
+                  valueNumeric: ${CATEGORY_EDU}
 
         - insert:
             tableName: products
@@ -111,7 +111,7 @@ databaseChangeLog:
               - column: { name: description, value: "-" }
               - column:
                   name: category_id
-                  valueNumeric: ${CATEGORY_OTHER}
+                  valueNumeric: ${CATEGORY_OTHER_GAMES}
 
         - insert:
             tableName: products
@@ -141,7 +141,7 @@ databaseChangeLog:
               - column: { name: description, value: "-" }
               - column:
                   name: category_id
-                  valueNumeric: ${CATEGORY_PROGRAMMING}
+                  valueNumeric: ${CATEGORY_TOOLS}
 
         - insert:
             tableName: products
@@ -211,7 +211,7 @@ databaseChangeLog:
               - column: { name: description, value: "-" }
               - column:
                   name: category_id
-                  valueNumeric: ${CATEGORY_PROGRAMMING}
+                  valueNumeric: ${CATEGORY_TOOLS}
 
         - insert:
             tableName: products
@@ -221,7 +221,7 @@ databaseChangeLog:
               - column: { name: description, value: "-" }
               - column:
                   name: category_id
-                  valueNumeric: ${CATEGORY_PROGRAMMING}
+                  valueNumeric: ${CATEGORY_OTHER_SOFTWARE}
 
         - insert:
             tableName: products
@@ -231,7 +231,7 @@ databaseChangeLog:
               - column: { name: description, value: "-" }
               - column:
                   name: category_id
-                  valueNumeric: ${CATEGORY_PROGRAMMING}
+                  valueNumeric: ${CATEGORY_OTHER_SOFTWARE}
 
         - insert:
             tableName: products
@@ -251,7 +251,7 @@ databaseChangeLog:
               - column: { name: description, value: "-" }
               - column:
                   name: category_id
-                  valueNumeric: ${CATEGORY_PROGRAMMING}
+                  valueNumeric: ${CATEGORY_LOGIC}
 
         - insert:
             tableName: products

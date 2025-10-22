@@ -61,8 +61,11 @@ spring:
       CATEGORY_SPORT: ${menu.category.SPORT}
       CATEGORY_LOGIC: ${menu.category.LOGIC}
       CATEGORY_EDU: ${menu.category.EDU}
-      CATEGORY_OTHER: ${menu.category.OTHER}
+      CATEGORY_OTHER_GAMES: ${menu.category.OTHER_GAMES}
+      CATEGORY_TOOLS: ${menu.category.TOOLS}
+      CATEGORY_SYSTEM: ${menu.category.SYSTEM}
       CATEGORY_PROGRAMMING: ${menu.category.PROGRAMMING}
+      CATEGORY_OTHER_SOFTWARE: ${menu.category.OTHER_SOFTWARE}
 
 # Настройки приложения
 # виртуальные пути необходимо разрешить в SecurityFilterChain.
@@ -91,5 +94,8 @@ menu:
     SPORT: 3
     LOGIC: 4
     EDU: 5
-    OTHER: 6
-    PROGRAMMING: 7
+    OTHER_GAMES: 6
+    TOOLS: 7
+    SYSTEM: 8
+    PROGRAMMING: 9
+    OTHER_SOFTWARE: 99
