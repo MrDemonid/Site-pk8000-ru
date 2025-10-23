@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 
 /**
  * Фильтр для выборки товаров из БД.
@@ -12,6 +14,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SoftFilter {
-    private Long categoryId;
+    private List<Long> categoryId;
     private String searchText;
 }

@@ -5,7 +5,7 @@ children:
   - title: "Игры"
     icon: "games_control.png"
     children:
-      - title: "Все"
+      - title: "Все игры"
         searchId: "soft-search"
         endpoint: "/api/v1/soft/games/all"
       - title: "Аркады"
@@ -26,6 +26,9 @@ children:
       - title: "Прочие"
         searchId: "soft-search"
         endpoint: "/api/v1/soft/games/other"
+  - title: "Весь софт"
+    searchId: "soft-search"
+    endpoint: "/api/v1/soft/all"
   - title: "Утилиты"
     searchId: "soft-search"
     endpoint: "/api/v1/soft/tools"

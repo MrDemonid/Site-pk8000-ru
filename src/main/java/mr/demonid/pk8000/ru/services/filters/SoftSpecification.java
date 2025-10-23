@@ -18,8 +18,8 @@ public class SoftSpecification {
         return (root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<Predicate>();
 
-            if (filter.getCategoryId() != null) {
-                predicates.add(criteriaBuilder.equal(root.get("category").get("id"), filter.getCategoryId()));
+            if (filter.getCategoryId() != null && !filter.getCategoryId().isEmpty()) {
+                predicates.add(root.get("category").get("id").in(filter.getCategoryId()));
             }
 
             if (filter.getSearchText() != null && !filter.getSearchText().isBlank()) {
