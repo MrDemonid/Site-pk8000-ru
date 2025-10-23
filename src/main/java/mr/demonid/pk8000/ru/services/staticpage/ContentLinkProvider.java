@@ -11,8 +11,6 @@ import mr.demonid.pk8000.ru.util.PathUtil;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
@@ -40,18 +38,21 @@ public class ContentLinkProvider implements AttributeProvider {
             refs.put(ref.getReference(), ref.getUrl()); // следом пойдет сама ссылка (ImageRef или LinkRef)
             return;
         }
+
         if (node instanceof ImageRef) {
             // ссылка на рисунок, вида: ![название][ссылка] ... [ссылка]: <путь>
             if (refs.containsKey(((ImageRef) node).getReference())) {
                 setAttache(attributes, refs.get(((ImageRef) node).getReference()).toString(), "src");
             }
         }
+
         if (node instanceof LinkRef) {
             // Косвенная ссылка на ресурс: [Схема][original_scheme] ... [original_scheme]: ./files/hdd-vv55-rev-1_0.zip
             if (refs.containsKey(((LinkRef) node).getReference())) {
                 setAttache(attributes, refs.get(((LinkRef) node).getReference()).toString(), "href");
             }
         }
+
         if (node instanceof Image || node instanceof Link) {
             String attr = node instanceof Image ? "src" : "href";
             String value = attributes.getValue(attr);
@@ -62,10 +63,11 @@ public class ContentLinkProvider implements AttributeProvider {
                 // это ссылка на другую страницу, направляем её на эндпоинт для статичных страниц.
                 // вычисляем относительный путь от текущей страницы
                 Path base = Paths.get(contentPath);
-                String resolvedStr = PathUtil.normalize(base.resolve(value).normalize().toString(), false);
+                String resolvedStr = PathUtil.normalize(base.resolve(value).normalize().toString(), true);
+
                 // удаляем имя md-файла из пути
                 resolvedStr = resolvedStr.replaceFirst("/?[^/]+\\.md$", "");
-                attributes.replaceValue(attr, config.getStaticEndpoint() + "?path=" + URLEncoder.encode(resolvedStr, StandardCharsets.UTF_8));
+                attributes.replaceValue(attr, config.getStaticEndpoint() + resolvedStr);
             } else {
                 // прямая ссылка на ресурс: [Схема](./files/hdd-vv55-rev-1_0.zip)
                 setAttache(attributes, value, attr);

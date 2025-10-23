@@ -17,7 +17,6 @@ public class MenuItem {
     private Integer order;
 
     private String endpoint;
-    private String path;
 
     private List<MenuItem> children;
 

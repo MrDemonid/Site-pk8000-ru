@@ -4,6 +4,8 @@ package mr.demonid.pk8000.ru.services;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import mr.demonid.pk8000.ru.configs.AppConfiguration;
+import mr.demonid.pk8000.ru.exceptions.ErrorCodes;
+import mr.demonid.pk8000.ru.exceptions.ServiceException;
 import mr.demonid.pk8000.ru.services.menu.MenuProperties;
 import mr.demonid.pk8000.ru.services.staticpage.MarkdownService;
 import mr.demonid.pk8000.ru.util.PathUtil;
@@ -42,6 +44,9 @@ public class PageService {
      */
     public String getPage(String path) {
 
+        if (path == null || path.isBlank()) {
+            throw new ServiceException(ErrorCodes.BAD_DATA, "Путь не может быть пустым");
+        }
         path = PathUtil.toSystemPath(path).toString();
         // строим путь до ресурса
         Path filePath = Paths.get(PathUtil.getRootPath().normalize().toString())

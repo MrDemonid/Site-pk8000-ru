@@ -24,7 +24,6 @@ import java.util.stream.Stream;
 @Log4j2
 public class MenuService {
 
-    private List<MenuItem> menu;
     private final ObjectMapper yamlMapper;
 
     private final MenuProperties menuProperties;
@@ -47,6 +46,7 @@ public class MenuService {
                     .filter(Objects::nonNull)
                     .sorted(Comparator.comparingInt(MenuItem::getOrder))
                     .toList();
+            log.info("Build menu");
             return menu;
         } catch (IOException e) {
             log.error(e.getMessage(), e);
@@ -67,9 +67,13 @@ public class MenuService {
         } catch (IOException e) {
             throw  new MenuException(ErrorCodes.BAD_META_YAML_FILE, e.getMessage());
         }
-        item.setPath(PathUtil.normalize(root.relativize(folder).normalize().toString(), false));
 
-//        log.info("Loaded menu item: title={}, endpoint={}, path={}, isadmin={}", item.getTitle(), item.getEndpoint(), item.getPath(), item.isAdminOnly());
+        if (item.getEndpoint() != null) {
+            String endpoint = item.getEndpoint() + PathUtil.normalize(root.relativize(folder).normalize().toString(), true);
+            item.setEndpoint(endpoint);
+        }
+
+//        log.info("Loaded menu item: title={}, endpoint={}, isadmin={}", item.getTitle(), item.getEndpoint(), item.isAdminOnly());
 
         // рекурсивно добавляем подкаталоги
         try (Stream<Path> files = Files.list(folder)) {

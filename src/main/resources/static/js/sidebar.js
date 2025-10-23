@@ -45,20 +45,13 @@ function syncSearchInputs() {
 
 function loadContentAjax(anchor) {
     let href = anchor.getAttribute('href');
-    const path = anchor.dataset.path;
     const searchId = anchor.dataset.searchId;
 
-
-    // если path задан, строим URL вида /page/{path}
     if (!href || href === 'javascript:void(0)') {
         console.warn("loadContentAjax(): нет href");
         return true;
     }
     url = new URL(href, window.location.origin);
-    if (path && path.trim() !== "") {
-        url.searchParams.set("path", path);
-        // url.searchParams.set("title", anchor.dataset.title);
-    }
 
     // сбрасываем активность других пунктов меню
     document.querySelectorAll('.menu a.active')
@@ -185,9 +178,6 @@ function restoreActiveMenu() {
 
     const saved = new URL(savedUrl, window.location.origin);
 
-    // значение уточняющего path — сначала пытаемся взять ?path=..., иначе null
-    const savedPathParam = saved.searchParams.get('path');
-    const savedPathname = saved.pathname;
 
     // извлекает из полного url только адрес (pathname)
     const normalizeHref = (href) => {
@@ -200,36 +190,16 @@ function restoreActiveMenu() {
         }
     };
 
+    const savedPathname = normalizeHref(savedUrl);
+
     // ищем activeMenuUrl в меню
     const links = Array.from(document.querySelectorAll('.menu a'));
-    const activeLink = links.find(a => {
-        // получаем и сравниваем адрес url
-        const hrefPath = normalizeHref(a.getAttribute('href'));
-        if (hrefPath !== savedPathname)
-            return false;                       // href не совпал — пропускаем
-
-        // href совпала, теперь проверяем data-path (если он есть)
-        const dataPath = a.dataset.path;
-        if (!dataPath) {
-            // у ссылки нет data-path, а href совпал, значит нашли нужный пункт меню
-            return true;
-        }
-
-        // проверяем data-path
-        if (savedPathParam) {
-            return decodeURIComponent(dataPath) === savedPathParam;
-        }
-
-        // непонятный случай:у ссылки есть data-path, а в savedUrl нет
-        console.error("restoreActiveMenu(): link: " + savedUrl + ", found pathname: " + hrefPath + " without params: " + dataPath);
-        return false;
-    });
+    const activeLink = links.find(a => normalizeHref(a.getAttribute('href')) === savedPathname);
 
     if (!activeLink) {
         console.log("restoreActiveMenu(): no matching menu link found for savedUrl" + savedUrl);
         return;
     }
-
     console.log("restoreActiveMenu(): matched link:", activeLink);
 
     // убираем старую "подсветку" и задаем новую
@@ -270,7 +240,8 @@ document.getElementById('content').addEventListener('click', function(e) {
     if (!target) return;
 
     const href = target.getAttribute('href');
-    if (!href) return;
+    if (!href)
+        return;
 
     if (href.startsWith('/api/v1/page')) {
         e.preventDefault();

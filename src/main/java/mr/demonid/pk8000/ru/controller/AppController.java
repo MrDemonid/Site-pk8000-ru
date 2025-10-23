@@ -28,12 +28,10 @@ public class AppController {
 
 
     @GetMapping("/")
-    public String main(@RequestParam(value = "path", required = false) String path, Model model) throws IOException {
-
-        List<String> scopes = AuthUtil.getCurrentUserAuthorities();
+    public String mainPage(@RequestParam(value = "path", required = false) String path, Model model) throws IOException {
 
         if (path == null) {
-            path = "/api/v1/page?path=main";
+            path = "/api/v1/page/main";
         }
         List<MenuItem> menu = filterMenu(menuService.buildMenu(), AuthUtil.isAdmin());
 
