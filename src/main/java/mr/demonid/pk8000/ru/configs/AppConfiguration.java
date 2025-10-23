@@ -14,6 +14,7 @@ public class AppConfiguration {
     private String authServerUrl;
 
     private String staticEndpoint;
+    private String softEndpoint;
 
     private String menuIconPath;        // каталог иконок для меню
     private String menuIconUrl;         // виртуальный каталог иконок (для html)

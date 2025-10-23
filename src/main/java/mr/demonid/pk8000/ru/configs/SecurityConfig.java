@@ -25,9 +25,10 @@ public class SecurityConfig {
                 .cors(Customizer.withDefaults()) // Разрешаем CORS
                 .csrf(AbstractHttpConfigurer::disable)                      // Отключаем CSRF для запросов API
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(HttpMethod.GET,"/", "/index").permitAll()
-                        .requestMatchers(HttpMethod.GET,"/api/v1/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/v1/images/**").permitAll()
+                        .requestMatchers("/", "/index").permitAll()
+                        .requestMatchers(
+                                "/api/v1/page/**",
+                                "/api/v1/soft/**").permitAll()
                         .requestMatchers(HttpMethod.GET,
                                 "/css/**",
                                 "/icons/**",
@@ -37,9 +38,10 @@ public class SecurityConfig {
                                 "/" + config.getSoftImagesUrl() + "/**",
                                 "/" + config.getSoftFilesUrl() + "/**").permitAll()
                         .requestMatchers("/api/v1/admin/**").hasAnyRole("ADMIN", "DEVELOPER")
+
                         .anyRequest().authenticated()  // Остальные требуют аутентификации
                 )
-//                .anonymous(Customizer.withDefaults()) // Включение анонимных пользователей
+                .anonymous(Customizer.withDefaults()) // Включение анонимных пользователей
                 .oauth2Login(oauth2 -> oauth2
                         .userInfoEndpoint(userInfo -> userInfo
                                 .oidcUserService(new KeycloakOidcUserService())

@@ -67,6 +67,7 @@ spring:
       CATEGORY_PROGRAMMING: ${menu.category.PROGRAMMING}
       CATEGORY_OTHER_SOFTWARE: ${menu.category.OTHER_SOFTWARE}
 
+
 # Настройки приложения
 # виртуальные пути необходимо разрешить в SecurityFilterChain.
 app:
@@ -74,6 +75,7 @@ app:
     realm-name: site-pk8000-ru-realm
     auth-server-url: ${PK8000_OAUTH2_ISSUER_URI:http://localhost:8080}
     static-endpoint: /api/v1/page                                 # эндпоинт для рендеринга статических страниц
+    soft-endpoint: /api/v1/soft                                   # эндпоинт для рендеринга динамически создаваемых страниц
     content-path: ${PK8000_CONTENT_PATH:./content/menu/}          # директория меню
     attache-url: ${PK8000_ATTACHE_URL:attache}                    # виртуальный каталог для аттачей статичных страниц (в html)
     menu-icon-path: ${PK8000_APP_ICON_PATH:./content/menu-icons/} # директория иконок меню
@@ -83,7 +85,6 @@ app:
     soft-files-path: ${PK8000_SOFT_ATTACHE_PATH:./content/soft/files/} # директория файлов софта
     soft-files-url: ${PK8000_SOFT_ATTACHE_URL:soft/files}         # виртуальный каталог софта (в html)
     temp-directory: ${PK8000_TEMP_DIRECTORY:./content/temp}
-
 
 menu:
   meta-file: "meta.yaml"
@@ -99,3 +100,5 @@ menu:
     SYSTEM: 8
     PROGRAMMING: 9
     OTHER_SOFTWARE: 99
+
+

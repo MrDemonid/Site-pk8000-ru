@@ -1,5 +1,6 @@
 package mr.demonid.pk8000.ru.util;
 
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -25,13 +26,12 @@ public class AuthUtil {
     }
 
     public static boolean isAdmin() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return authentication != null
-                && authentication.getAuthorities().stream()
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth == null || auth instanceof AnonymousAuthenticationToken) {
+            return false;
+        }
+        return auth.getAuthorities().stream()
                 .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
     }
 
 }
-
-// List<String> scopes = idnUtil.getCurrentUserAuthorities();
-// model.addAttribute("isAdmin", scopes.contains("ROLE_ADMIN") || scopes.contains("ROLE_DEVELOPER"));

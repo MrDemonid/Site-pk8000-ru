@@ -8,6 +8,7 @@ import mr.demonid.pk8000.ru.configs.AppConfiguration;
 import mr.demonid.pk8000.ru.exceptions.ErrorCodes;
 import mr.demonid.pk8000.ru.exceptions.MenuException;
 import mr.demonid.pk8000.ru.util.PathUtil;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -36,7 +37,7 @@ public class MenuService {
         this.yamlMapper = new ObjectMapper(new YAMLFactory());
     }
 
-    public List<MenuItem> buildMenu() throws IOException {
+    public List<MenuItem> buildMenu(boolean isAdmin) {
         List<MenuItem> menu;
         Path root = PathUtil.getRootPath().resolve(appConfiguration.getContentPath());
         try (Stream<Path> files = Files.list(root)) {
@@ -47,7 +48,7 @@ public class MenuService {
                     .sorted(Comparator.comparingInt(MenuItem::getOrder))
                     .toList();
             log.info("Build menu");
-            return menu;
+            return filterMenu(menu, isAdmin);
         } catch (IOException e) {
             log.error(e.getMessage(), e);
             throw  new MenuException(ErrorCodes.BAD_META_YAML_FILE, e.getMessage());
@@ -95,6 +96,26 @@ public class MenuService {
         return item;
     }
 
+
+    /**
+     * Отсеивает пункты меню в соответствии с уровнем текущей роли.
+     */
+    private List<MenuItem> filterMenu(List<MenuItem> menu, boolean isAdmin) {
+        if (menu == null)
+            return List.of();
+
+        return menu.stream()
+                .filter(item -> !item.isAdminOnly() || isAdmin)
+                .map(item -> {
+                    MenuItem copy = new MenuItem();
+                    BeanUtils.copyProperties(item, copy);
+                    if (item.getChildren() != null) {
+                        copy.setChildren(filterMenu(item.getChildren(), isAdmin));
+                    }
+                    return copy;
+                })
+                .toList();
+    }
 
 //    /*
 //    Присвоение всем пунктам меню уникального идентификатора.

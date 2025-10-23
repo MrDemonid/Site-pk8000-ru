@@ -9,6 +9,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let urlToLoad = initialPath;
 
+    console.log("init-content(): initialPath: " + urlToLoad);
+
     if (savedUrl) {
         const uSaved = new URL(savedUrl, window.location.origin);
         const uInit  = new URL(initialPath, window.location.origin);
@@ -16,6 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
             urlToLoad = uSaved.pathname + uSaved.search; // берём сохранённый query
         }
     }
+    console.log("init-content(): urlToLoad: " + urlToLoad);
 
     if (urlToLoad) {
         fetch(urlToLoad, { headers: { 'X-Requested-With': 'XMLHttpRequest' } })

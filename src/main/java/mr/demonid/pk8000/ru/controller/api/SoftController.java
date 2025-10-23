@@ -2,6 +2,7 @@ package mr.demonid.pk8000.ru.controller.api;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import mr.demonid.pk8000.ru.configs.AppConfiguration;
 import mr.demonid.pk8000.ru.domain.CategoryGroup;
 import mr.demonid.pk8000.ru.domain.CategoryType;
 import mr.demonid.pk8000.ru.dto.SoftResponse;
@@ -17,6 +18,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -26,119 +28,143 @@ import java.util.List;
 
 @Controller
 @AllArgsConstructor
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/soft")
 @Log4j2
 public class SoftController {
 
     private final SoftService softService;
-    private MenuProperties menuProperties;
+    private final MenuProperties menuProperties;
+    private final FullPageHelper fullPageHelper;
+    private final AppConfiguration config;
 
 
-    @GetMapping("/soft/games/all")
+    @GetMapping("/games/all")
     public String allGames(
             @PageableDefault(size = 12, page = 0, direction = Sort.Direction.ASC) Pageable pageable,
             @RequestParam(defaultValue = "") String q,
+            @RequestHeader(value = "X-Requested-With", required = false) String requestedWith,
             Model model) {
         List<CategoryType> gameCategories = Arrays.stream(CategoryType.values())
                 .filter(c -> c.getGroup() == CategoryGroup.GAMES)
                 .toList();
-        return makeSoftFragment(gameCategories, pageable, q, model);
+        return renderPage("/games/all", gameCategories, requestedWith, pageable, q, model);
     }
 
-    @GetMapping("/soft/games/arcade")
+    @GetMapping("/games/arcade")
     public String arcadeGames(
             @PageableDefault(size = 12, page = 0, direction = Sort.Direction.ASC) Pageable pageable,
             @RequestParam(defaultValue = "") String q,
+            @RequestHeader(value = "X-Requested-With", required = false) String requestedWith,
             Model model) {
-        return makeSoftFragment(List.of(CategoryType.ARCADE), pageable, q, model);
+        return renderPage("/games/arcade", List.of(CategoryType.ARCADE), requestedWith, pageable, q, model);
     }
 
-    @GetMapping("/soft/games/car")
+    @GetMapping("/games/car")
     public String racingGames(
             @PageableDefault(size = 12, page = 0, direction = Sort.Direction.ASC) Pageable pageable,
             @RequestParam(defaultValue = "") String q,
+            @RequestHeader(value = "X-Requested-With", required = false) String requestedWith,
             Model model) {
-        return makeSoftFragment(List.of(CategoryType.RACING), pageable, q, model);
+        return renderPage("/games/car", List.of(CategoryType.RACING), requestedWith, pageable, q, model);
     }
 
-    @GetMapping("/soft/games/sport")
+    @GetMapping("/games/sport")
     public String sportGames(
             @PageableDefault(size = 12, page = 0, direction = Sort.Direction.ASC) Pageable pageable,
             @RequestParam(defaultValue = "") String q,
+            @RequestHeader(value = "X-Requested-With", required = false) String requestedWith,
             Model model) {
-        return makeSoftFragment(List.of(CategoryType.SPORT), pageable, q, model);
+        return renderPage("/games/sport", List.of(CategoryType.SPORT), requestedWith, pageable, q, model);
     }
 
-    @GetMapping("/soft/games/logic")
+    @GetMapping("/games/logic")
     public String logicGames(
             @PageableDefault(size = 12, page = 0, direction = Sort.Direction.ASC) Pageable pageable,
             @RequestParam(defaultValue = "") String q,
+            @RequestHeader(value = "X-Requested-With", required = false) String requestedWith,
             Model model) {
-        return makeSoftFragment(List.of(CategoryType.LOGIC), pageable, q, model);
+        return renderPage("/games/logic", List.of(CategoryType.LOGIC), requestedWith, pageable, q, model);
     }
 
-    @GetMapping("/soft/games/edu")
+    @GetMapping("/games/edu")
     public String eduGames(
             @PageableDefault(size = 12, page = 0, direction = Sort.Direction.ASC) Pageable pageable,
             @RequestParam(defaultValue = "") String q,
+            @RequestHeader(value = "X-Requested-With", required = false) String requestedWith,
             Model model) {
-        return makeSoftFragment(List.of(CategoryType.EDU), pageable, q, model);
+        return renderPage("/games/edu", List.of(CategoryType.EDU), requestedWith, pageable, q, model);
     }
 
-    @GetMapping("/soft/games/other")
+    @GetMapping("/games/other")
     public String otherGames(
             @PageableDefault(size = 12, page = 0, direction = Sort.Direction.ASC) Pageable pageable,
             @RequestParam(defaultValue = "") String q,
+            @RequestHeader(value = "X-Requested-With", required = false) String requestedWith,
             Model model) {
-        return makeSoftFragment(List.of(CategoryType.OTHER_GAMES), pageable, q, model);
+        return renderPage("/games/other", List.of(CategoryType.OTHER_GAMES), requestedWith, pageable, q, model);
     }
 
-    @GetMapping("/soft/all")
+    @GetMapping("/all")
     public String allSoft(
             @PageableDefault(size = 12, page = 0, direction = Sort.Direction.ASC) Pageable pageable,
             @RequestParam(defaultValue = "") String q,
+            @RequestHeader(value = "X-Requested-With", required = false) String requestedWith,
             Model model) {
         List<CategoryType> softCategories = Arrays.stream(CategoryType.values())
                 .filter(c -> c.getGroup() == CategoryGroup.SOFTWARE)
                 .toList();
-        return makeSoftFragment(softCategories, pageable, q, model);
+        return renderPage("/all", softCategories, requestedWith, pageable, q, model);
     }
 
-    @GetMapping("/soft/tools")
+    @GetMapping("/tools")
     public String toolsSoft(
             @PageableDefault(size = 12, page = 0, direction = Sort.Direction.ASC) Pageable pageable,
             @RequestParam(defaultValue = "") String q,
+            @RequestHeader(value = "X-Requested-With", required = false) String requestedWith,
             Model model) {
-        return makeSoftFragment(List.of(CategoryType.TOOLS), pageable, q, model);
+        return renderPage("/tools", List.of(CategoryType.TOOLS), requestedWith, pageable, q, model);
     }
 
-    @GetMapping("/soft/system")
+    @GetMapping("/system")
     public String systemSoft(
             @PageableDefault(size = 12, page = 0, direction = Sort.Direction.ASC) Pageable pageable,
             @RequestParam(defaultValue = "") String q,
+            @RequestHeader(value = "X-Requested-With", required = false) String requestedWith,
             Model model) {
-        return makeSoftFragment(List.of(CategoryType.SYSTEM), pageable, q, model);
+        return renderPage("/system", List.of(CategoryType.SYSTEM), requestedWith, pageable, q, model);
     }
 
-    @GetMapping("/soft/code")
+    @GetMapping("/code")
     public String programmingSoft(
             @PageableDefault(size = 12, page = 0, direction = Sort.Direction.ASC) Pageable pageable,
             @RequestParam(defaultValue = "") String q,
+            @RequestHeader(value = "X-Requested-With", required = false) String requestedWith,
             Model model) {
-        return makeSoftFragment(List.of(CategoryType.PROGRAMMING), pageable, q, model);
+        return renderPage("/code", List.of(CategoryType.PROGRAMMING), requestedWith, pageable, q, model);
     }
 
-    @GetMapping("/soft/other")
+    @GetMapping("/other")
     public String otherSoft(
             @PageableDefault(size = 12, page = 0, direction = Sort.Direction.ASC) Pageable pageable,
             @RequestParam(defaultValue = "") String q,
+            @RequestHeader(value = "X-Requested-With", required = false) String requestedWith,
             Model model) {
-        return makeSoftFragment(List.of(CategoryType.OTHER_SOFTWARE), pageable, q, model);
+        return renderPage("/other", List.of(CategoryType.OTHER_SOFTWARE), requestedWith, pageable, q, model);
     }
 
 
+    /**
+     * В зависимости от типа запроса возвращает либо фрагмент, либо полную страницу.
+     */
+    private String renderPage(
+            String path,
+            List<CategoryType> type,
+            @RequestHeader(value = "X-Requested-With", required = false) String requestedWith,
+            Pageable pageable,
+            String q,
+            Model model) {
 
-    private String makeSoftFragment(List<CategoryType> type, Pageable pageable, String q, Model model) {
+        boolean isAjax = "XMLHttpRequest".equals(requestedWith);
 
         List<Long> categories = type.stream()
                 .map(menuProperties::getCategoryId)
@@ -150,7 +176,12 @@ public class SoftController {
         model.addAttribute("q", q);
         // пагинатор
         PaginationHelper.setPaginator(soft, model);
-        return "fragments/soft-list :: softListFragment";
+        if (isAjax) {
+            // AJAX-запрос - отдаем фрагмент страницы
+            return "fragments/soft-list :: softListFragment";
+        }
+        // Это запрос по прямой ссылке на страницу, отдаем полную страницу
+        return fullPageHelper.renderFullPage(config.getSoftEndpoint() + path, model);
     }
 
 
