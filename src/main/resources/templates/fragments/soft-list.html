@@ -1,9 +1,6 @@
 <!-- soft-list.html -->
 <div th:fragment="softListFragment(softList)">
 
-    <link rel="stylesheet" th:href="@{/css/soft-list-view.css}">
-    <script th:src="@{/js/soft-list-view.js}" defer></script>
-
     <!-- Контент софта -->
     <main class="content-product">
         <div class="product-grid">
@@ -13,8 +10,7 @@
                 <div class="product-title" th:text="${soft.name}">Soft Name</div>
 
                 <!-- Изображения -->
-                <div class="product-image-container"
-                     th:if="${soft.imageUrls != null and !soft.imageUrls.isEmpty()}">
+                <div class="product-image-container" th:if="${soft.imageUrls != null and !soft.imageUrls.isEmpty()}">
                     <div class="image-wrapper">
                         <img th:each="imgUrl, iterStat : ${soft.imageUrls}"
                              th:src="@{${imgUrl}}"
@@ -31,7 +27,7 @@
                 </div>
 
                 <!-- Список архивов -->
-                <div class="product-price"
+                <div class="product-archive"
                      th:if="${soft.archiveUrls != null and !soft.archiveUrls.isEmpty()}">
                     <div class="archive-list">
                         <div th:each="url, iterStat : ${soft.archiveUrls}">
@@ -53,4 +49,7 @@
         </th:block>
     </div>
 
+
 </div>
+
+

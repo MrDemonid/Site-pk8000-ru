@@ -7,7 +7,7 @@ databaseChangeLog:
             tableName: products
             columns:
               - column: { name: name, value: "Клад" }
-              - column: { name: short_description, value: "-" }
+              - column: { name: short_description, value: "Сбор кладов в лабиринте." }
               - column: { name: description, value: "-" }
               - column:
                   name: category_id
@@ -17,7 +17,7 @@ databaseChangeLog:
             tableName: products
             columns:
               - column: { name: name, value: "Пилот" }
-              - column: { name: short_description, value: "-" }
+              - column: { name: short_description, value: "Бомбардировка города." }
               - column: { name: description, value: "-" }
               - column:
                   name: category_id
@@ -27,7 +27,7 @@ databaseChangeLog:
             tableName: products
             columns:
               - column: { name: name, value: "Питон (Фотон)" }
-              - column: { name: short_description, value: "-" }
+              - column: { name: short_description, value: "Питон охотится на кроликов." }
               - column: { name: description, value: "-" }
               - column:
                   name: category_id
@@ -37,7 +37,7 @@ databaseChangeLog:
             tableName: products
             columns:
               - column: { name: name, value: "Угадай число" }
-              - column: { name: short_description, value: "-" }
+              - column: { name: short_description, value: "Игра на логику." }
               - column: { name: description, value: "-" }
               - column:
                   name: category_id
@@ -47,7 +47,7 @@ databaseChangeLog:
             tableName: products
             columns:
               - column: { name: name, value: "Тяп-ляп" }
-              - column: { name: short_description, value: "-" }
+              - column: { name: short_description, value: "Тетрис." }
               - column: { name: description, value: "-" }
               - column:
                   name: category_id
@@ -57,7 +57,7 @@ databaseChangeLog:
             tableName: products
             columns:
               - column: { name: name, value: "Тест" }
-              - column: { name: short_description, value: "-" }
+              - column: { name: short_description, value: "Тест компьютера." }
               - column: { name: description, value: "-" }
               - column:
                   name: category_id
@@ -67,7 +67,7 @@ databaseChangeLog:
             tableName: products
             columns:
               - column: { name: name, value: "Минер" }
-              - column: { name: short_description, value: "-" }
+              - column: { name: short_description, value: "Прохождение по минному полю." }
               - column: { name: description, value: "-" }
               - column:
                   name: category_id
@@ -77,7 +77,7 @@ databaseChangeLog:
             tableName: products
             columns:
               - column: { name: name, value: "Морской бой" }
-              - column: { name: short_description, value: "-" }
+              - column: { name: short_description, value: "Упрощенная версия настольной игры." }
               - column: { name: description, value: "-" }
               - column:
                   name: category_id
@@ -87,7 +87,7 @@ databaseChangeLog:
             tableName: products
             columns:
               - column: { name: name, value: "Автодром" }
-              - column: { name: short_description, value: "-" }
+              - column: { name: short_description, value: "Поездка на автомобиле по небольшой трассе." }
               - column: { name: description, value: "-" }
               - column:
                   name: category_id
@@ -97,7 +97,7 @@ databaseChangeLog:
             tableName: products
             columns:
               - column: { name: name, value: "Сура" }
-              - column: { name: short_description, value: "-" }
+              - column: { name: short_description, value: "Клавиатурный тренажер." }
               - column: { name: description, value: "-" }
               - column:
                   name: category_id
@@ -107,7 +107,7 @@ databaseChangeLog:
             tableName: products
             columns:
               - column: { name: name, value: "Танец" }
-              - column: { name: short_description, value: "-" }
+              - column: { name: short_description, value: "Танцующий человечек." }
               - column: { name: description, value: "-" }
               - column:
                   name: category_id
@@ -117,7 +117,7 @@ databaseChangeLog:
             tableName: products
             columns:
               - column: { name: name, value: "Шахматы" }
-              - column: { name: short_description, value: "-" }
+              - column: { name: short_description, value: "Шахматы. Вполне неплохой AI." }
               - column: { name: description, value: "-" }
               - column:
                   name: category_id
@@ -127,7 +127,7 @@ databaseChangeLog:
             tableName: products
             columns:
               - column: { name: name, value: "Пожарник" }
-              - column: { name: short_description, value: "-" }
+              - column: { name: short_description, value: "Спасение мышек из горящего здания." }
               - column: { name: description, value: "-" }
               - column:
                   name: category_id
@@ -137,7 +137,7 @@ databaseChangeLog:
             tableName: products
             columns:
               - column: { name: name, value: "Тест-Хобби" }
-              - column: { name: short_description, value: "-" }
+              - column: { name: short_description, value: "Тест компьютера. Версия от ПК 'Хобби'" }
               - column: { name: description, value: "-" }
               - column:
                   name: category_id
@@ -147,7 +147,7 @@ databaseChangeLog:
             tableName: products
             columns:
               - column: { name: name, value: "Алибаба" }
-              - column: { name: short_description, value: "-" }
+              - column: { name: short_description, value: "Пусть и не сорок, но разбойники присутствуют." }
               - column: { name: description, value: "-" }
               - column:
                   name: category_id
@@ -167,7 +167,7 @@ databaseChangeLog:
             tableName: products
             columns:
               - column: { name: name, value: "Crux" }
-              - column: { name: short_description, value: "-" }
+              - column: { name: short_description, value: "Нечто среднее между тетрисом и цветными линиями." }
               - column: { name: description, value: "-" }
               - column:
                   name: category_id
@@ -177,7 +177,7 @@ databaseChangeLog:
             tableName: products
             columns:
               - column: { name: name, value: "Кобра" }
-              - column: { name: short_description, value: "-" }
+              - column: { name: short_description, value: "Полет на боевом вертолете." }
               - column: { name: description, value: "-" }
               - column:
                   name: category_id
@@ -187,7 +187,7 @@ databaseChangeLog:
             tableName: products
             columns:
               - column: { name: name, value: "Boulder dash" }
-              - column: { name: short_description, value: "-" }
+              - column: { name: short_description, value: "Порт оригинального Boulder." }
               - column: { name: description, value: "-" }
               - column:
                   name: category_id
@@ -197,7 +197,7 @@ databaseChangeLog:
             tableName: products
             columns:
               - column: { name: name, value: "Bomber man" }
-              - column: { name: short_description, value: "-" }
+              - column: { name: short_description, value: "Уничтожение врагов минами." }
               - column: { name: description, value: "-" }
               - column:
                   name: category_id
@@ -207,7 +207,7 @@ databaseChangeLog:
             tableName: products
             columns:
               - column: { name: name, value: "File manager" }
-              - column: { name: short_description, value: "-" }
+              - column: { name: short_description, value: "Файловый менеджер под CM/M" }
               - column: { name: description, value: "-" }
               - column:
                   name: category_id
@@ -217,7 +217,7 @@ databaseChangeLog:
             tableName: products
             columns:
               - column: { name: name, value: "Image view" }
-              - column: { name: short_description, value: "-" }
+              - column: { name: short_description, value: "Вьюнер всех известных форматов изображений для 8-битных компьютеров." }
               - column: { name: description, value: "-" }
               - column:
                   name: category_id
@@ -227,7 +227,7 @@ databaseChangeLog:
             tableName: products
             columns:
               - column: { name: name, value: "STC Player" }
-              - column: { name: short_description, value: "-" }
+              - column: { name: short_description, value: "Плеер STC-музыки для AY-контроллера." }
               - column: { name: description, value: "-" }
               - column:
                   name: category_id
@@ -237,7 +237,7 @@ databaseChangeLog:
             tableName: products
             columns:
               - column: { name: name, value: "Питон" }
-              - column: { name: short_description, value: "-" }
+              - column: { name: short_description, value: "Классический питон." }
               - column: { name: description, value: "-" }
               - column:
                   name: category_id
@@ -247,7 +247,7 @@ databaseChangeLog:
             tableName: products
             columns:
               - column: { name: name, value: "Двигалка" }
-              - column: { name: short_description, value: "-" }
+              - column: { name: short_description, value: "Логическая игра на смекалку." }
               - column: { name: description, value: "-" }
               - column:
                   name: category_id
@@ -257,7 +257,7 @@ databaseChangeLog:
             tableName: products
             columns:
               - column: { name: name, value: "Bolder dash" }
-              - column: { name: short_description, value: "-" }
+              - column: { name: short_description, value: "Порт аналогичной DOS-игры, являющейся портом с Электроника БК-0010." }
               - column: { name: description, value: "-" }
               - column:
                   name: category_id
@@ -267,7 +267,7 @@ databaseChangeLog:
             tableName: products
             columns:
               - column: { name: name, value: "High way" }
-              - column: { name: short_description, value: "-" }
+              - column: { name: short_description, value: "Езда по городу. Что-то собираем и избегаем встреч с врагами." }
               - column: { name: description, value: "-" }
               - column:
                   name: category_id

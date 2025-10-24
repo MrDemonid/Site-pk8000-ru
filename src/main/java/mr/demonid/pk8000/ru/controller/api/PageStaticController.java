@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import mr.demonid.pk8000.ru.configs.AppConfiguration;
 import mr.demonid.pk8000.ru.services.PageService;
-import mr.demonid.pk8000.ru.services.menu.MenuService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,7 +24,6 @@ import java.io.IOException;
 public class PageStaticController {
 
     private final PageService pageService;
-    private final MenuService menuService;
     private final AppConfiguration config;
     private final FullPageHelper fullPageHelper;
 

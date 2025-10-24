@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.Arrays;
 import java.util.List;
@@ -181,8 +182,25 @@ public class SoftController {
             return "fragments/soft-list :: softListFragment";
         }
         // Это запрос по прямой ссылке на страницу, отдаем полную страницу
-        return fullPageHelper.renderFullPage(config.getSoftEndpoint() + path, model);
+        String url = buildUrl(config.getSoftEndpoint() + path, pageable, q);
+
+        return fullPageHelper.renderFullPage(url, model);
     }
 
+    private String buildUrl(String path, Pageable pageable, String query) {
+        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(path)
+                .queryParam("page", pageable.getPageNumber())
+                .queryParam("size", pageable.getPageSize());
 
+        pageable.getSort().forEach(order ->
+                builder.queryParam("sort", order.getProperty() + "," + order.getDirection().name().toLowerCase())
+        );
+
+        if (query != null && !query.isBlank()) {
+            builder.queryParam("q", query);
+        }
+        return builder.toUriString();
+    }
 }
+
+// http://localhost:9000/api/v1/soft/games/all?size=20&page=1

@@ -15,12 +15,15 @@ function appendSearchParam(url) {
         const query = searchInput.value.trim();
         if (query) {
             url.searchParams.set(searchId, query);
+            url.searchParams.set("page", 0);     // сброс номера страницы при новом запросе
         } else {
             url.searchParams.delete(searchId);
         }
+
     }
     return url;
 }
+
 
 /*
 Синхронизация полей из url/хранилища.
@@ -73,10 +76,18 @@ function loadContentAjax(anchor) {
             }
         }
     }
+    // добавляем текущие параметры пагинации
+    const currentUrl = new URL(window.location.href);
+    const currentSize = currentUrl.searchParams.get("size");
+    if (currentSize)
+        url.searchParams.set("size", currentSize);
+
+
     sessionStorage.setItem('searchValues', JSON.stringify(searchValues));
     // сохраняем активный пункт меню
     sessionStorage.setItem('activeMenuUrl', url.pathname + url.search);
 
+    console.log("loadContentAjax() = ", url.pathname + url.search);
     // делаем AJAX-запрос
     fetch(url.pathname + url.search, { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
         .then(r => r.text())
@@ -139,6 +150,7 @@ function changePageSizeValue(size) {
     Переход на страницу.
  */
 function goToPage(pageNumber) {
+    console.log("goToPage(", pageNumber, ")");
     let url = new URL(window.location.href);
     url.searchParams.set("page", pageNumber);
     url = appendSearchParam(url); // добавляем пои
@@ -163,6 +175,7 @@ function loadPage(url) {
             window.scrollTo(0, 0);
         });
 }
+
 
 /**
  * Восстановление меню при обновлении (перезагрузке) страницы.

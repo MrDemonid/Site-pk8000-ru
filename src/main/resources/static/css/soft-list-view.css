@@ -1,4 +1,13 @@
 /* Стили для сетки товаров */
+.product-image-container {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    background-color: #f2f2f2; /* нейтральный фон, чтобы не было вспышки */
+    overflow: hidden;
+    border-radius: 10px;
+}
+
 .product-grid {
     display: flex;
     flex-wrap: wrap;
@@ -8,12 +17,11 @@
 }
 
 .product-item {
-    width: calc(25% - 10px);
+    width: calc(25% - 10px); /* Ширина для четырёх товаров в строке */
     box-sizing: border-box;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     border: 1px solid #ccc;
     border-radius: 5px;
-    /*border: 1px solid #ddd;*/
     padding: 10px;
     text-align: center;
     background-color: #f9f9f9;
@@ -27,21 +35,6 @@
     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); /* Добавляем тень */
 }
 
-.product-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    justify-content: flex-start;
-}
-.product-item {
-    width: calc(25% - 10px); /* Ширина для четырёх товаров в строке */
-    box-sizing: border-box;
-    border: 1px solid #ddd;
-    padding: 10px;
-    text-align: center;
-    background-color: #f9f9f9;
-    margin-bottom: 10px;
-}
 .product-image {
     width: 100%;
     height: auto;
@@ -55,7 +48,7 @@
     margin: 10px 0;
     font-weight: bold;
 }
-.product-price {
+.product-archive {
     color: #007b00;
     font-size: 1.1em;
 }
@@ -118,38 +111,9 @@
     padding: 20px;
 }
 
-.product-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-}
-
-
-/* Таблица товаров в админке */
-.product-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.product-table th, .product-table td {
-    padding: 8px;
-    border: 1px solid #ccc;
-    vertical-align: top;
-}
-
-.product-table input, .product-table textarea {
-    box-sizing: border-box;
-}
-
-.product-table textarea {
-    resize: vertical;
-}
-
 .product-image.hidden {
     display: none;
 }
-
-
 
 .image-wrapper {
     position: relative;
