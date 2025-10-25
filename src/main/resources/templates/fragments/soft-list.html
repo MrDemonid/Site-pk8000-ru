@@ -27,13 +27,16 @@
                 </div>
 
                 <!-- Список архивов -->
-                <div class="product-archive"
-                     th:if="${soft.archiveUrls != null and !soft.archiveUrls.isEmpty()}">
-                    <div class="archive-list">
-                        <div th:each="url, iterStat : ${soft.archiveUrls}">
-                            <a th:href="@{${url}}"
-                               th:text="'Скачать архив ' + ${iterStat.index + 1}">Скачать архив</a>
-                        </div>
+                <div class="product-archive" th:if="${soft.archiveUrls != null and !soft.archiveUrls.isEmpty()}">
+                    <div class="custom-select-wrapper">
+                        <select class="archive-select" th:data-soft-id="${soft.id}">
+                            <option value="" disabled selected>Скачать файл</option>
+                            <option th:each="url : ${soft.archiveUrls}"
+                                    th:value="${url}"
+                                    th:text="${url.substring(url.lastIndexOf('/') + 1)}">
+                            </option>
+                        </select>
+                        <div class="custom-arrow"></div>
                     </div>
                 </div>
 
@@ -49,7 +52,20 @@
         </th:block>
     </div>
 
-
 </div>
 
+
+<!--                &lt;!&ndash; Список архивов &ndash;&gt;-->
+<!--                <div class="product-archive"-->
+<!--                     th:if="${soft.archiveUrls != null and !soft.archiveUrls.isEmpty()}">-->
+<!--                    <div class="archive-list">-->
+<!--                        <div th:each="url : ${soft.archiveUrls}">-->
+<!--                            <a th:if="${url != null}"-->
+<!--                               th:href="@{${url}}"-->
+<!--                               th:text="${url.substring(url.lastIndexOf('/') + 1)}">-->
+<!--                            </a>-->
+<!--                            <span th:if="${url == null}">файл</span>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
 

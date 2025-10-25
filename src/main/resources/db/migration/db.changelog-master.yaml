@@ -18,3 +18,7 @@ databaseChangeLog:
   - include:
       file: changes/db.changelog-1.1-initial-product-images.yml
       relativeToChangelogFile: true
+
+  - include:
+      file: changes/db.changelog-1.1-initial-product-archives.yml
+      relativeToChangelogFile: true

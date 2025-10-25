@@ -133,3 +133,63 @@
     pointer-events: none; /* Чтобы клики шли сквозь лупу на изображение */
 }
 
+
+/*
+    Кастомизация выпадающего списка файлов.
+ */
+
+/* Обертка для селекта */
+.custom-select-wrapper {
+    position: relative;
+    display: inline-block;
+    width: 100%; /* теперь занимает всю ширину родителя */
+    min-width: 180px;
+    max-width: 100%; /* точно не выйдет за границы */
+    font-family: "Segoe UI", Tahoma, sans-serif;
+    margin-top: 8px;
+}
+
+
+/* Сам селект скрываем, но оставляем функциональность */
+.custom-select-wrapper select {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px 40px 10px 12px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-color: #fff;
+    cursor: pointer;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+/* Hover & focus */
+.custom-select-wrapper select:hover,
+.custom-select-wrapper select:focus {
+    border-color: #3b82f6; /* Голубой акцент */
+    box-shadow: 0 0 5px rgba(59, 130, 246, 0.5);
+    outline: none;
+}
+
+/* Кастомная стрелка */
+.custom-arrow {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    pointer-events: none;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid #333;
+    transition: transform 0.3s;
+}
+
+/* Стрелка при открытом селекте */
+.custom-select-wrapper select:focus + .custom-arrow {
+    transform: translateY(-50%) rotate(180deg);
+}
