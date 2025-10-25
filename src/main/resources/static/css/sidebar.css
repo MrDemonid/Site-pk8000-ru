@@ -122,46 +122,55 @@
 
 
 /* ============= Стили для поля поиска ============ */
-.menu-search-box {
-    /* не нужен padding, он есть в форме */
-}
-
 .menu-search-form {
+    position: relative;
     display: flex;
     align-items: center;
     padding: 10px 18px;
-    color: #cbd5e1;
-    font-size: 15px;
-    border-radius: 6px;
-    transition: background 0.2s ease, color 0.2s ease;
-    background-color: transparent;
-    cursor: pointer;
 }
 
-.menu-search-form:hover {
-    background-color: #1e293b;
-    color: #ffffff;
+.search-wrapper {
+    position: relative;
+    flex: 1;               /* занимает доступное место */
+    min-width: 0;          /* важно для flex-children */
 }
 
 .menu-search-input {
-    flex: 1;
-    min-width: 0;
+    width: 100%;
+    box-sizing: border-box;    /* учитывать padding в ширине */
+    padding-right: 28px;       /* место для крестика */
     background: none;
     border: none;
     outline: none;
     color: inherit;
     font-size: inherit;
-    padding: 4px 6px;
 }
 
-.menu-search-input::placeholder {
-    color: #94a3b8; /* светло-серый */
+/* Для Chrome / Edge */
+.menu-search-input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px #111827 inset; /* вставляем "свой" фон поверх autofill */
+    -webkit-text-fill-color: #e5e7eb;                 /* цвет текста */
+    transition: background-color 5000s ease-in-out 0s; /* глушим мерцание */
 }
 
-.clickable-icon {
-    width: 20px;
-    height: 20px;
-    margin-right: 10px;
-    flex-shrink: 0;
+/* Для Firefox */
+.menu-search-input:-moz-autofill {
+    box-shadow: 0 0 0 1000px #111827 inset;
+    -moz-text-fill-color: #e5e7eb;
+}
+
+.clear-btn {
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
     cursor: pointer;
+    font-size: 14px;
+    opacity: 1;                 /* делаем полностью видимым */
+    color: #f87171;             /* красный для заметности */
+    display: none;
+    user-select: none;
+}
+.clear-btn:hover {
+    color: #ef4444;             /* более яркий при наведении */
 }

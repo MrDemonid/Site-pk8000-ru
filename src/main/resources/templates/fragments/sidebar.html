@@ -19,9 +19,17 @@
                  alt="🔍" class="menu-icon clickable-icon"
                  onclick="this.closest('form').requestSubmit()" />
 
-            <input type="text"
-                   th:attr="id=${item.menuId}, placeholder=${item.placeholder}"
-                   class="menu-search-input" />
+            <!-- Поле поиска с крестиком -->
+            <div class="search-wrapper">
+                <input type="text"
+                       th:attr="id=${item.menuId}, placeholder=${item.placeholder}"
+                       class="menu-search-input"
+                       oninput="toggleClearButton(this)" />
+                <span class="clear-btn" onclick="clearSearchInput(this)">✖</span>
+            </div>
+<!--            <input type="text"-->
+<!--                   th:attr="id=${item.menuId}, placeholder=${item.placeholder}"-->
+<!--                   class="menu-search-input" />-->
         </form>
     </div>
 

@@ -16,7 +16,7 @@ public class SoftSpecification {
 
     public static Specification<SoftEntity> filter(SoftFilter filter) {
         return (root, query, criteriaBuilder) -> {
-            List<Predicate> predicates = new ArrayList<Predicate>();
+            List<Predicate> predicates = new ArrayList<>();
 
             if (filter.getCategoryId() != null && !filter.getCategoryId().isEmpty()) {
                 predicates.add(root.get("category").get("id").in(filter.getCategoryId()));

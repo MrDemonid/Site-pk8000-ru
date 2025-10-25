@@ -1,32 +1,31 @@
 // ========================== sidebar.js ==========================
 
-
-/*
-Добавляет в адресную строку параметр со строкой из поля поиска (фильтра)
+/**
+ * Добавляет в адресную строку параметр со строкой из поля поиска (фильтра)
  */
 function appendSearchParam(url) {
     const activeLink = document.querySelector('.menu a.active[data-search-id]');
-    if (!activeLink) return url;
+    if (!activeLink)
+        return url;
 
     const searchId = activeLink.dataset.searchId;
     const searchInput = document.getElementById(searchId);
 
-    if (searchId && searchInput) {
+    if (searchInput) {
         const query = searchInput.value.trim();
         if (query) {
-            url.searchParams.set(searchId, query);
-            url.searchParams.set("page", 0);     // сброс номера страницы при новом запросе
+            url.searchParams.set("query", query);
+            url.searchParams.set("page", 0);
         } else {
-            url.searchParams.delete(searchId);
+            url.searchParams.delete("query");
         }
-
     }
     return url;
 }
 
 
-/*
-Синхронизация полей из url/хранилища.
+/**
+ * Синхронизация полей из url/хранилища.
  */
 function syncSearchInputs() {
     const url = new URL(window.location.href);
@@ -34,18 +33,93 @@ function syncSearchInputs() {
 
     document.querySelectorAll('.menu a[data-search-id]').forEach(linkEl => {
         const searchId = linkEl.dataset.searchId;
-        if (!searchId) return;
+        if (!searchId)
+            return;
 
         const input = document.getElementById(searchId);
-        if (!input) return;
+        if (!input)
+            return;
 
-        // Приоритет: URL ? saved ? ''
-        const fromUrl = url.searchParams.get(searchId);
+        const fromUrl = url.searchParams.get("query");
         input.value = (fromUrl !== null ? fromUrl : (saved[searchId] ?? ''));
+
+        toggleClearButton(input);
     });
 }
 
+/**
+ * Обработчик кнопки "Поиск"
+ */
+function searchSoftSection(form) {
+    const input = form.querySelector('input');
+    if (!input) return false;
 
+    const searchId = input.id;
+    const query = input.value.trim();
+
+    // Обновляем сохранённые значения поиска
+    const searchValues = JSON.parse(sessionStorage.getItem('searchValues') || '{}');
+    if (query) {
+        searchValues[searchId] = query;
+    } else {
+        // удаляем, если строка пустая
+        if (searchValues.hasOwnProperty(searchId))
+            delete searchValues[searchId];
+    }
+    sessionStorage.setItem('searchValues', JSON.stringify(searchValues));
+
+    // Находим ту ссылку меню, для которой предназначено это поле поиска.
+    // Сначала — активную, затем — любую ссылку с тем же data-search-id (если ввод в поиск вне пунктов "Софт").
+    let activeLink = document.querySelector(`.menu a.active[data-search-id="${searchId}"]`);
+    if (!activeLink) {
+        activeLink = document.querySelector(`.menu a[data-search-id="${searchId}"]`);
+    }
+    if (!activeLink) {
+        console.warn("searchSoftSection(): не найдена ссылка меню для searchId=" + searchId);
+        return false;
+    }
+    // Формируем новый URL
+    const url = new URL(activeLink.getAttribute('href'), window.location.origin);
+
+    if (query) {
+        url.searchParams.set("query", query);       // ставим параметр поиска
+    } else {
+        url.searchParams.delete("query");     // удаляем параметр, если пусто
+    }
+    url.searchParams.set("page", 0);                // всегда начинаем с первой страницы
+
+    // Сохраняем активный пункт и делаем запрос через loadPage()
+    sessionStorage.setItem('activeMenuUrl', url.pathname + url.search);
+
+    console.log("searchSoftSection(): ", url.toString());
+    history.pushState(null, '', url);
+    loadPage(url);
+
+    return false;
+}
+
+/**
+ * Очистка поля ввода строки для поиска.
+ */
+function toggleClearButton(input) {
+    const btn = input.parentElement.querySelector('.clear-btn');
+    if (btn) btn.style.display = input.value.trim() ? 'block' : 'none';
+}
+
+function clearSearchInput(span) {
+    const input = span.parentElement.querySelector('input');
+    if (!input) return;
+    input.value = '';
+    span.style.display = 'none';
+    // сразу обновляем результат
+    input.form.requestSubmit();
+}
+
+
+
+/**
+ * Подгрузка страницы с сервера.
+ */
 function loadContentAjax(anchor) {
     let href = anchor.getAttribute('href');
     const searchId = anchor.dataset.searchId;
@@ -68,10 +142,10 @@ function loadContentAjax(anchor) {
         if (input) {
             const q = input.value.trim();
             if (q) {
-                url.searchParams.set(searchId, q);
+                url.searchParams.set("query", q);
                 searchValues[searchId] = q;
             } else {
-                url.searchParams.delete(searchId);
+                url.searchParams.delete("query");
                 delete searchValues[searchId];
             }
         }
@@ -183,14 +257,16 @@ function loadPage(url) {
 function restoreActiveMenu() {
     syncSearchInputs(); // сначала восстановим значения поисков
 
-    const savedUrl = sessionStorage.getItem('activeMenuUrl') || null;
-    if (!savedUrl)
-        return;
+    let savedUrl = sessionStorage.getItem('activeMenuUrl') || null;
 
-    console.log("restoreActiveMenu(): do restore menu to: " + savedUrl);
+    if (!savedUrl) {
+        // похоже был переход по прямой ссылке, берем данные из адресной строки
+        savedUrl = window.location.pathname + window.location.search;
+        console.log("restoreActiveMenu(). fallback to current URL: ", savedUrl);
+    }
 
-    const saved = new URL(savedUrl, window.location.origin);
-
+    console.log("restoreActiveMenu(). do restore menu to: " + savedUrl);
+    // const saved = new URL(savedUrl, window.location.origin);
 
     // извлекает из полного url только адрес (pathname)
     const normalizeHref = (href) => {
@@ -210,10 +286,10 @@ function restoreActiveMenu() {
     const activeLink = links.find(a => normalizeHref(a.getAttribute('href')) === savedPathname);
 
     if (!activeLink) {
-        console.log("restoreActiveMenu(): no matching menu link found for savedUrl" + savedUrl);
+        console.log("restoreActiveMenu(). no matching menu link found for savedUrl" + savedUrl);
         return;
     }
-    console.log("restoreActiveMenu(): matched link:", activeLink);
+    console.log("restoreActiveMenu(). matched link:", activeLink);
 
     // убираем старую "подсветку" и задаем новую
     document.querySelectorAll('.menu a.active').forEach(el => el.classList.remove('active'));
@@ -262,4 +338,5 @@ document.getElementById('content').addEventListener('click', function(e) {
         loadPage(new URL(href, window.location.origin));
     }
 });
+
 
