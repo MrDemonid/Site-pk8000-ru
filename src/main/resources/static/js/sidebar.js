@@ -16,6 +16,11 @@ function appendSearchParam(url) {
         if (query) {
             url.searchParams.set("query", query);
             url.searchParams.set("page", 0);
+            // !!!!!
+            const currentUrl = new URL(window.location.href);
+            const currentSize = currentUrl.searchParams.get("size");
+            if (currentSize)
+                url.searchParams.set("size", currentSize);
         } else {
             url.searchParams.delete("query");
         }
@@ -87,6 +92,11 @@ function searchSoftSection(form) {
         url.searchParams.delete("query");     // удаляем параметр, если пусто
     }
     url.searchParams.set("page", 0);                // всегда начинаем с первой страницы
+    // !!!!!
+    const currentUrl = new URL(window.location.href);
+    const currentSize = currentUrl.searchParams.get("size");
+    if (currentSize)
+        url.searchParams.set("size", currentSize);
 
     // Сохраняем активный пункт и делаем запрос через loadPage()
     sessionStorage.setItem('activeMenuUrl', url.pathname + url.search);
