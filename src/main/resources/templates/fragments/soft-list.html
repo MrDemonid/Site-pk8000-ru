@@ -16,6 +16,7 @@
                              th:src="@{${imgUrl}}"
                              class="product-image"
                              th:classappend="${iterStat.index != 0} ? ' hidden' : ''"
+                             data-action="open-modal-images"
                              alt="Soft image" />
                     </div>
                 </div>
@@ -25,6 +26,9 @@
                      th:text="${soft.shortDescription ?: 'Описание отсутствует'}">
                     Краткое описание...
                 </div>
+
+                <!-- Скрытое полное описание (вставляем HTML) -->
+                <div class="product-full-description visually-hidden" th:utext="${soft.description}"></div>
 
                 <!-- Список архивов -->
                 <div class="product-archive" th:if="${soft.archiveUrls != null and !soft.archiveUrls.isEmpty()}">
@@ -51,6 +55,26 @@
             <div th:replace="~{fragments/pagination :: paginationControls(pageData=${pageData}, pageButtons=${pageButtons})}"></div>
         </th:block>
     </div>
+
+    <!-- Модальное окно -->
+    <div id="softModal" class="soft-modal hidden">
+        <div class="soft-modal-overlay" data-action="close-modal"></div>
+
+        <div class="soft-modal-content">
+            <button class="modal-close-btn" data-action="close-modal">&times;</button>
+
+            <h2 id="modalTitle" class="modal-title"></h2>
+
+            <!-- Превьюшки сверху -->
+            <div class="modal-thumbnails"></div>
+
+            <!-- Основная картинка -->
+            <div class="modal-body">
+                <img id="modalMainImage" class="modal-main-image" src="" alt="Soft image" />
+            </div>
+        </div>
+    </div>
+
 
 </div>
 

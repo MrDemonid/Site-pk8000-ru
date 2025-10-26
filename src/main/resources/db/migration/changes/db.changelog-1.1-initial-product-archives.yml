@@ -2,19 +2,7 @@ databaseChangeLog:
   - changeSet:
       id: insert-archives-1
       author: andrey
-      changes:
-        - insert:
-            tableName: product_archives
-            columns:
-              - column: { name: product_id, valueComputed: "(SELECT id FROM products WHERE name='Клад')" }
-              - column: { name: archive_file, value: "klad_com.zip" }
-        - insert:
-            tableName: product_archives
-            columns:
-              - column: { name: product_id, valueComputed: "(SELECT id FROM products WHERE name='Клад')" }
-              - column: { name: archive_file, value: "klad_cas.zip" }
-        - insert:
-            tableName: product_archives
-            columns:
-              - column: { name: product_id, valueComputed: "(SELECT id FROM products WHERE name='Клад')" }
-              - column: { name: archive_file, value: "klad_bas.zip" }
+      sqlFile:
+        path: db/seed/product_archives.sql
+        relativeToChangelogFile: false
+        endDelimiter: ";"

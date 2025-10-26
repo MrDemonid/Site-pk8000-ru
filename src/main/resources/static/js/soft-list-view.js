@@ -18,3 +18,100 @@ document.addEventListener('change', function(event) {
     }
 });
 
+
+
+// Реестр действий
+const actions = {
+    "open-modal-images": handleOpenModal
+};
+
+// Делегирование кликов
+document.addEventListener("click", e => {
+    const el = e.target.closest("[data-action]");
+    if (!el) return;
+
+    const actionName = el.dataset.action;
+    if (typeof actions[actionName] === "function") {
+        actions[actionName](el);
+    }
+});
+
+
+function handleOpenModal(img) {
+    const item = img.closest(".product-item");
+    if (!item) return;
+
+    const modal = document.getElementById("softModal");
+    const modalOverlay = modal.querySelector(".soft-modal-overlay");
+    const modalClose = modal.querySelector(".modal-close-btn");
+    const modalTitle = modal.querySelector("#modalTitle");
+    const modalMainImage = modal.querySelector("#modalMainImage");
+    const modalThumbnails = modal.querySelector(".modal-thumbnails");
+    const content = modal.querySelector(".soft-modal-content");
+
+    const softName = item.querySelector(".product-title")?.textContent || "Без названия";
+    const images = item.querySelectorAll(".product-image");
+    const imageUrls = Array.from(images).map(i => i.src);
+    const currentIndex = Array.from(images).indexOf(img);
+
+    modalTitle.textContent = softName;
+    modalMainImage.src = imageUrls[currentIndex];
+
+    modalThumbnails.innerHTML = "";
+    imageUrls.forEach((url, idx) => {
+        const thumb = document.createElement("img");
+        thumb.src = url;
+        if (idx === currentIndex) thumb.classList.add("active");
+        thumb.addEventListener("click", () => {
+            modalMainImage.src = url;
+            modalThumbnails.querySelectorAll("img").forEach(i => i.classList.remove("active"));
+            thumb.classList.add("active");
+            adjustImageHeight(); // пересчитать при смене картинки
+        });
+        modalThumbnails.appendChild(thumb);
+    });
+
+    modal.classList.remove("hidden");
+    document.body.style.overflow = "hidden";
+
+    /*
+    Вычисляем оптимальную высоту для картинки (modalMainImage)
+     */
+    function adjustImageHeight() {
+        const modalMaxHeight = window.innerHeight * 0.9; // 90vh
+        const style = getComputedStyle(content);
+        const paddingTop = parseFloat(style.paddingTop) || 0;
+        const paddingBottom = parseFloat(style.paddingBottom) || 0;
+        // const bottomGap = 20; // добавляем визуальный зазор
+        const imgStyle = getComputedStyle(modalMainImage);
+        const marginTop = parseFloat(imgStyle.marginTop) || 0;
+        const marginBottom = parseFloat(imgStyle.marginBottom) || 0;
+
+        const available = modalMaxHeight
+            - modalTitle.offsetHeight
+            - modalThumbnails.offsetHeight
+            - paddingTop
+            - paddingBottom
+            - marginTop
+            - marginBottom;
+
+        modalMainImage.style.maxHeight = available + "px";
+    }
+
+    adjustImageHeight();
+    window.addEventListener("resize", adjustImageHeight);
+
+    const closeModal = () => {
+        modal.classList.add("hidden");
+        document.body.style.overflow = "";
+        document.removeEventListener("keydown", onEsc);
+        window.removeEventListener("resize", adjustImageHeight);
+    };
+
+    const onEsc = (e) => { if(e.key === "Escape") closeModal(); };
+    document.addEventListener("keydown", onEsc);
+
+    modalClose.onclick = closeModal;
+    modalOverlay.onclick = closeModal;
+
+}
