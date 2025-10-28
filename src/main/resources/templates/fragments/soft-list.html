@@ -12,17 +12,12 @@
                 <!-- Название -->
                 <div class="product-title" th:text="${soft.name}">Soft Name</div>
 
-                <!-- Изображения -->
-                <div class="product-image-container" th:if="${soft.imageUrls != null and !soft.imageUrls.isEmpty()}">
-                    <div class="image-wrapper">
-                        <img th:each="imgUrl, iterStat : ${soft.imageUrls}"
-                             th:src="@{${imgUrl}}"
-                             class="product-image"
-                             th:classappend="${iterStat.index != 0} ? ' hidden' : ''"
-                             data-action="open-modal-images"
-                             alt="Soft image" />
-                    </div>
-                </div>
+                <!-- Изображения. Первое загружаем, остальные - в список -->
+                <img class="product-image"
+                     th:src="@{${soft.imageUrls[0]}}"
+                     th:data-images="${#strings.arrayJoin(soft.imageUrls.toArray(), '|')}"
+                     data-action="open-modal-images"
+                     alt="Soft image"/>
 
                 <!-- Краткое описание -->
                 <div class="product-description"

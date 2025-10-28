@@ -1,6 +1,6 @@
 // Реакция на выбор файла в выпадающем списке.
 // Чтобы браузер не воспринял как переход на новую страницу (тогда существующая моргнет при перерисовке).
-document.addEventListener('change', function(event) {
+document.addEventListener('change', function (event) {
     const target = event.target;
     if (target.classList.contains('archive-select')) {
         const url = target.value;
@@ -17,7 +17,6 @@ document.addEventListener('change', function(event) {
         target.value = ''; // сброс выбора
     }
 });
-
 
 
 // Реестр действий
@@ -39,11 +38,12 @@ document.addEventListener("click", e => {
 
 
 /*
-Открытие модального окна галереи картинок.
+ * Открытие модального окна галереи картинок.
  */
-function handleOpenModal(img) {
+async function handleOpenModal(img) {
     const item = img.closest(".product-item");
-    if (!item) return;
+    if (!item)
+        return;
 
     const modal = document.getElementById("softModal");
     const modalOverlay = modal.querySelector(".soft-modal-overlay");
@@ -53,24 +53,37 @@ function handleOpenModal(img) {
     const modalThumbnails = modal.querySelector(".modal-thumbnails");
     const content = modal.querySelector(".soft-modal-content");
 
-    const softName = item.querySelector(".product-title")?.textContent || "Без названия";
-    const images = item.querySelectorAll(".product-image");
-    const imageUrls = Array.from(images).map(i => i.src);
-    const currentIndex = Array.from(images).indexOf(img);
+    const softName = item.dataset.name || "Без названия";
+    const mainUrl = img.src;
+    let imageUrls = [];
+
+    // Берем все дополнительные URL из data-images (разделитель |)
+    const dataImages = item.querySelector(".product-image").dataset.images;
+    if (dataImages) {
+        imageUrls = dataImages.split('|').map(s => s.trim()).filter(Boolean);
+    }
 
     modalTitle.textContent = softName;
-    modalMainImage.src = imageUrls[currentIndex];
+    modalMainImage.src = mainUrl;
 
     modalThumbnails.innerHTML = "";
+
+    // Асинхронная подгрузка превью
     imageUrls.forEach((url, idx) => {
         const thumb = document.createElement("img");
-        thumb.src = url;
-        if (idx === currentIndex) thumb.classList.add("active");
+        thumb.classList.add("modal-thumbnail");
+
+        if (url === mainUrl)
+            thumb.classList.add("active");
+
+        thumb.src = "";
+        setTimeout(() => { thumb.src = url; }, 0);
+
         thumb.addEventListener("click", () => {
             modalMainImage.src = url;
             modalThumbnails.querySelectorAll("img").forEach(i => i.classList.remove("active"));
             thumb.classList.add("active");
-            adjustImageHeight(); // пересчитать при смене картинки
+            adjustImageHeight();
         });
         modalThumbnails.appendChild(thumb);
     });
@@ -79,14 +92,13 @@ function handleOpenModal(img) {
     document.body.style.overflow = "hidden";
 
     /*
-    Вычисляем оптимальную высоту для картинки (modalMainImage)
+     * Вычисляем оптимальную высоту для картинки (modalMainImage)
      */
     function adjustImageHeight() {
-        const modalMaxHeight = window.innerHeight * 0.9; // 90vh
+        const modalMaxHeight = window.innerHeight * 0.9;
         const style = getComputedStyle(content);
         const paddingTop = parseFloat(style.paddingTop) || 0;
         const paddingBottom = parseFloat(style.paddingBottom) || 0;
-        // const bottomGap = 20; // добавляем визуальный зазор
         const imgStyle = getComputedStyle(modalMainImage);
         const marginTop = parseFloat(imgStyle.marginTop) || 0;
         const marginBottom = parseFloat(imgStyle.marginBottom) || 0;
@@ -102,18 +114,15 @@ function handleOpenModal(img) {
         modalMainImage.style.maxHeight = available + "px";
     }
 
-
     adjustImageHeight();
     window.addEventListener("resize", adjustImageHeight);
 
     const closeModal = () => {
         modal.classList.add("hidden");
         document.body.style.overflow = "";
-        document.removeEventListener("keydown", onEsc);
         window.removeEventListener("resize", adjustImageHeight);
         document.removeEventListener("keydown", onEsc);
     };
-
     const onEsc = (e) => { if(e.key === "Escape") closeModal(); };
     document.addEventListener("keydown", onEsc);
 
@@ -121,7 +130,14 @@ function handleOpenModal(img) {
     modalOverlay.onclick = closeModal;
 }
 
+
+
+/*
+ * Открытие модального окна для просмотра описания программы.
+ */
 const descriptionCache = new Map(); // кэш загруженных описаний
+
+
 async function handleOpenDescription(el) {
     const item = el.closest(".product-item");
     if (!item) return;
@@ -168,6 +184,7 @@ async function handleOpenDescription(el) {
         const viewportHeight = window.innerHeight * 0.9;
         wrapper.style.maxHeight = viewportHeight + "px";
     }
+
     adjustModalSize();
     window.addEventListener("resize", adjustModalSize);
 
@@ -177,7 +194,9 @@ async function handleOpenDescription(el) {
         window.removeEventListener("resize", adjustModalSize);
         document.removeEventListener("keydown", onEsc);
     };
-    const onEsc = (e) => { if (e.key === "Escape") closeModal(); };
+    const onEsc = (e) => {
+        if (e.key === "Escape") closeModal();
+    };
     document.addEventListener("keydown", onEsc);
 
     modalClose.onclick = closeModal;
