@@ -28,7 +28,8 @@ public class SoftEntity {
     @Column(name = "short_description", length = 256)
     private String shortDescription;
 
-    @Column(length = 4096)
+    @Lob
+    @Column(name = "description_cache")
     private String description;
 
     @ManyToOne

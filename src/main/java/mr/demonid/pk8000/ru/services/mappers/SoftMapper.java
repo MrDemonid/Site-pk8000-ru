@@ -7,6 +7,7 @@ import mr.demonid.pk8000.ru.domain.CategoryEntity;
 import mr.demonid.pk8000.ru.domain.SoftEntity;
 import mr.demonid.pk8000.ru.dto.SoftRequest;
 import mr.demonid.pk8000.ru.dto.SoftResponse;
+import mr.demonid.pk8000.ru.services.staticpage.MarkdownService;
 import mr.demonid.pk8000.ru.util.PathUtil;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,7 @@ import java.util.function.Predicate;
 public class SoftMapper {
 
     private AppConfiguration config;
+    private MarkdownService markdownService;
 
 
     /**
@@ -33,9 +35,9 @@ public class SoftMapper {
                 entity.getName(),
                 entity.getCategory().getId(),
                 entity.getShortDescription(),
-                entity.getDescription(),
-                toImageLinks(entity.getId(), entity.getImageFiles()),
-                toAttacheLinks(entity.getId(), entity.getArchiveFiles())
+                markdownService.toHtml(entity.getDescription(), config.getDescDirectory()),
+                toImageLinks(entity.getImageFiles()),
+                toAttacheLinks(entity.getArchiveFiles())
         );
     }
 
@@ -57,22 +59,22 @@ public class SoftMapper {
     /**
      * Конвертирует имена изображений в ссылки.
      */
-    private List<String> toImageLinks(Long id, List<String> names) {
+    private List<String> toImageLinks(List<String> names) {
         return names.stream()
                 .filter(Objects::nonNull)
                 .filter(Predicate.not(String::isBlank))
-                .map(e -> PathUtil.normalize(Paths.get(config.getSoftImagesUrl(), id.toString(), e).toString(), true))
+                .map(e -> PathUtil.normalize(Paths.get(config.getSoftImagesUrl(), e).toString(), true))
                 .toList();
     }
 
     /**
      * Конвертирует имена файлов в ссылки для их загрузки.
      */
-    private List<String> toAttacheLinks(Long id, List<String> names) {
+    private List<String> toAttacheLinks(List<String> names) {
         return names.stream()
                 .filter(Objects::nonNull)
                 .filter(Predicate.not(String::isBlank))
-                .map(e -> PathUtil.normalize(Paths.get(config.getSoftFilesUrl(), id.toString(), e).toString(), true))
+                .map(e -> PathUtil.normalize(Paths.get(config.getSoftFilesUrl(), e).toString(), true))
                 .toList();
     }
 

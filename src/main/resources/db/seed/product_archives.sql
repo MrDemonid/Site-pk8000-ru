@@ -27,9 +27,21 @@ WHERE name='Клад';
 -- 19. Boulder dash
 -- 20. Bomber man
 -- 21. File manager
+INSERT INTO product_archives (product_id, archive_file) SELECT id, 'fm.zip' FROM products
+WHERE name = 'File manager';
+
 -- 22. Image view
+INSERT INTO product_archives (product_id, archive_file) SELECT id, 'iview.zip' FROM products
+WHERE name = 'Image view';
+
 -- 23. STC Player
+INSERT INTO product_archives (product_id, archive_file) SELECT id, 'stcpl.zip' FROM products
+WHERE name = 'STC Player';
 -- 24. Питон
+
 -- 25. Двигалка
+INSERT INTO product_archives (product_id, archive_file) SELECT id, 'dvig.zip' FROM products
+WHERE name = 'Двигалка';
+
 -- 26. Bolder dash
 -- 27. High way

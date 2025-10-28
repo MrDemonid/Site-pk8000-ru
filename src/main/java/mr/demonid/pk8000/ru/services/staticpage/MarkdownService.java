@@ -28,7 +28,6 @@ public class MarkdownService {
     private final AppConfiguration appConfiguration;
 
 
-
     public MarkdownService(AppConfiguration appConfiguration) {
 
         this.appConfiguration = appConfiguration;

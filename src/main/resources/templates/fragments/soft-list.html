@@ -23,7 +23,8 @@
 
                 <!-- Краткое описание -->
                 <div class="product-description"
-                     th:text="${soft.shortDescription ?: 'Описание отсутствует'}">
+                     th:text="${soft.shortDescription ?: 'Описание отсутствует'}"
+                     data-action="open-modal-description">
                     Краткое описание...
                 </div>
 
@@ -31,8 +32,21 @@
                 <div class="product-full-description visually-hidden" th:utext="${soft.description}"></div>
 
                 <!-- Список архивов -->
-                <div class="product-archive" th:if="${soft.archiveUrls != null and !soft.archiveUrls.isEmpty()}">
-                    <div class="custom-select-wrapper">
+                <div class="product-archive"
+                     th:if="${soft.archiveUrls != null and !soft.archiveUrls.isEmpty()}">
+
+                    <!-- Если только один файл -->
+                    <div class="single-archive"
+                         th:if="${#lists.size(soft.archiveUrls) == 1}">
+                        <a th:href="@{${soft.archiveUrls[0]}}"
+                           th:text="${soft.archiveUrls[0].substring(soft.archiveUrls[0].lastIndexOf('/') + 1)}"
+                           class="archive-link">
+                        </a>
+                    </div>
+
+                    <!-- Если файлов больше одного -->
+                    <div class="custom-select-wrapper"
+                         th:if="${#lists.size(soft.archiveUrls) > 1}">
                         <select class="archive-select" th:data-soft-id="${soft.id}">
                             <option value="" disabled selected>Скачать файл</option>
                             <option th:each="url : ${soft.archiveUrls}"
@@ -42,6 +56,7 @@
                         </select>
                         <div class="custom-arrow"></div>
                     </div>
+
                 </div>
 
             </div> <!-- /product-item -->
@@ -56,7 +71,7 @@
         </th:block>
     </div>
 
-    <!-- Модальное окно -->
+    <!-- Модальное окно для галереи картинок-->
     <div id="softModal" class="soft-modal hidden">
         <div class="soft-modal-overlay" data-action="close-modal"></div>
 
@@ -75,21 +90,20 @@
         </div>
     </div>
 
+    <!-- Модальное окно для description -->
+    <div id="descriptionModal" class="soft-modal hidden">
+        <div class="soft-modal-overlay" data-action="close-modal"></div>
+
+        <!-- внешний контейнер для скруглений и тени -->
+        <div class="description-modal-wrapper">
+            <button class="modal-close-btn" data-action="close-modal">&times;</button>
+
+            <!-- скроллируемый контент -->
+            <div class="soft-modal-content">
+                <h2 id="descriptionModalTitle" class="modal-title"></h2>
+                <div id="descriptionModalBody" class="modal-description-body"></div>
+            </div>
+        </div>
+    </div>
 
 </div>
-
-
-<!--                &lt;!&ndash; Список архивов &ndash;&gt;-->
-<!--                <div class="product-archive"-->
-<!--                     th:if="${soft.archiveUrls != null and !soft.archiveUrls.isEmpty()}">-->
-<!--                    <div class="archive-list">-->
-<!--                        <div th:each="url : ${soft.archiveUrls}">-->
-<!--                            <a th:if="${url != null}"-->
-<!--                               th:href="@{${url}}"-->
-<!--                               th:text="${url.substring(url.lastIndexOf('/') + 1)}">-->
-<!--                            </a>-->
-<!--                            <span th:if="${url == null}">файл</span>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-

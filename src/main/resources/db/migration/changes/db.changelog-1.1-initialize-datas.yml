@@ -1,0 +1,40 @@
+databaseChangeLog:
+  - changeSet:
+      id: insert-categories-1
+      author: andrey
+      sqlFile:
+        path: db/seed/categories.sql
+        relativeToChangelogFile: false
+        endDelimiter: ";"
+
+  - changeSet:
+      id: insert-products-1
+      author: andrey
+      sqlFile:
+        path: db/seed/products.sql
+        relativeToChangelogFile: false
+        endDelimiter: ";"
+
+  - changeSet:
+      id: insert-images-1
+      author: andrey
+      sqlFile:
+        path: db/seed/product_images.sql
+        relativeToChangelogFile: false
+        endDelimiter: ";"
+
+  - changeSet:
+      id: insert-archives-1
+      author: andrey
+      sqlFile:
+        path: db/seed/product_archives.sql
+        relativeToChangelogFile: false
+        endDelimiter: ";"
+
+  - changeSet:
+      id: insert-descriptions-1
+      author: andrey
+      sqlFile:
+        path: db/seed/descriptions.sql
+        relativeToChangelogFile: false
+        endDelimiter: ";"

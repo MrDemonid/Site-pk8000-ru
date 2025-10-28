@@ -22,7 +22,8 @@ document.addEventListener('change', function(event) {
 
 // Реестр действий
 const actions = {
-    "open-modal-images": handleOpenModal
+    "open-modal-images": handleOpenModal,
+    "open-modal-description": handleOpenDescription
 };
 
 // Делегирование кликов
@@ -37,6 +38,9 @@ document.addEventListener("click", e => {
 });
 
 
+/*
+Открытие модального окна галереи картинок.
+ */
 function handleOpenModal(img) {
     const item = img.closest(".product-item");
     if (!item) return;
@@ -98,6 +102,7 @@ function handleOpenModal(img) {
         modalMainImage.style.maxHeight = available + "px";
     }
 
+
     adjustImageHeight();
     window.addEventListener("resize", adjustImageHeight);
 
@@ -106,6 +111,7 @@ function handleOpenModal(img) {
         document.body.style.overflow = "";
         document.removeEventListener("keydown", onEsc);
         window.removeEventListener("resize", adjustImageHeight);
+        document.removeEventListener("keydown", onEsc);
     };
 
     const onEsc = (e) => { if(e.key === "Escape") closeModal(); };
@@ -113,5 +119,50 @@ function handleOpenModal(img) {
 
     modalClose.onclick = closeModal;
     modalOverlay.onclick = closeModal;
-
 }
+
+
+/*
+Открытие модального окна просмотра description.
+ */
+function handleOpenDescription(el) {
+    const item = el.closest(".product-item");
+    if (!item) return;
+
+    const modal = document.getElementById("descriptionModal");
+    const modalClose = modal.querySelector(".modal-close-btn");
+    const modalTitle = modal.querySelector("#descriptionModalTitle");
+    const modalBody = modal.querySelector("#descriptionModalBody");
+
+    modalTitle.textContent = item.querySelector(".product-title")?.textContent || "Без названия";
+    modalBody.innerHTML = item.querySelector(".product-full-description")?.innerHTML || "Описание отсутствует";
+
+
+    function adjustModalSize() {
+        const modal = document.getElementById("descriptionModal");
+        const wrapper = modal.querySelector(".description-modal-wrapper");
+        // ограничение по высоте окна
+        const viewportHeight = window.innerHeight * 0.9;
+        wrapper.style.maxHeight = viewportHeight + "px";
+    }
+
+    adjustModalSize();
+    window.addEventListener("resize", adjustModalSize);
+
+    modal.classList.remove("hidden");
+    document.body.style.overflow = "hidden";
+
+    const closeModal = () => {
+        modal.classList.add("hidden");
+        document.body.style.overflow = "";
+        window.removeEventListener("resize", adjustModalSize);
+        document.removeEventListener("keydown", onEsc);
+    };
+
+    const onEsc = (e) => { if (e.key === "Escape") closeModal(); };
+    document.addEventListener("keydown", onEsc);
+
+    modalClose.onclick = closeModal;
+    modal.querySelector(".soft-modal-overlay").onclick = closeModal;
+}
+

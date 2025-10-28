@@ -1,8 +1,0 @@
-databaseChangeLog:
-  - changeSet:
-      id: insert-categories-1
-      author: andrey
-      sqlFile:
-        path: db/seed/categories.sql
-        relativeToChangelogFile: false
-        endDelimiter: ";"

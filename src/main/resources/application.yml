@@ -78,13 +78,14 @@ app:
     soft-endpoint: /api/v1/soft                                   # эндпоинт для рендеринга динамически создаваемых страниц
     content-path: ${PK8000_CONTENT_PATH:./content/menu/}          # директория меню
     attache-url: ${PK8000_ATTACHE_URL:attache}                    # виртуальный каталог для аттачей статичных страниц (в html)
-    menu-icon-path: ${PK8000_APP_ICON_PATH:./content/menu-icons/} # директория иконок меню
+    menu-icon-path: ${PK8000_APP_ICON_PATH:./content/icons/menu/} # директория иконок меню
     menu-icon-url: ${PK8000_APP_ICON_URL:menu/icons}                   # виртуальный каталог иконок меню (в html)
     soft-images-path: ${PK8000_SOFT_IMAGES_PATH:./content/soft/images/}  # директория картинок софта
     soft-images-url: ${PK8000_SOFT_IMAGES_URL:soft/images}        # виртуальный каталог картинок софта (в html)
     soft-files-path: ${PK8000_SOFT_ATTACHE_PATH:./content/soft/files/} # директория файлов софта
     soft-files-url: ${PK8000_SOFT_ATTACHE_URL:soft/files}         # виртуальный каталог софта (в html)
     temp-directory: ${PK8000_TEMP_DIRECTORY:./content/temp}
+    desc-directory: ${PK8000_DESC_DIRECTORY:./content/soft/descriptions/}
 
 menu:
   meta-file: "meta.yaml"

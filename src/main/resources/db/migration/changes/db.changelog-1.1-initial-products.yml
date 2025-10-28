@@ -1,8 +1,0 @@
-databaseChangeLog:
-  - changeSet:
-      id: insert-products-1
-      author: andrey
-      sqlFile:
-        path: db/seed/products.sql
-        relativeToChangelogFile: false
-        endDelimiter: ";"

@@ -1,6 +1,6 @@
 USE catalog_db;
 
-INSERT INTO products (name, short_description, description, category_id) VALUES
+INSERT INTO products (name, short_description, description_cache, category_id) VALUES
     ('Клад', 'Сбор кладов в лабиринте.', '-', ${CATEGORY_ARCADE}),
     ('Пилот', 'Бомбардировка города.', '-', ${CATEGORY_ARCADE}),
     ('Питон (Фотон)', 'Питон охотится на кроликов.', '-', ${CATEGORY_ARCADE}),
@@ -19,7 +19,7 @@ INSERT INTO products (name, short_description, description, category_id) VALUES
     ('Binary land', '-', '-', ${CATEGORY_ARCADE}),
     ('Crux', 'Нечто среднее между тетрисом и цветными линиями.', '-', ${CATEGORY_LOGIC}),
     ('Кобра', 'Полет на боевом вертолете.', '-', ${CATEGORY_ARCADE}),
-    ('Boulder dash', 'Порт оригинального Boulder.', '-', ${CATEGORY_ARCADE}),
+    ('Boulder dash', 'Классический Boulder.', '-', ${CATEGORY_ARCADE}),
     ('Bomber man', 'Уничтожение врагов минами.', '-', ${CATEGORY_ARCADE}),
     ('File manager', 'Файловый менеджер под CM/M', '-', ${CATEGORY_TOOLS}),
     ('Image view', 'Вьюнер всех известных форматов изображений для 8-битных компьютеров.', '-', ${CATEGORY_OTHER_SOFTWARE}),

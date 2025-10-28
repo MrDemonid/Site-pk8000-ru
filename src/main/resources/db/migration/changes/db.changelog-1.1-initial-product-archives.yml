@@ -1,8 +1,0 @@
-databaseChangeLog:
-  - changeSet:
-      id: insert-archives-1
-      author: andrey
-      sqlFile:
-        path: db/seed/product_archives.sql
-        relativeToChangelogFile: false
-        endDelimiter: ";"
