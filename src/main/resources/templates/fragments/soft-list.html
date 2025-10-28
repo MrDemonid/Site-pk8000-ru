@@ -4,7 +4,10 @@
     <!-- Контент софта -->
     <main class="content-product">
         <div class="product-grid">
-            <div th:each="soft : ${softList}" class="product-item" th:data-name="${soft.name}">
+            <div th:each="soft : ${softList}"
+                 class="product-item"
+                 th:data-id="${soft.id}"
+                 th:data-name="${soft.name}">
 
                 <!-- Название -->
                 <div class="product-title" th:text="${soft.name}">Soft Name</div>
@@ -27,9 +30,6 @@
                      data-action="open-modal-description">
                     Краткое описание...
                 </div>
-
-                <!-- Скрытое полное описание (вставляем HTML) -->
-                <div class="product-full-description visually-hidden" th:utext="${soft.description}"></div>
 
                 <!-- Список архивов -->
                 <div class="product-archive"

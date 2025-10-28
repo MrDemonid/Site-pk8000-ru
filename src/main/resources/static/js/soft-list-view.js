@@ -121,36 +121,55 @@ function handleOpenModal(img) {
     modalOverlay.onclick = closeModal;
 }
 
-
-/*
-Открытие модального окна просмотра description.
- */
-function handleOpenDescription(el) {
+const descriptionCache = new Map(); // кэш загруженных описаний
+async function handleOpenDescription(el) {
     const item = el.closest(".product-item");
     if (!item) return;
+
+    const productId = item.dataset.id;
+    const productName = item.dataset.name || "Без названия";
 
     const modal = document.getElementById("descriptionModal");
     const modalClose = modal.querySelector(".modal-close-btn");
     const modalTitle = modal.querySelector("#descriptionModalTitle");
     const modalBody = modal.querySelector("#descriptionModalBody");
 
-    modalTitle.textContent = item.querySelector(".product-title")?.textContent || "Без названия";
-    modalBody.innerHTML = item.querySelector(".product-full-description")?.innerHTML || "Описание отсутствует";
+    modalTitle.textContent = productName;
+    modalBody.innerHTML = "<p class='loading'>Загрузка описания...</p>";
 
+    // показываем окно сразу, чтобы не было задержки
+    modal.classList.remove("hidden");
+    document.body.style.overflow = "hidden";
 
+    // подгружаем описание (если не в кэше)
+    let description = descriptionCache.get(productId);
+    if (!description) {
+        try {
+            const response = await fetch(`/api/v1/soft/games/description/${productId}`);
+            if (response.ok) {
+                description = await response.text();
+                descriptionCache.set(productId, description);
+            } else if (response.status === 404) {
+                description = "<p>Описание отсутствует.</p>";
+            } else {
+                description = `<p>Ошибка загрузки: ${response.status}</p>`;
+            }
+        } catch (err) {
+            description = "<p>Не удалось загрузить описание (ошибка сети).</p>";
+            console.error(err);
+        }
+    }
+
+    modalBody.innerHTML = description;
+
+    // Подгоняем размер окна
     function adjustModalSize() {
-        const modal = document.getElementById("descriptionModal");
         const wrapper = modal.querySelector(".description-modal-wrapper");
-        // ограничение по высоте окна
         const viewportHeight = window.innerHeight * 0.9;
         wrapper.style.maxHeight = viewportHeight + "px";
     }
-
     adjustModalSize();
     window.addEventListener("resize", adjustModalSize);
-
-    modal.classList.remove("hidden");
-    document.body.style.overflow = "hidden";
 
     const closeModal = () => {
         modal.classList.add("hidden");
@@ -158,11 +177,9 @@ function handleOpenDescription(el) {
         window.removeEventListener("resize", adjustModalSize);
         document.removeEventListener("keydown", onEsc);
     };
-
     const onEsc = (e) => { if (e.key === "Escape") closeModal(); };
     document.addEventListener("keydown", onEsc);
 
     modalClose.onclick = closeModal;
     modal.querySelector(".soft-modal-overlay").onclick = closeModal;
 }
-

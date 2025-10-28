@@ -1,8 +1,9 @@
 INSERT INTO catalog_db.product_description_files (
-    product_id, file_path, file_size, file_created_at, file_modified_at
+    product_id, description_cache, file_path, file_size, file_created_at, file_modified_at
 )
 SELECT
     p.id,
+    "",
     'klad.md',
     0,
     0,

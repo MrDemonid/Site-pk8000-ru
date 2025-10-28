@@ -24,6 +24,10 @@ public class SoftDescriptionFileEntity {
     @JoinColumn(name = "product_id", nullable = false, unique = true)
     private SoftEntity product;
 
+    @Lob
+    @Column(name = "description_cache")
+    private String description;
+
     @Column(name = "file_path", length = 256, nullable = false)
     private String filePath;
 

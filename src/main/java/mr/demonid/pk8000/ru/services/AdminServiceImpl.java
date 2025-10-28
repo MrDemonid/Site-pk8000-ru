@@ -89,7 +89,6 @@ public class AdminServiceImpl {
             soft.setName(request.name());
             soft.setCategory(category);
             soft.setShortDescription(request.shortDescription());
-            soft.setDescription(request.description());
 
             softRepository.save(soft);
 

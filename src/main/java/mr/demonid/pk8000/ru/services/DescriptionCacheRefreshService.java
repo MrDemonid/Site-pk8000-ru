@@ -5,7 +5,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import mr.demonid.pk8000.ru.configs.AppConfiguration;
 import mr.demonid.pk8000.ru.domain.SoftDescriptionFileEntity;
-import mr.demonid.pk8000.ru.domain.SoftEntity;
 import mr.demonid.pk8000.ru.repository.SoftDescriptionFileRepository;
 import mr.demonid.pk8000.ru.repository.SoftRepository;
 import org.springframework.stereotype.Service;
@@ -59,10 +58,7 @@ public class DescriptionCacheRefreshService {
      */
     private void deleteCache(SoftDescriptionFileEntity meta) {
         log.info("File {} not found. Delete cache.", Path.of(config.getDescDirectory(), meta.getFilePath()));
-        SoftEntity product = meta.getProduct();
-        product.setDescription("");
-        softRepository.save(product);
-
+        meta.setDescription("");
         // обновляем метаданные, чтобы гарантированно не совпали с добавляемым впоследствии файлом.
         meta.setFileModifiedAt(0L);
         meta.setFileCreatedAt(0L);
@@ -79,12 +75,7 @@ public class DescriptionCacheRefreshService {
         try {
             BasicFileAttributes attrs = Files.readAttributes(path, BasicFileAttributes.class);
             String content = Files.readString(path);
-
-            // обновляем кеш в основном продукте
-            SoftEntity product = meta.getProduct();
-            product.setDescription(content);
-            softRepository.save(product);
-
+            meta.setDescription(content);
             // обновляем метаданные
             meta.setFileModifiedAt(attrs.lastModifiedTime().toMillis());
             meta.setFileCreatedAt(attrs.creationTime().toMillis());
@@ -118,7 +109,7 @@ public class DescriptionCacheRefreshService {
 
         } catch (Exception e) {
             // считаем, что кеш устарел
-            log.error("isDescriptionCacheOutdated(). IO error: ", e);
+            log.error("isDescriptionCacheOutdated(). IO error: {}", e.getMessage());
             return CacheStatus.IO_ERROR;
         }
     }

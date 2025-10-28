@@ -374,3 +374,11 @@
     opacity: 1;
     transform: scale(1);
 }
+
+/* UI для загрузки */
+.loading {
+    color: #888;
+    text-align: center;
+    padding: 1em;
+    font-style: italic;
+}

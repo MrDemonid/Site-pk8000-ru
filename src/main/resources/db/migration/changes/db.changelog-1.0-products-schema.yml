@@ -24,9 +24,6 @@ databaseChangeLog:
                   name: short_description
                   type: VARCHAR(256)
               - column:
-                  name: description_cache
-                  type: LONGTEXT
-              - column:
                   name: category_id
                   type: BIGINT
                   constraints:

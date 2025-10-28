@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import mr.demonid.pk8000.ru.configs.AppConfiguration;
 import mr.demonid.pk8000.ru.domain.CategoryEntity;
+import mr.demonid.pk8000.ru.domain.SoftDescriptionFileEntity;
 import mr.demonid.pk8000.ru.domain.SoftEntity;
 import mr.demonid.pk8000.ru.dto.SoftRequest;
 import mr.demonid.pk8000.ru.dto.SoftResponse;
@@ -22,9 +23,8 @@ import java.util.function.Predicate;
 @Log4j2
 public class SoftMapper {
 
+    private final MarkdownService markdownService;
     private AppConfiguration config;
-    private MarkdownService markdownService;
-
 
     /**
      * Конвертируем сущность в DTO.
@@ -35,7 +35,6 @@ public class SoftMapper {
                 entity.getName(),
                 entity.getCategory().getId(),
                 entity.getShortDescription(),
-                markdownService.toHtml(entity.getDescription(), config.getDescDirectory()),
                 toImageLinks(entity.getImageFiles()),
                 toAttacheLinks(entity.getArchiveFiles())
         );
@@ -48,11 +47,17 @@ public class SoftMapper {
         return new SoftEntity(
                 response.name(),
                 response.shortDescription(),
-                response.description(),
                 categoryEntity,
                 new ArrayList<>(),
                 new ArrayList<>()
         );
+    }
+
+    public String descriptionToHtml(SoftDescriptionFileEntity entity) {
+        if (entity == null) {
+            return "";
+        }
+        return markdownService.toHtml(entity.getDescription(), config.getDescDirectory());
     }
 
 

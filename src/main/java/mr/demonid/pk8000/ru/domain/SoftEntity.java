@@ -28,10 +28,6 @@ public class SoftEntity {
     @Column(name = "short_description", length = 256)
     private String shortDescription;
 
-    @Lob
-    @Column(name = "description_cache")
-    private String description;
-
     @ManyToOne
     @JoinColumn(name = "category_id", nullable = false)
     private CategoryEntity category;
@@ -51,11 +47,10 @@ public class SoftEntity {
     private LocalDateTime createAt;
 
 
-    public SoftEntity(String name, String shortDescription, String description, CategoryEntity category, List<String> newImageFiles, List<String> newArchiveFiles) {
+    public SoftEntity(String name, String shortDescription, CategoryEntity category, List<String> newImageFiles, List<String> newArchiveFiles) {
         this.id = null;
         this.name = name;
         this.shortDescription = shortDescription;
-        this.description = description;
         this.category = category;
         this.imageFiles = newImageFiles == null ? new ArrayList<>() : newImageFiles;
         this.archiveFiles = newArchiveFiles == null ? new ArrayList<>() : newArchiveFiles;
@@ -63,7 +58,7 @@ public class SoftEntity {
 
 
     public SoftEntity() {
-        this(null, null, null, null, new ArrayList<>(), null);
+        this(null, null, null, new ArrayList<>(), null);
     }
 
 
