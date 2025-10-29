@@ -2,13 +2,13 @@ package mr.demonid.pk8000.ru.services.mappers;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import mr.demonid.pk8000.ru.configs.AppConfiguration;
+import mr.demonid.pk8000.ru.configs.AliasPaths;
 import mr.demonid.pk8000.ru.domain.CategoryEntity;
 import mr.demonid.pk8000.ru.domain.SoftDescriptionFileEntity;
 import mr.demonid.pk8000.ru.domain.SoftEntity;
 import mr.demonid.pk8000.ru.dto.SoftRequest;
 import mr.demonid.pk8000.ru.dto.SoftResponse;
-import mr.demonid.pk8000.ru.services.staticpage.MarkdownService;
+import mr.demonid.pk8000.ru.services.markdown.MarkdownService;
 import mr.demonid.pk8000.ru.util.PathUtil;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +24,8 @@ import java.util.function.Predicate;
 public class SoftMapper {
 
     private final MarkdownService markdownService;
-    private AppConfiguration config;
+    private AliasPaths aliasPaths;
+
 
     /**
      * Конвертируем сущность в DTO.
@@ -35,8 +36,8 @@ public class SoftMapper {
                 entity.getName(),
                 entity.getCategory().getId(),
                 entity.getShortDescription(),
-                toImageLinks(entity.getImageFiles()),
-                toAttacheLinks(entity.getArchiveFiles())
+                toFilesLinks(entity.getImageFiles()),
+                toFilesLinks(entity.getArchiveFiles())
         );
     }
 
@@ -57,29 +58,19 @@ public class SoftMapper {
         if (entity == null) {
             return "";
         }
-        return markdownService.toHtml(entity.getDescription(), config.getDescDirectory());
+        // TODO: сделай путь!
+        return markdownService.toHtmlSoft(entity.getDescription(), "descriptions");
     }
 
 
     /**
-     * Конвертирует имена изображений в ссылки.
+     * Конвертирует имена изображений и файлов в ссылки.
      */
-    private List<String> toImageLinks(List<String> names) {
+    private List<String> toFilesLinks(List<String> names) {
         return names.stream()
                 .filter(Objects::nonNull)
                 .filter(Predicate.not(String::isBlank))
-                .map(e -> PathUtil.normalize(Paths.get(config.getSoftImagesUrl(), e).toString(), true))
-                .toList();
-    }
-
-    /**
-     * Конвертирует имена файлов в ссылки для их загрузки.
-     */
-    private List<String> toAttacheLinks(List<String> names) {
-        return names.stream()
-                .filter(Objects::nonNull)
-                .filter(Predicate.not(String::isBlank))
-                .map(e -> PathUtil.normalize(Paths.get(config.getSoftFilesUrl(), e).toString(), true))
+                .map(e -> PathUtil.normalize(Paths.get(aliasPaths.softUrl(), e).toString(), true))
                 .toList();
     }
 

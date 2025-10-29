@@ -16,7 +16,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @AllArgsConstructor
 public class SecurityConfig {
 
-    private AppConfiguration config;
+    private AliasPaths aliasPaths;
 
 
     @Bean
@@ -33,10 +33,9 @@ public class SecurityConfig {
                                 "/css/**",
                                 "/icons/**",
                                 "/js/**",
-                                "/" + config.getMenuIconUrl() + "/**",
-                                "/" + config.getAttacheUrl() + "/**",
-                                "/" + config.getSoftImagesUrl() + "/**",
-                                "/" + config.getSoftFilesUrl() + "/**").permitAll()
+                                "/" + aliasPaths.menuIconUrl() + "/**",
+                                "/" + aliasPaths.staticUrl() + "/**",
+                                "/" + aliasPaths.softUrl() + "/**").permitAll()
                         .requestMatchers("/api/v1/admin/**").hasAnyRole("ADMIN", "DEVELOPER")
 
                         .anyRequest().authenticated()  // Остальные требуют аутентификации

@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import lombok.extern.log4j.Log4j2;
-import mr.demonid.pk8000.ru.configs.AppConfiguration;
+import mr.demonid.pk8000.ru.configs.AliasPaths;
 import mr.demonid.pk8000.ru.exceptions.ErrorCodes;
 import mr.demonid.pk8000.ru.exceptions.MenuException;
 import mr.demonid.pk8000.ru.util.PathUtil;
@@ -28,18 +28,18 @@ public class MenuService {
     private final ObjectMapper yamlMapper;
 
     private final MenuProperties menuProperties;
-    private final AppConfiguration appConfiguration;
+    private final AliasPaths aliasPaths;
 
 
-    public MenuService(MenuProperties properties, AppConfiguration appConfiguration) throws IOException {
+    public MenuService(MenuProperties properties, AliasPaths aliasPaths) throws IOException {
         this.menuProperties = properties;
-        this.appConfiguration = appConfiguration;
+        this.aliasPaths = aliasPaths;
         this.yamlMapper = new ObjectMapper(new YAMLFactory());
     }
 
     public List<MenuItem> buildMenu(boolean isAdmin) {
         List<MenuItem> menu;
-        Path root = PathUtil.getRootPath().resolve(appConfiguration.getContentPath());
+        Path root = PathUtil.getRootPath().resolve(aliasPaths.staticPath());
         try (Stream<Path> files = Files.list(root)) {
             menu = files.toList().stream()
                     .filter(Files::isDirectory)

@@ -1,22 +1,21 @@
-package mr.demonid.pk8000.ru.services.staticpage;
+package mr.demonid.pk8000.ru.services.markdown;
 
 import com.vladsch.flexmark.html.AttributeProvider;
 import com.vladsch.flexmark.html.AttributeProviderFactory;
 import com.vladsch.flexmark.html.renderer.LinkResolverContext;
-import mr.demonid.pk8000.ru.configs.AppConfiguration;
+import mr.demonid.pk8000.ru.services.markdown.linkmap.LinkMappingStrategy;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Set;
 
+
 public class ContentLinkProviderFactory implements AttributeProviderFactory {
 
-    private final String contentPath;
-    private final AppConfiguration appConfiguration;
+    private final LinkMappingStrategy strategy;
 
-    public ContentLinkProviderFactory(AppConfiguration appConfiguration, String contentPath) {
-        this.contentPath = contentPath;
-        this.appConfiguration = appConfiguration;
+    public ContentLinkProviderFactory(LinkMappingStrategy strategy) {
+        this.strategy = strategy;
     }
 
     @Override
@@ -36,7 +35,7 @@ public class ContentLinkProviderFactory implements AttributeProviderFactory {
 
     @Override
     public @NotNull AttributeProvider apply(@NotNull LinkResolverContext context) {
-        return new ContentLinkProvider(appConfiguration, contentPath);
+        return new ContentLinkProvider(strategy);
     }
 
 }

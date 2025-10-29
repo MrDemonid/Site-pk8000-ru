@@ -8,8 +8,8 @@ import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-@Log4j2
 @Service
+@Log4j2
 public class PathUtil {
 
     private static Path root;
@@ -55,6 +55,7 @@ public class PathUtil {
     public static Path toSystemPath(String path) {
         return Paths.get(path.replace("/", File.separator));
     }
+
 
     /*
     Определяем путь к папке проекта/jar-файла

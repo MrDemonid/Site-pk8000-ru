@@ -1,4 +1,4 @@
-package mr.demonid.pk8000.ru.services.staticpage;
+package mr.demonid.pk8000.ru.services.markdown;
 
 import com.vladsch.flexmark.ast.Text;
 import com.vladsch.flexmark.html.HtmlWriter;
@@ -7,6 +7,7 @@ import com.vladsch.flexmark.html.renderer.NodeRendererContext;
 import com.vladsch.flexmark.html.renderer.NodeRenderingHandler;
 
 import java.util.Set;
+
 
 /**
  * Подмена текста MARKDOWN на спец стили.

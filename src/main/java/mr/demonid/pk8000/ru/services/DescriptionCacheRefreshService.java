@@ -3,17 +3,22 @@ package mr.demonid.pk8000.ru.services;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import mr.demonid.pk8000.ru.configs.AppConfiguration;
+import mr.demonid.pk8000.ru.configs.AliasPaths;
 import mr.demonid.pk8000.ru.domain.SoftDescriptionFileEntity;
 import mr.demonid.pk8000.ru.repository.SoftDescriptionFileRepository;
-import mr.demonid.pk8000.ru.repository.SoftRepository;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.safety.Safelist;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -29,8 +34,7 @@ public class DescriptionCacheRefreshService {
     }
 
     private final SoftDescriptionFileRepository fileRepository;
-    private final SoftRepository softRepository;
-    private final AppConfiguration config;
+    private final AliasPaths aliasPaths;
 
 
     @Transactional
@@ -57,7 +61,7 @@ public class DescriptionCacheRefreshService {
      * Удаление описания файла из кеша продукта.
      */
     private void deleteCache(SoftDescriptionFileEntity meta) {
-        log.info("File {} not found. Delete cache.", Path.of(config.getDescDirectory(), meta.getFilePath()));
+        log.info("File {} not found. Delete cache.", Path.of(aliasPaths.softPath(), meta.getFilePath()));
         meta.setDescription("");
         // обновляем метаданные, чтобы гарантированно не совпали с добавляемым впоследствии файлом.
         meta.setFileModifiedAt(0L);
@@ -71,7 +75,7 @@ public class DescriptionCacheRefreshService {
      */
     private void updateCache(SoftDescriptionFileEntity meta) {
         log.info("File changed, updating cache for product {}", meta.getProduct().getName());
-        Path path = Path.of(config.getDescDirectory(), meta.getFilePath());
+        Path path = Path.of(aliasPaths.softPath(), meta.getFilePath());
         try {
             BasicFileAttributes attrs = Files.readAttributes(path, BasicFileAttributes.class);
             String content = Files.readString(path);
@@ -92,7 +96,7 @@ public class DescriptionCacheRefreshService {
      */
     private CacheStatus isDescriptionCacheOutdated(SoftDescriptionFileEntity meta) {
         try {
-            Path path = Path.of(config.getDescDirectory(), meta.getFilePath());
+            Path path = Path.of(aliasPaths.softPath(), meta.getFilePath());
             if (!Files.exists(path)) {
                 log.warn("isDescriptionCacheOutdated(). File not found: {}", meta.getFilePath());
                 return CacheStatus.FILE_NOT_FOUND;
@@ -117,6 +121,27 @@ public class DescriptionCacheRefreshService {
 
     private void showTime(long time) {
         log.info("Cache refresh complete at {} milliseconds", time);
+    }
+
+
+    /**
+     * Очищает HTML от потенциально опасного кода.
+     * @param html Исходный HTML.
+    //            String clean = cleanHtml(html);
+     */
+    public String cleanHtml(String html) {
+        Safelist safe = Safelist.relaxed().addAttributes("span", "style");
+        Document doc = Jsoup.parseBodyFragment(html);
+        for (Element element : doc.select("[style]")) {
+            String style = element.attr("style");
+            // удаляем любой стиль, кроме цветовых
+            String cleaned = Arrays.stream(style.split(";"))
+                    .map(String::trim)
+                    .filter(s -> s.matches("(?i)^(color|background-color)\\s*:\\s*#?[a-z0-9()%,\\s]+$"))
+                    .collect(Collectors.joining("; "));
+            element.attr("style", cleaned);
+        }
+        return Jsoup.clean(doc.body().html(), safe);
     }
 
 }

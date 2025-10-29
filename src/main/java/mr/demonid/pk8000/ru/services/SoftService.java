@@ -39,7 +39,7 @@ public class SoftService {
 
 
     public String getDescription(Long productId) {
-        Optional<SoftDescriptionFileEntity> entity = softDescriptionFileRepository.findById(productId);
+        Optional<SoftDescriptionFileEntity> entity = softDescriptionFileRepository.findByProduct_Id(productId);
         return entity.map(softMapper::descriptionToHtml).orElse(null);
     }
 
