@@ -147,10 +147,8 @@ async function handleOpenDescription(el) {
 
     const modal = document.getElementById("descriptionModal");
     const modalClose = modal.querySelector(".modal-close-btn");
-    const modalTitle = modal.querySelector("#descriptionModalTitle");
     const modalBody = modal.querySelector("#descriptionModalBody");
 
-    modalTitle.textContent = productName;
     modalBody.innerHTML = "<p class='loading'>Загрузка описания...</p>";
 
     // показываем окно сразу, чтобы не было задержки

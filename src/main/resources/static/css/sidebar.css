@@ -174,3 +174,53 @@
 .clear-btn:hover {
     color: #ef4444;             /* более яркий при наведении */
 }
+
+
+/* ============= Пункт "Выйти" ============ */
+.menu-logout-form {
+    margin-top: 10px;
+    padding: 0 18px;
+}
+
+.menu-logout-btn {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 10px 0;
+    background: none;
+    border: none;
+    color: #f87171;             /* спокойный красный, в духе Tailwind Red-400 */
+    font-size: 15px;
+    text-align: left;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+/* Иконка в кнопке */
+.menu-logout-btn .menu-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    filter: brightness(0.9);
+}
+
+/* Наведение */
+.menu-logout-btn:hover {
+    background-color: #1e293b;  /* в твоей гамме hover */
+    color: #ef4444;             /* ярко-красный Red-500 */
+}
+
+/* Акцент на иконке при hover */
+.menu-logout-btn:hover .menu-icon {
+    filter: brightness(1.2);
+}
+
+/* Если хочется отделить визуально пункт выхода от остального меню */
+.menu-logout-form::before {
+    content: '';
+    display: block;
+    height: 1px;
+    margin: 8px 0 12px;
+    background-color: rgba(255, 255, 255, 0.08);
+}

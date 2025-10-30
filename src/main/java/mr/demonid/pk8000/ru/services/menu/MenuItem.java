@@ -22,7 +22,7 @@ public class MenuItem {
 
     // поле ввода
     private String menuId;          // для идентификатора поля ввода, чтобы знать к каким меню применять его значение
-    private String type;            // для поля ввода = "input"
+    private String type;            // "input", "logout"
     private String placeholder;     // значение по умолчанию
 
     private String searchId;        // ссылка на menuId поля ввода строки поиска

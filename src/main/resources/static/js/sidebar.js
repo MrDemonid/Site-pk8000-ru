@@ -177,7 +177,6 @@ function loadContentAjax(anchor) {
         .then(r => r.text())
         .then(html => {
             document.getElementById('content').innerHTML = html;
-            // !!!!!!
             restoreActiveMenu();
             history.pushState(null, '', url);
             window.scrollTo(0, 0);

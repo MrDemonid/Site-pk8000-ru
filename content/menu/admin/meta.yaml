@@ -9,4 +9,7 @@ children:
   - title: "Остальное"
     endpoint: "/api/v1/admin/documents"
     adminOnly: true
-
+  - title: "Выход"
+    type: "logout"
+    endpoint: "/logout"
+    adminOnly: true

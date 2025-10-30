@@ -64,44 +64,35 @@
     color: #555;
 }
 
+/* ====================== Краткое описание продукта (и кнопка по совместительству) =================== */
+
 .product-description {
     flex-grow: 1;
     display: flex;
     align-items: flex-start;
     justify-content: center;
-    padding: 12px;
-    border-radius: 6px;
-    background-color: transparent;
-    transition: background-color 0.2s ease, color 0.2s ease;
+    padding: 10px 12px;
+    border-radius: 8px;
+    background-color: #fff;
+    border: 1px solid #ccc;
     cursor: pointer;
+    font-size: 0.95em;
+    margin-top: 8px; /* 🔹 равен отступу у списка файлов */
+    transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s, color 0.2s;
 }
 
 .product-description:hover {
-    background-color: rgba(0, 123, 255, 0.1);
+    border-color: #3b82f6;
+    box-shadow: 0 0 5px rgba(59, 130, 246, 0.5);
+    background-color: rgba(59, 130, 246, 0.05);
     color: #0056b3;
 }
+
 
 .visually-hidden {
     display: none !important;
 }
 
-
-/* Адаптивные стили для разных экранов */
-@media (max-width: 992px) {
-    .product-item {
-        width: calc(33.33% - 10px); /* Три товара в строке */
-    }
-}
-@media (max-width: 768px) {
-    .product-item {
-        width: calc(50% - 10px); /* Два товара в строке */
-    }
-}
-@media (max-width: 576px) {
-    .product-item {
-        width: 100%; /* Один товар в строке для мобильных устройств */
-    }
-}
 
 /* Контент товаров */
 .content-product {
@@ -192,7 +183,35 @@
     transform: translateY(-50%) rotate(180deg);
 }
 
+/* ========================== одиночный файл в аттаче =========================== */
 
+.single-archive {
+    display: block;
+    width: 100%;             /* Растягиваем блок на всю ширину родителя */
+    text-align: center;
+    margin-top: 8px;         /* Отступ сверху, как у select */
+}
+
+.single-archive .archive-link {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #fff;
+    font-size: 14px;
+    color: #0056b3;
+    text-decoration: none;
+    transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s, color 0.2s;
+}
+
+.single-archive .archive-link:hover {
+    border-color: #3b82f6;
+    box-shadow: 0 0 5px rgba(59, 130, 246, 0.5);
+    background-color: rgba(59, 130, 246, 0.05);
+    color: #003a80;
+}
 
 
 /*!*===================== Модалка с картинками ==================*!*/
@@ -418,3 +437,27 @@ pre {
     -webkit-font-smoothing: antialiased;
     box-shadow: inset 0 1px 0 rgba(255,255,255,0.02);
 }
+
+
+/* ================== Адаптивные стили для разных экранов ================= */
+
+@media (max-width: 992px) {
+    .product-item {
+        width: calc(33.33% - 10px); /* Три товара в строке */
+    }
+}
+@media (max-width: 768px) {
+    .product-item {
+        width: calc(50% - 10px); /* Два товара в строке */
+    }
+}
+@media (max-width: 576px) {
+    .product-item {
+        width: 100%; /* Один товар в строке для мобильных устройств */
+    }
+    .product-description {
+        margin-top: 10px;
+    }
+}
+
+

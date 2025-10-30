@@ -41,13 +41,25 @@
         <span th:text="${item.title}"></span>
     </a>
 
-    <a th:if="${item.type != 'input' and (item.children == null or #lists.isEmpty(item.children))}"
+    <a th:if="${item.type == null and (item.children == null or #lists.isEmpty(item.children))}"
        th:href="@{${item.endpoint}}"
        onclick="return loadContentAjax(this)"
        th:attr="data-title=${item.title}, data-search-id=${item.searchId}">
         <img th:if="${item.icon != null}" th:src="@{/menu/icons/{icon}(icon=${item.icon})}" alt="" class="menu-icon">
         <span th:text="${item.title}"></span>
     </a>
+
+    <!-- Пункт выхода -->
+    <form th:if="${item.type == 'logout'}" th:action="@{/logout}" method="post" class="menu-logout-form">
+<!--        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>-->
+        <button type="submit" class="menu-logout-btn">
+            <img th:if="${item.icon != null}"
+                 th:src="@{/menu/icons/{icon}(icon=${item.icon})}"
+                 alt="⎋"
+                 class="menu-icon" />
+            <span th:text="${item.title}">Выйти</span>
+        </button>
+    </form>
 
     <ul class="submenu"
         th:if="${item.children != null and #lists.size(item.children) > 0}">
