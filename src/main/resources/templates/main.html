@@ -15,12 +15,19 @@
 </head>
 <body>
 
+
+<th:block th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+<!--    Подгружаем скрипты для админки-->
+    <script src="/js/soft-list-edit.js" defer></script>
+</th:block>
+
+
 <!-- Меню -->
 <div th:replace="~{fragments/sidebar :: sidebar(menu=${menu})}"></div>
 
+
 <!-- Контент -->
 <div style="margin-left:260px; padding:20px;">
-
     <!-- Заглушка (видна только если нет path) -->
     <div id="welcome" th:if="${initialPath == null}">
         <h1>Добро пожаловать</h1>

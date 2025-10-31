@@ -3,7 +3,7 @@ package mr.demonid.pk8000.ru.controller.api;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import mr.demonid.pk8000.ru.dto.PageDTO;
-import mr.demonid.pk8000.ru.dto.SoftRequest;
+import mr.demonid.pk8000.ru.dto.SoftCreateRequest;
 import mr.demonid.pk8000.ru.dto.SoftResponse;
 import mr.demonid.pk8000.ru.dto.SoftUpdateRequest;
 import mr.demonid.pk8000.ru.dto.filters.SoftFilter;
@@ -19,7 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 @AllArgsConstructor
 @Log4j2
 @RequestMapping("/api/v1/admin")
-public class ApiAdminController {
+public class AdminApiController {
 
     private AdminServiceImpl adminService;
     private SoftService softService;
@@ -40,7 +40,7 @@ public class ApiAdminController {
      */
     @PreAuthorize("hasAnyRole('ADMIN', 'DEVELOPER')")
     @PostMapping("/create")
-    public ResponseEntity<?> createProduct(@RequestBody SoftRequest product) {
+    public ResponseEntity<?> createProduct(@RequestBody SoftCreateRequest product) {
         adminService.createProduct(product);
         return ResponseEntity.ok().build();
     }

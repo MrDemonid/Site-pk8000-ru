@@ -26,9 +26,7 @@ public class SoftSpecification {
                 String pattern = "%" + filter.getSearchText().toLowerCase() + "%";
                 Predicate namePredicate = criteriaBuilder.like(criteriaBuilder.lower(root.get("name")), pattern);
                 Predicate shortDescPredicate = criteriaBuilder.like(criteriaBuilder.lower(root.get("shortDescription")), pattern);
-                Predicate descPredicate = criteriaBuilder.like(criteriaBuilder.lower(root.get("description")), pattern);
-
-                predicates.add(criteriaBuilder.or(namePredicate, shortDescPredicate, descPredicate));
+                predicates.add(criteriaBuilder.or(namePredicate, shortDescPredicate));
             }
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
         };

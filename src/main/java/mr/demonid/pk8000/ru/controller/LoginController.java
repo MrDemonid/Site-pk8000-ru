@@ -17,7 +17,7 @@ public class LoginController {
     private final OAuth2ClientProperties oAuth2ClientProperties;
 
 
-    @GetMapping("/login")
+    @GetMapping("/enter")
     public String login() {
         // Получаем первый зарегистрированный клиент
         String registrationId = oAuth2ClientProperties.getRegistration()

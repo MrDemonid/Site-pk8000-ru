@@ -1,3 +1,5 @@
+/* ======================== soft-list-view.js ======================== */
+
 // Реакция на выбор файла в выпадающем списке.
 // Чтобы браузер не воспринял как переход на новую страницу (тогда существующая моргнет при перерисовке).
 document.addEventListener('change', function (event) {
@@ -20,7 +22,7 @@ document.addEventListener('change', function (event) {
 
 
 // Реестр действий
-const actions = {
+window.actions = {
     "open-modal-images": handleOpenModal,
     "open-modal-description": handleOpenDescription
 };

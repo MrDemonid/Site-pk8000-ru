@@ -1,4 +1,4 @@
-<!-- fragments/soft-list.html -->
+<!-- fragments/soft-list-edit.html -->
 <div th:fragment="softListEdit(softList, categories)">
     <form id="soft-list-form">
 
@@ -7,7 +7,6 @@
             <div class="col name">Название</div>
             <div class="col category">Категория</div>
             <div class="col short-desc">Краткое описание</div>
-            <div class="col description">Описание</div>
             <div class="col archives">Файлы</div>
             <div class="col actions">Действия</div>
         </div>
@@ -17,38 +16,52 @@
             <input type="text" th:name="'softList[' + ${iterStat.index} + '].name'"
                    th:value="${soft.name}" placeholder="Название" class="soft-field name"/>
 
+<!--            <select th:name="'softList[' + ${iterStat.index} + '].category'" class="soft-field category">-->
+<!--                <option th:each="cat : ${categories}"-->
+<!--                        th:value="${cat.ordinal() + 1}"-->
+<!--                        th:text="${cat.displayName}"-->
+<!--                        th:selected="${cat.ordinal() + 1 == soft.category}"></option>-->
+<!--            </select>-->
             <select th:name="'softList[' + ${iterStat.index} + '].category'" class="soft-field category">
                 <option th:each="cat : ${categories}"
-                        th:value="${cat.ordinal()}"
+                        th:value="${menu.getCategoryId(cat)}"
                         th:text="${cat.displayName}"
-                        th:selected="${cat.ordinal() == soft.category}"></option>
+                        th:selected="${menu.getCategoryId(cat) == soft.category}">
+                </option>
             </select>
 
             <input type="text" th:name="'softList[' + ${iterStat.index} + '].shortDescription'"
                    th:value="${soft.shortDescription}" placeholder="Краткое описание" class="soft-field short-desc"/>
 
-            <textarea th:name="'softList[' + ${iterStat.index} + '].description'"
-                      rows="3" class="soft-field description">[[${soft.description}]]</textarea>
-
             <div class="soft-buttons archives">
-                <button type="button" class="add-image" th:data-index="${iterStat.index}">
+                <button type="button" class="add-image" data-action="add-image"  th:data-index="${iterStat.index}" title="Изображения">
                     <img src="/menu/icons/gallery.png" alt="images"/>
                 </button>
-                <button type="button" class="add-archive" th:data-index="${iterStat.index}">
+                <button type="button" class="add-archive" data-action="add-archive"  th:data-index="${iterStat.index}" title="Архивы">
                     <img src="/menu/icons/archive.png" alt="archive"/>
+                </button>
+                <button type="button" class="add-description" data-action="add-description" th:data-index="${iterStat.index}" title="Описание">
+                    <img src="/menu/icons/description.png" alt="description"/>
                 </button>
             </div>
 
             <div class="soft-buttons actions">
-                <button type="button" class="save-soft" th:data-index="${iterStat.index}">
+                <button type="button" class="save-soft" data-action="save-soft" th:data-index="${iterStat.index}" title="Сохранить">
                     <img src="/menu/icons/save.png" alt="save"/>
                 </button>
-                <button type="button" class="delete-soft" th:data-index="${iterStat.index}">
+                <button type="button" class="delete-soft" data-action="delete-soft" th:data-index="${iterStat.index}" title="Удалить">
                     <img src="/menu/icons/delete.png" alt="delete"/>
                 </button>
             </div>
         </div>
     </form>
-</div>
 
+    <!-- пагинация -->
+    <div class="pagination-container">
+        <div th:replace="~{fragments/pagination :: pageSizeSelector(pageData=${pageData})}"></div>
+        <th:block th:if="${pageData.totalPages > 1}">
+            <div th:replace="~{fragments/pagination :: paginationControls(pageData=${pageData}, pageButtons=${pageButtons})}"></div>
+        </th:block>
+    </div>
+</div>
 

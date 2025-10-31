@@ -6,7 +6,7 @@ import mr.demonid.pk8000.ru.configs.AliasPaths;
 import mr.demonid.pk8000.ru.configs.AppConfiguration;
 import mr.demonid.pk8000.ru.domain.CategoryEntity;
 import mr.demonid.pk8000.ru.domain.SoftEntity;
-import mr.demonid.pk8000.ru.dto.SoftRequest;
+import mr.demonid.pk8000.ru.dto.SoftCreateRequest;
 import mr.demonid.pk8000.ru.dto.SoftUpdateRequest;
 import mr.demonid.pk8000.ru.exceptions.ErrorCodes;
 import mr.demonid.pk8000.ru.exceptions.ServiceException;
@@ -47,7 +47,7 @@ public class AdminServiceImpl {
      * их можно добавить потом.
      */
     @Transactional
-    public void createProduct(SoftRequest request) {
+    public void createProduct(SoftCreateRequest request) {
         if (request == null || request.category() == null) {
             throw new ServiceException(ErrorCodes.BAD_DATA, "Поступили некорректные данные");
         }
@@ -70,6 +70,7 @@ public class AdminServiceImpl {
     /**
      * Обновление информации о продукте.
      * Кроме изображений и архивов, для них отдельные API.
+     * test!!!!
      */
     @Transactional
     public void updateProduct(SoftUpdateRequest request) {
@@ -90,6 +91,8 @@ public class AdminServiceImpl {
             soft.setShortDescription(request.shortDescription());
 
             softRepository.save(soft);
+
+            log.info("Update product [ id = {}, name = '{}', short desc = '{}', category = '{}']", request.id(), request.name(), request.shortDescription(), category.getName());
 
         } catch (ServiceException e) {
             throw e;

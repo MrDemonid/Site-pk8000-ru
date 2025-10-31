@@ -1,5 +1,6 @@
 package mr.demonid.pk8000.ru.configs;
 
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,8 +28,10 @@ public class SecurityConfig {
                 .cors(Customizer.withDefaults()) // Разрешаем CORS
                 .csrf(AbstractHttpConfigurer::disable)                      // Отключаем CSRF для запросов API
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/", "/index", "/login").permitAll()
+                        .requestMatchers("/", "/index", "/enter", "/error").permitAll()
                         .requestMatchers(
+                                "/api/v1/page",
+                                "/api/v1/soft",
                                 "/api/v1/page/**",
                                 "/api/v1/soft/**").permitAll()
                         .requestMatchers(HttpMethod.GET,
@@ -44,7 +47,6 @@ public class SecurityConfig {
                 )
                 .anonymous(Customizer.withDefaults()) // Включение анонимных пользователей
                 .oauth2Login(oauth2 -> oauth2
-                        .loginPage("/login")
                         .userInfoEndpoint(userInfo -> userInfo
                                 .oidcUserService(new KeycloakOidcUserService())
                         )
@@ -56,8 +58,12 @@ public class SecurityConfig {
                                 .invalidateHttpSession(true)
                                 .deleteCookies("JSESSIONID", "ANON_ID")     // удаляем нужные куки
                                 .clearAuthentication(true)
-                );
-
+                )
+                .exceptionHandling(ex -> ex
+                        .authenticationEntryPoint((request, response, authException) -> {
+                            // сообщаем, что такой страницы нет
+                            response.sendError(HttpServletResponse.SC_NOT_FOUND);
+                        }));
 
         return http.build();
     }

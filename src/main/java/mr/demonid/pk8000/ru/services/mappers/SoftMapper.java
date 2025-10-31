@@ -6,7 +6,7 @@ import mr.demonid.pk8000.ru.configs.AliasPaths;
 import mr.demonid.pk8000.ru.domain.CategoryEntity;
 import mr.demonid.pk8000.ru.domain.SoftDescriptionFileEntity;
 import mr.demonid.pk8000.ru.domain.SoftEntity;
-import mr.demonid.pk8000.ru.dto.SoftRequest;
+import mr.demonid.pk8000.ru.dto.SoftCreateRequest;
 import mr.demonid.pk8000.ru.dto.SoftResponse;
 import mr.demonid.pk8000.ru.services.markdown.MarkdownService;
 import mr.demonid.pk8000.ru.util.PathUtil;
@@ -44,7 +44,7 @@ public class SoftMapper {
     /**
      * Создает новую сущность.
      */
-    public SoftEntity toEntity(SoftRequest response, CategoryEntity categoryEntity) {
+    public SoftEntity toEntity(SoftCreateRequest response, CategoryEntity categoryEntity) {
         return new SoftEntity(
                 response.name(),
                 response.shortDescription(),

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>500 — Внутренняя ошибка сервера</title>
+    <style>
+        body { background-color: #111827; color: #e5e7eb; font-family: sans-serif; margin:0; }
+        .error-container { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 90vh; text-align: center; padding: 2em; }
+        .error-code { font-size: 5rem; color: #facc15; margin-bottom: .5em; }
+        .error-title { font-size: 2rem; margin-bottom: .5em; }
+        .error-text { color: #9ca3af; margin-bottom: 1.5em; }
+        .button { background-color: #fbbf24; color: #111827; padding: 0.6em 1.5em; border-radius: 8px; text-decoration: none; transition: background-color 0.2s; }
+        .button:hover { background-color: #b45309; color: white; }
+        .error-details { margin-top: 1.5em; font-size: 0.9rem; color: #6b7280; text-align: left; max-width: 480px; }
+        svg { width: 160px; height: auto; margin-bottom: 1em; opacity: 0.9; }
+    </style>
+</head>
+<body>
+<div class="error-container">
+    <svg viewBox="0 0 24 24" fill="none" stroke="#facc15" stroke-width="1.5">
+        <circle cx="12" cy="12" r="10"/>
+        <path d="M12 8v4m0 4h.01"/>
+    </svg>
+    <div class="error-code">500</div>
+    <div class="error-title">Внутренняя ошибка</div>
+    <div class="error-text">Произошла непредвиденная ошибка на сервере.</div>
+    <a href="/" class="button">На главную</a>
+    <div class="error-details">
+        <p>URL: <span th:text="${path}"></span></p>
+        <p>Статус: <span th:text="${status}"></span></p>
+        <p>Метод: <span th:text="${method}"></span></p>
+        <p>Ошибка: <span th:text="${error}"></span></p>
+        <p>Сообщение: <span th:text="${message}"></span></p>
+        <p>Время: <span th:text="${#dates.format(#dates.createNow(), 'HH:mm:ss dd.MM.yyyy')}"></span></p>
+    </div>
+</div>
+</body>
+</html>

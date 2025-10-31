@@ -1,162 +1,119 @@
-/* Контейнер формы */
+/* ======= Общие настройки ======= */
 #soft-list-form {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr 1.6fr 0.6fr auto;
     width: 100%;
+    row-gap: 4px; /* было 6px — чуть плотнее */
     font-size: 14px;
+    color: #1f2937;
 }
 
-/* Заголовок и строки — одинаковая структура */
-.soft-header,
-.soft-item-inline {
-    display: flex;
-    align-items: flex-start;
-    border-bottom: 1px solid #e0e0e0;
-    padding: 6px 4px;
-    gap: 8px;
-}
-
-/* Заголовок */
+/* ======= Заголовок ======= */
 .soft-header {
+    display: contents;
+}
+
+.soft-header > .col {
+    background: #f3f4f6;
+    border-bottom: 2px solid #d1d5db;
     font-weight: 600;
-    background: #f5f5f5;
-    border-bottom: 2px solid #ccc;
+    padding: 6px 8px; /* было 8px 10px — чуть меньше */
+    border-radius: 6px 6px 0 0;
+    text-align: left;
+    color: #374151;
 }
 
-/* Распределение ширины */
-.col.name,
-.soft-field.name { flex: 1.2; min-width: 100px; }
-
-.col.category,
-.soft-field.category { flex: 0.8; min-width: 80px; }
-
-.col.short-desc,
-.soft-field.short-desc { flex: 1.5; min-width: 150px; }
-
-.col.description,
-.soft-field.description { flex: 2; min-width: 200px; }
-
-/*.col.images,*/
-/*.soft-buttons.images { flex: 0.5; justify-content: center; }*/
-
-/*.col.archives,*/
-/*.soft-buttons.archives { flex: 0.5; justify-content: center; }*/
-
-.col.actions,
-.soft-buttons.actions { flex: 0 0 auto; margin-left: auto; }
-
-/* Поля */
-.soft-field {
-    width: 100%;
-    padding: 4px 6px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 14px;
+/* ======= Строки ======= */
+.soft-item-inline {
+    display: contents;
 }
 
-.soft-field.description {
-    resize: vertical;
-    min-height: 60px;
+.soft-field,
+.soft-buttons {
+    padding: 4px 6px; /* было 6px 8px */
+    box-sizing: border-box;
+    border: 1px solid #d1d5db;
+    border-radius: 5px;
+    background: #ffffff;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+    min-height: 28px; /* гарантирует удобную кликабельность */
 }
 
-/* Кнопки */
+/* Инпуты и селекты */
+.soft-field:focus,
+.soft-field:hover {
+    border-color: #60a5fa;
+    background-color: #f0f9ff;
+    outline: none;
+}
+
+/* Чередование строк */
+.soft-item-inline:nth-of-type(even) .soft-field,
+.soft-item-inline:nth-of-type(even) .soft-buttons {
+    background-color: #f9fafb;
+}
+
+/* ======= Кнопки ======= */
 .soft-buttons {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 6px; /* было 8px */
+    justify-content: center;
+    border: none;
 }
 
 .soft-buttons button {
     border: none;
     background: none;
-    padding: 2px;
+    padding: 3px; /* было 4px */
+    border-radius: 5px;
     cursor: pointer;
-    transition: transform 0.1s ease;
+    transition: transform 0.1s ease, background-color 0.2s ease;
 }
 
 .soft-buttons button:hover {
-    transform: scale(1.1);
+    transform: scale(1.08);
+    background-color: #e5e7eb;
 }
 
 .soft-buttons img {
-    width: 20px;
-    height: 20px;
+    width: 18px; /* было 20px */
+    height: 18px;
 }
 
-/* Чередование строк */
-.soft-item-inline:nth-child(even) {
-    background-color: #fafafa;
+/* ======= Пагинация ======= */
+.pagination-container {
+    margin-top: 8px; /* было 10px */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px;
+    border-top: 1px solid #e5e7eb;
 }
 
-/* Адаптивность */
-@media (max-width: 1000px) {
-    .soft-header, .soft-item-inline {
-        flex-wrap: wrap;
-        gap: 4px;
+/* ======= Адаптивность ======= */
+@media (max-width: 900px) {
+    #soft-list-form {
+        grid-template-columns: 1fr;
     }
-    .col.actions, .soft-buttons.actions {
-        width: 100%;
+
+    .soft-header {
+        display: none;
+    }
+
+    .soft-field,
+    .soft-buttons {
+        margin-bottom: 4px;
+    }
+
+    .soft-buttons.actions {
         justify-content: flex-end;
     }
+
+    .soft-item-inline {
+        display: block;
+        border-bottom: 1px solid #e5e7eb;
+        padding-bottom: 8px;
+        margin-bottom: 8px;
+    }
 }
-
-/*!* Общая обёртка строки *!*/
-/*.soft-item-inline {*/
-/*    display: flex;*/
-/*    align-items: flex-start;*/
-/*    gap: 10px;*/
-/*    margin-bottom: 8px;*/
-/*}*/
-
-/*!* Поля *!*/
-/*.soft-field {*/
-/*    padding: 4px 6px;*/
-/*    border: 1px solid #ccc;*/
-/*    border-radius: 4px;*/
-/*    font-size: 14px;*/
-/*}*/
-
-/*!* Размеры полей *!*/
-/*.soft-field.name {*/
-/*    width: 120px;*/
-/*}*/
-/*.soft-field.category {*/
-/*    width: 120px;*/
-/*}*/
-/*.soft-field.short-desc {*/
-/*    width: 150px;*/
-/*}*/
-/*.soft-field.description {*/
-/*    width: 250px;*/
-/*    resize: vertical;*/
-/*}*/
-
-/*!* Кнопки с иконками *!*/
-/*.soft-buttons {*/
-/*    display: flex;*/
-/*    align-items: center;*/
-/*    gap: 4px;*/
-/*}*/
-
-/*.soft-buttons button {*/
-/*    padding: 2px;*/
-/*    border: none;*/
-/*    background: none;*/
-/*    cursor: pointer;*/
-/*}*/
-
-/*.soft-buttons button img {*/
-/*    width: 20px;*/
-/*    height: 20px;*/
-/*}*/
-
-/*!* Мелкая адаптация *!*/
-/*@media (max-width: 1000px) {*/
-/*    .soft-field.description {*/
-/*        width: 180px;*/
-/*    }*/
-/*    .soft-field.short-desc {*/
-/*        width: 120px;*/
-/*    }*/
-/*}*/

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>403 — Доступ запрещён</title>
+    <style>
+        body { background-color: #111827; color: #e5e7eb; font-family: sans-serif; margin:0; }
+        .error-container { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 90vh; text-align: center; padding: 2em; }
+        .error-code { font-size: 5rem; color: #f87171; margin-bottom: .5em; }
+        .error-title { font-size: 2rem; margin-bottom: .5em; }
+        .error-text { color: #9ca3af; margin-bottom: 1.5em; }
+        .button { background-color: #ef4444; color: white; padding: 0.6em 1.5em; border-radius: 8px; text-decoration: none; transition: background-color 0.2s; }
+        .button:hover { background-color: #b91c1c; }
+        .error-details { margin-top: 1.5em; font-size: 0.9rem; color: #6b7280; text-align: left; max-width: 480px; }
+        svg { width: 160px; height: auto; margin-bottom: 1em; opacity: 0.9; }
+    </style>
+</head>
+<body>
+<div class="error-container">
+    <svg viewBox="0 0 24 24" fill="none" stroke="#f87171" stroke-width="1.5">
+        <circle cx="12" cy="12" r="10"/>
+        <line x1="12" y1="6" x2="12" y2="12"/>
+        <line x1="12" y1="12" x2="16" y2="14"/>
+    </svg>
+    <div class="error-code">403</div>
+    <div class="error-title">Доступ запрещён</div>
+    <div class="error-text">У вас нет прав для просмотра этой страницы.</div>
+    <a href="/" class="button">На главную</a>
+    <div class="error-details">
+        <p>URL: <span th:text="${path}"></span></p>
+        <p>Статус: <span th:text="${status}"></span></p>
+        <p>Метод: <span th:text="${method}"></span></p>
+        <p>Ошибка: <span th:text="${error}"></span></p>
+        <p>Сообщение: <span th:text="${message}"></span></p>
+        <p>Время: <span th:text="${#dates.format(#dates.createNow(), 'HH:mm:ss dd.MM.yyyy')}"></span></p>
+    </div>
+</div>
+</body>
+</html>
