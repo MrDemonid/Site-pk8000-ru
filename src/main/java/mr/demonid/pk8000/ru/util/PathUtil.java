@@ -57,6 +57,18 @@ public class PathUtil {
     }
 
 
+    /**
+     * Извлекает имя файла из пути.
+     * @param path Путь (абсолютный или относительный).
+     * @return Имя файла, или пустую строку.
+     */
+    public static String extractFileName(String path) {
+        if (path == null || path.isBlank()) return "";
+        Path p = Paths.get(path);
+        return p.getFileName().toString();
+    }
+
+
     /*
     Определяем путь к папке проекта/jar-файла
      */
@@ -69,5 +81,6 @@ public class PathUtil {
             root = Paths.get(System.getProperty("user.dir")).toAbsolutePath();
         }
     }
+
 
 }

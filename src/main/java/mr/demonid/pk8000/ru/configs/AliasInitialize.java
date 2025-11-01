@@ -15,6 +15,9 @@ public class AliasInitialize {
                 map.get("static-path"),
                 map.get("soft-url"),
                 map.get("soft-path"),
+                map.get("soft-images-subdir"),
+                map.get("soft-files-subdir"),
+                map.get("soft-desc-subdir"),
                 map.get("menu-icon-url"),
                 map.get("menu-icon-path")
         );

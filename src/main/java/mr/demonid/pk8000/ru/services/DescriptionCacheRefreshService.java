@@ -61,7 +61,7 @@ public class DescriptionCacheRefreshService {
      * Удаление описания файла из кеша продукта.
      */
     private void deleteCache(SoftDescriptionFileEntity meta) {
-        log.info("File {} not found. Delete cache.", Path.of(aliasPaths.softPath(), meta.getFilePath()));
+        log.info("File {} not found. Delete cache.", getPath(meta));
         meta.setDescription("");
         // обновляем метаданные, чтобы гарантированно не совпали с добавляемым впоследствии файлом.
         meta.setFileModifiedAt(0L);
@@ -75,7 +75,7 @@ public class DescriptionCacheRefreshService {
      */
     private void updateCache(SoftDescriptionFileEntity meta) {
         log.info("File changed, updating cache for product {}", meta.getProduct().getName());
-        Path path = Path.of(aliasPaths.softPath(), meta.getFilePath());
+        Path path = getPath(meta);
         try {
             BasicFileAttributes attrs = Files.readAttributes(path, BasicFileAttributes.class);
             String content = Files.readString(path);
@@ -96,9 +96,9 @@ public class DescriptionCacheRefreshService {
      */
     private CacheStatus isDescriptionCacheOutdated(SoftDescriptionFileEntity meta) {
         try {
-            Path path = Path.of(aliasPaths.softPath(), meta.getFilePath());
+            Path path = getPath(meta);
             if (!Files.exists(path)) {
-                log.warn("isDescriptionCacheOutdated(). File not found: {}", meta.getFilePath());
+                log.warn("isDescriptionCacheOutdated(). File not found: {}", path);
                 return CacheStatus.FILE_NOT_FOUND;
             }
             BasicFileAttributes attrs = Files.readAttributes(path, BasicFileAttributes.class);
@@ -123,6 +123,9 @@ public class DescriptionCacheRefreshService {
         log.info("Cache refresh complete at {} milliseconds", time);
     }
 
+    private Path getPath(SoftDescriptionFileEntity meta) {
+        return Path.of(aliasPaths.softPath(), aliasPaths.softDescSubdir(), meta.getFilePath());
+    }
 
     /**
      * Очищает HTML от потенциально опасного кода.

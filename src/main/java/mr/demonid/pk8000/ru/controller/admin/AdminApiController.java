@@ -1,4 +1,4 @@
-package mr.demonid.pk8000.ru.controller.api;
+package mr.demonid.pk8000.ru.controller.admin;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -124,7 +124,6 @@ public class AdminApiController {
         adminService.deleteImage(productId, fileName);
         return ResponseEntity.ok(true);
     }
-
 
 
 }

@@ -1,7 +1,8 @@
-package mr.demonid.pk8000.ru.controller.api;
+package mr.demonid.pk8000.ru.controller.admin;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import mr.demonid.pk8000.ru.controller.api.FullPageHelper;
 import mr.demonid.pk8000.ru.domain.CategoryType;
 import mr.demonid.pk8000.ru.dto.SoftResponse;
 import mr.demonid.pk8000.ru.dto.filters.SoftFilter;

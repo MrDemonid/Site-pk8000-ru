@@ -81,15 +81,15 @@
     height: 18px;
 }
 
-/* ======= Пагинация ======= */
-.pagination-container {
-    margin-top: 8px; /* было 10px */
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 6px;
-    border-top: 1px solid #e5e7eb;
-}
+/*!* ======= Пагинация ======= *!*/
+/*.pagination-container {*/
+/*    margin-top: 8px; !* было 10px *!*/
+/*    display: flex;*/
+/*    justify-content: space-between;*/
+/*    align-items: center;*/
+/*    padding: 6px;*/
+/*    border-top: 1px solid #e5e7eb;*/
+/*}*/
 
 /* ======= Адаптивность ======= */
 @media (max-width: 900px) {
@@ -116,4 +116,106 @@
         padding-bottom: 8px;
         margin-bottom: 8px;
     }
+}
+
+
+
+
+
+/* === Модальное окно управления изображениями (softimg) === */
+.softimg-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+}
+
+.softimg-modal-content {
+    background: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    max-width: 800px;
+    width: 90%;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+
+.softimg-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.softimg-item {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #f9f9f9;
+    transition: transform 0.2s ease;
+}
+
+.softimg-item:hover {
+    transform: scale(1.03);
+}
+
+.softimg-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.softimg-btn-delete {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    background: rgba(0, 0, 0, 0.65);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 32px;      /* было 24px */
+    height: 32px;     /* было 24px */
+    font-size: 20px;  /* добавлено для увеличенного крестика */
+    line-height: 32px;
+    text-align: center;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.softimg-btn-delete:hover {
+    background: rgba(255, 0, 0, 0.8); /* подсветка при наведении */
+    transform: scale(1.1);
+}
+
+.softimg-item.add-slot {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: 48px;
+    color: #888;
+    border: 2px dashed #aaa;
+    background: #fafafa;
+    transition: background 0.2s ease;
+}
+
+.softimg-item.add-slot:hover {
+    background: #f0f0f0;
+}
+
+.softimg-modal-close {
+    cursor: pointer;
+    font-size: 24px;
+    float: right;
+    color: #555;
+    transition: color 0.2s;
+}
+
+.softimg-modal-close:hover {
+    color: #000;
 }

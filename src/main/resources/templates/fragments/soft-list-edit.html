@@ -16,12 +16,6 @@
             <input type="text" th:name="'softList[' + ${iterStat.index} + '].name'"
                    th:value="${soft.name}" placeholder="Название" class="soft-field name"/>
 
-<!--            <select th:name="'softList[' + ${iterStat.index} + '].category'" class="soft-field category">-->
-<!--                <option th:each="cat : ${categories}"-->
-<!--                        th:value="${cat.ordinal() + 1}"-->
-<!--                        th:text="${cat.displayName}"-->
-<!--                        th:selected="${cat.ordinal() + 1 == soft.category}"></option>-->
-<!--            </select>-->
             <select th:name="'softList[' + ${iterStat.index} + '].category'" class="soft-field category">
                 <option th:each="cat : ${categories}"
                         th:value="${menu.getCategoryId(cat)}"
@@ -63,5 +57,17 @@
             <div th:replace="~{fragments/pagination :: paginationControls(pageData=${pageData}, pageButtons=${pageButtons})}"></div>
         </th:block>
     </div>
+
+
+    <!-- Модальное окно для управления изображениями -->
+    <div id="softimg-modal" class="softimg-modal" style="display: none;">
+        <div class="softimg-modal-content">
+            <span class="softimg-modal-close">&times;</span>
+            <h2>Управление изображениями</h2>
+            <div id="softimg-container" class="softimg-grid"></div>
+        </div>
+    </div>
+
+
 </div>
 

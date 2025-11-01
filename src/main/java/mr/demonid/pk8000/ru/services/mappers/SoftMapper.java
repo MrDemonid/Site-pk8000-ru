@@ -6,6 +6,7 @@ import mr.demonid.pk8000.ru.configs.AliasPaths;
 import mr.demonid.pk8000.ru.domain.CategoryEntity;
 import mr.demonid.pk8000.ru.domain.SoftDescriptionFileEntity;
 import mr.demonid.pk8000.ru.domain.SoftEntity;
+import mr.demonid.pk8000.ru.dto.ImageResponse;
 import mr.demonid.pk8000.ru.dto.SoftCreateRequest;
 import mr.demonid.pk8000.ru.dto.SoftResponse;
 import mr.demonid.pk8000.ru.services.markdown.MarkdownService;
@@ -36,8 +37,8 @@ public class SoftMapper {
                 entity.getName(),
                 entity.getCategory().getId(),
                 entity.getShortDescription(),
-                toFilesLinks(entity.getImageFiles()),
-                toFilesLinks(entity.getArchiveFiles())
+                toImageLinks(entity.getImageFiles()),
+                toFileLinks(entity.getArchiveFiles())
         );
     }
 
@@ -58,21 +59,45 @@ public class SoftMapper {
         if (entity == null) {
             return "";
         }
-        // TODO: сделай путь!
-        return markdownService.toHtmlSoft(entity.getDescription(), "descriptions");
+        return markdownService.toHtmlSoft(entity.getDescription(), aliasPaths.softDescSubdir());
     }
 
 
+    public List<ImageResponse> toImageResponse(SoftEntity entity) {
+        return entity.getImageFiles().stream()
+                .filter(Objects::nonNull)
+                .filter(Predicate.not(String::isBlank))
+                .map(e -> new ImageResponse(
+                        entity.getId(),
+                        PathUtil.normalize(Paths.get(aliasPaths.softUrl(), aliasPaths.softImagesSubdir(), e).toString(), true),
+                        PathUtil.extractFileName(e)
+                ))
+                .toList();
+    }
+
     /**
-     * Конвертирует имена изображений и файлов в ссылки.
+     * Конвертирует имена изображений в ссылки.
      */
-    private List<String> toFilesLinks(List<String> names) {
+    private List<String> toImageLinks(List<String> names) {
         return names.stream()
                 .filter(Objects::nonNull)
                 .filter(Predicate.not(String::isBlank))
-                .map(e -> PathUtil.normalize(Paths.get(aliasPaths.softUrl(), e).toString(), true))
+                .map(e -> PathUtil.normalize(Paths.get(aliasPaths.softUrl(), aliasPaths.softImagesSubdir(), e).toString(), true))
                 .toList();
     }
+
+    /**
+     * Конвертирует имена файлов в ссылки.
+     */
+    private List<String> toFileLinks(List<String> names) {
+        return names.stream()
+                .filter(Objects::nonNull)
+                .filter(Predicate.not(String::isBlank))
+                .map(e -> PathUtil.normalize(Paths.get(aliasPaths.softUrl(), aliasPaths.softFilesSubdir(), e).toString(), true))
+                .toList();
+    }
+
+
 
 }
 

@@ -6,6 +6,7 @@ import mr.demonid.pk8000.ru.configs.AliasPaths;
 import mr.demonid.pk8000.ru.configs.AppConfiguration;
 import mr.demonid.pk8000.ru.domain.CategoryEntity;
 import mr.demonid.pk8000.ru.domain.SoftEntity;
+import mr.demonid.pk8000.ru.dto.ImageResponse;
 import mr.demonid.pk8000.ru.dto.SoftCreateRequest;
 import mr.demonid.pk8000.ru.dto.SoftUpdateRequest;
 import mr.demonid.pk8000.ru.exceptions.ErrorCodes;
@@ -22,6 +23,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -131,21 +133,27 @@ public class AdminServiceImpl {
                 throw new ServiceException(ErrorCodes.SOFT_NOT_FOUND, "Продукт не найден");
             }
             // проверяем, существует ли заменяемый файл
-            if (replaceFileName != null && !replaceFileName.isEmpty()) {
+            if (replaceFileName != null && !replaceFileName.isBlank()) {
                 if (!soft.getImageFiles().contains(replaceFileName)) {
                     throw new ServiceException(ErrorCodes.FILE_NOT_FOUND, "Файл '" + replaceFileName + "' не найден");
                 }
             }
+
             // сохраняем во временную папку
             Path tmpFile = loadToTempDirectory(file);
             // переносим в папку изображений
             String finalFileName = replaceFileName == null ? file.getOriginalFilename() : replaceFileName.isBlank() ? file.getOriginalFilename() : replaceFileName;
-            moveToImageDirectory(tmpFile, Paths.get(aliasPaths.softPath(), productId.toString()).toString(), finalFileName);
+            moveToImageDirectory(tmpFile, Paths.get(aliasPaths.softPath(), aliasPaths.softImagesSubdir()).toString(), finalFileName);
 
             // корректируем БД
             if (replaceFileName == null || replaceFileName.isEmpty()) {
                 soft.getImageFiles().add(finalFileName);
                 softRepository.save(soft);
+            }
+            if (replaceFileName != null && !replaceFileName.isEmpty()) {
+                log.info("Replace image [{}]", finalFileName);
+            } else {
+                log.info("Add new image [{}]", finalFileName);
             }
         } catch (ServiceException e) {
             throw e;
@@ -258,6 +266,24 @@ public class AdminServiceImpl {
         }
     }
 
+
+    /*
+     * Возвращает список изображений продукта.
+     */
+    public List<ImageResponse> getImages(Long productId) {
+        try {
+            SoftEntity soft = softRepository.findById(productId).orElse(null);
+            if (soft == null) {
+                throw new ServiceException(ErrorCodes.SOFT_NOT_FOUND, "Продукт не найден");
+            }
+            return softMapper.toImageResponse(soft);
+
+        } catch (ServiceException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new ServiceException(ErrorCodes.UNKNOWN_ERROR_CODE, e.getMessage());
+        }
+    }
 
     /*
      * Перемещает файл с временной папки в каталог изображений

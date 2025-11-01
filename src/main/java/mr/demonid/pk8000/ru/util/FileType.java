@@ -1,5 +1,7 @@
 package mr.demonid.pk8000.ru.util;
 
+import lombok.extern.log4j.Log4j2;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -14,6 +16,7 @@ import java.nio.file.Path;
  *      PNG, JPG, GIF
  *      ZIP, RAR, 7Z, GZIP
  */
+@Log4j2
 public class FileType {
 
 
@@ -41,15 +44,21 @@ public class FileType {
         try (InputStream is = Files.newInputStream(file)) {
             byte[] buffer = new byte[len];
             int bytesRead = is.read(buffer);
-            if (bytesRead < len && bytesRead > 0) {
+
+            if (bytesRead == -1) {
+                log.warn("File '{}' is empty", file);
+                return new byte[len];
+            }
+            if (bytesRead < len) {
+                log.warn("File '{}' is too short ({}). Truncated.", file, bytesRead);
                 byte[] truncated = new byte[bytesRead];
                 System.arraycopy(buffer, 0, truncated, 0, bytesRead);
                 return truncated;
-            } else {
-                buffer = new byte[len];
             }
             return buffer;
+
         } catch (IOException e) {
+            log.error("Error reading file '{}': {}", file, e.getMessage());
             return new byte[len];
         }
     }

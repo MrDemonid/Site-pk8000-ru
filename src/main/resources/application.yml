@@ -83,6 +83,9 @@ app:
       static-path: ${PK8000_CONTENT_PATH:./content/menu/}          # директория меню (статичных страниц)
       soft-url: ${PK8000_SOFT_URL:soft}
       soft-path: ${PK8000_SOFT_PATH:./content/soft/}
+      soft-images-subdir: images
+      soft-files-subdir: files
+      soft-desc-subdir: descriptions
       menu-icon-url: ${PK8000_APP_ICON_URL:menu/icons}             # виртуальный каталог иконок меню (в html)
       menu-icon-path: ${PK8000_APP_ICON_PATH:./content/icons/menu/} # директория иконок меню
 

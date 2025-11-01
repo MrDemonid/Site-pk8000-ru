@@ -4,7 +4,7 @@
 document.addEventListener("DOMContentLoaded", () => {
     if (window.actions) {
         Object.assign(window.actions, {
-            "add-image": handleAddImage,
+            "add-image": handleControlImage,
             "add-archive": handleAddArchive,
             "add-description": handleAddDescription,
             "save-soft": handleSaveSoft,
@@ -16,15 +16,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 });
 
-/**
- * Добавить изображения
- */
-function handleAddImage(el) {
-    const index = el.dataset.index;
-    const row = getSoftRow(index);
-    console.log("Добавление изображений для:", row);
-    // TODO: открыть модальное окно
-}
 
 /**
  * Добавить архив
@@ -59,7 +50,8 @@ function handleSaveSoft(el) {
 
     fetch("/api/v1/admin/update", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", "X-Requested-With": "XMLHttpRequest" },
+
         body: JSON.stringify(data)
     })
         .then(async r => {
@@ -116,7 +108,10 @@ function handleDeleteSoft(el) {
     if (!data) return;
 
     if (!confirm(`Удалить «${data.name || "элемент"}»?`)) return;
-    fetch(`/api/v1/soft/${data.id}`, { method: "DELETE" })
+    fetch(`/api/v1/soft/${data.id}`, {
+        method: "DELETE",
+        headers: { "X-Requested-With": "XMLHttpRequest" }
+    })
         .then(r => r.ok ? showToast("Удалено", "success") : Promise.reject(r))
         .catch(() => showToast("Ошибка при удалении", "error"));
 }
@@ -166,3 +161,238 @@ function showToast(message, type = "info") {
         setTimeout(() => toast.remove(), 300);
     }, 2000);
 }
+
+
+/**
+ * Управление изображениями
+ */
+/**
+ * ============================================================================================================
+ */
+// === Управление изображениями для выбранного софта ===
+
+function handleControlImage(el) {
+    const index = el.dataset.index;
+    const row = getSoftRow(index);
+    const softId = row.dataset.id;
+    console.log("Управление изображениями для:", softId);
+
+    const modal = document.getElementById("softimg-modal");
+    const container = document.getElementById("softimg-container");
+
+    // Очистка содержимого
+    container.innerHTML = "";
+    modal.style.display = "flex";
+
+    // Загрузка изображений для выбранного софта
+    fetch(`/api/v1/admin/images-manage/${softId}`, {
+        headers: {"X-Requested-With": "XMLHttpRequest"}
+    })
+        .then(resp => {
+            if (!resp.ok)
+                throw new Error(`HTTP ${resp.status}`);
+            return resp.json();
+        })
+        .then(images => {
+            renderImageGrid(images, softId);
+        })
+        .catch(err => {
+            console.error("Ошибка загрузки изображений:", err);
+            container.innerHTML = `<p style="color:red;">Ошибка загрузки изображений</p>`;
+        });
+
+    // Кнопка закрытия
+    modal.querySelector(".softimg-modal-close").onclick = () => closeSoftimgModal();
+    // Закрытие по клику вне контента
+    modal.onclick = e => { if (e.target === modal) closeSoftimgModal(); };
+}
+
+function closeSoftimgModal() {
+    const modal = document.getElementById("softimg-modal");
+    modal.style.display = "none";
+}
+
+// // === Отрисовка сетки изображений ===
+// function renderImageGrid(images, softId) {
+//     const container = document.getElementById("softimg-container");
+//     container.innerHTML = "";
+//
+//     images.forEach(img => {
+//         const div = document.createElement("div");
+//         div.classList.add("softimg-item");
+//
+//         const image = document.createElement("img");
+//         // Добавляем query-параметр для обхода кэша
+//         image.src = img.url + "?v=" + Date.now();
+//         image.alt = img.filename || "image";
+//         div.appendChild(image);
+//
+//         const delBtn = document.createElement("button");
+//         delBtn.className = "softimg-btn-delete";
+//         delBtn.innerHTML = "×";
+//         delBtn.title = "Удалить изображение";
+//         delBtn.onclick = () => deleteSoftimgImage(softId, img.filename);
+//         div.appendChild(delBtn);
+//
+//         image.onclick = () => replaceSoftimgImage(softId, img.filename);
+//
+//         container.appendChild(div);
+//     });
+//
+//     const addSlot = document.createElement("div");
+//     addSlot.className = "softimg-item add-slot";
+//     addSlot.title = "Добавить изображение";
+//     addSlot.innerHTML = "+";
+//     addSlot.onclick = () => addSoftimgImage(softId);
+//     container.appendChild(addSlot);
+// }
+
+function renderImageGrid(images, softId) {
+    const container = document.getElementById("softimg-container");
+    container.innerHTML = "";
+
+    // Существующие изображения
+    images.forEach(img => {
+        const div = document.createElement("div");
+        div.classList.add("softimg-item");
+
+        const image = document.createElement("img");
+        image.src = img.url;
+        image.title = "Кликните для замены изображения";
+        image.alt = img.filename || "image";
+        div.appendChild(image);
+
+        // Кнопка удаления
+        const delBtn = document.createElement("button");
+        delBtn.className = "softimg-btn-delete";
+        delBtn.innerHTML = "×";
+        delBtn.title = "Удалить изображение";
+        delBtn.onclick = () => deleteSoftimgImage(softId, img.filename);
+        div.appendChild(delBtn);
+
+        // Замена по клику
+        image.onclick = () => replaceSoftimgImage(softId, img.filename);
+
+        container.appendChild(div);
+    });
+
+    // Пустой слот для добавления
+    const addSlot = document.createElement("div");
+    addSlot.className = "softimg-item add-slot";
+    addSlot.title = "Добавить изображение";
+    addSlot.innerHTML = "+";
+    addSlot.onclick = () => addSoftimgImage(softId);
+    container.appendChild(addSlot);
+}
+
+// === Добавление нового изображения ===
+function addSoftimgImage(softId) {
+    const input = document.createElement("input");
+    input.type = "file";
+    input.accept = "image/*";
+    input.onchange = () => {
+        if (!input.files || input.files.length === 0) return;
+
+        const formData = new FormData();
+        formData.append("file", input.files[0]);
+
+        fetch(`/api/v1/admin/images-manage/${softId}`, {
+            method: "POST",
+            body: formData,
+            headers: {
+                "X-Requested-With": "XMLHttpRequest"
+            }
+        })
+            .then(resp => {
+                if (!resp.ok)
+                    throw new Error(`Ошибка загрузки: ${resp.status}`);
+                // Тело отсутствует, просто обновляем список изображений
+                handleControlImage({ dataset: { index: getRowIndexById(softId) } });
+            })
+            .catch(err => console.error("Ошибка добавления изображения:", err));
+    };
+    input.click();
+}
+
+
+// === Замена существующего изображения ===
+function replaceSoftimgImage(softId, imageName) {
+    const input = document.createElement("input");
+    input.type = "file";
+    input.accept = "image/*";
+    input.onchange = () => {
+        if (!input.files || input.files.length === 0) return;
+
+        const formData = new FormData();
+        formData.append("file", input.files[0]);
+
+        fetch(`/api/v1/admin/images-manage/${softId}/${imageName}`, {
+            method: "PUT",
+            body: formData,
+            headers: { "X-Requested-With": "XMLHttpRequest" }
+        })
+            .then(resp => {
+                if (!resp.ok)
+                    throw new Error(`Ошибка замены изображения: ${resp.status}`);
+                // Тело отсутствует, просто обновляем список изображений
+                handleControlImage({ dataset: { index: getRowIndexById(softId) } });
+            })
+            .catch(err => console.error("Ошибка замены изображения:", err));
+    };
+    input.click();
+}
+
+// === Удаление изображения ===
+function deleteSoftimgImage(softId, imageName) {
+    if (!confirm("Удалить изображение?")) return;
+
+    fetch(`/api/v1/admin/images-manage/${softId}/${imageName}`, {
+        method: "DELETE",
+        headers: { "X-Requested-With": "XMLHttpRequest" }
+    })
+        .then(resp => {
+            if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+            // Удаляем элемент из DOM
+            const imageDiv = document.querySelector(`.softimg-item img[src*="${imageName}"]`)?.closest(".softimg-item");
+            if (imageDiv) imageDiv.remove();
+        })
+        .catch(err => console.error("Ошибка удаления изображения:", err));
+}
+
+
+function reloadImage(imageName) {
+
+}
+
+// === Вспомогательная функция для поиска индекса строки по ID ===
+function getRowIndexById(softId) {
+    const rows = document.querySelectorAll(".soft-item-inline");
+    for (let i = 0; i < rows.length; i++) {
+        if (rows[i].dataset.id === softId) return i;
+    }
+    return null;
+}
+
+
+
+
+// ------------------------
+/*
+Вариант B: обновлять только конкретный <img> без перерисовки сетки
+
+Если хочешь не перерисовывать весь список:
+
+const image = document.querySelector(`.softimg-item img[src*="${imageName}"]`);
+if (image) image.src = image.src.split("?")[0] + "?v=" + Date.now()
+
+
+-----------------------
+Когда ты в JS после замены вызываешь, например:
+
+fetch(`/api/v1/admin/images-manage/${softId}`, {
+    headers: { "X-Requested-With": "XMLHttpRequest" }
+})
+    .then(r => r.json())
+    .then(images => renderImageGrid(images, softId));
+    
+ */

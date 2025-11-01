@@ -32,11 +32,10 @@ public class GlobalExceptionHandler {
         if ("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
             // Для AJAX-запроса возвращаем JSON (как у @RestController)
             return ResponseEntity.status(errorResponse.getStatus()).body(errorResponse);
-        } else {
-            // Для обычного запроса возвращаем HTML-фрагмент
-            model.addAttribute("error", errorResponse);
-            return "fragments/error :: errorFragment";
         }
+        // Для обычного запроса возвращаем HTML-фрагмент
+        model.addAttribute("error", errorResponse);
+        return "templates/error/error :: errorFragment";
     }
 
     /**
