@@ -11,7 +11,7 @@ document.addEventListener('change', function (event) {
 
         const a = document.createElement('a');
         a.href = url;
-        a.download = url.substring(url.lastIndexOf('/') + 1);
+        a.download = getFileName(url);
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
@@ -20,6 +20,18 @@ document.addEventListener('change', function (event) {
     }
 });
 
+// извлекает из url имя файла, отбрасывая путь и версию
+function getFileName(url) {
+    if (!url) return "";
+    // Берем часть после последнего '/'
+    let name = url.substring(url.lastIndexOf('/') + 1);
+    // Убираем ?v=...
+    const qIndex = name.indexOf('?');
+    if (qIndex !== -1) {
+        name = name.substring(0, qIndex);
+    }
+    return name;
+}
 
 // Реестр действий
 window.actions = {

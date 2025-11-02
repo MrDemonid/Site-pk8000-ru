@@ -39,6 +39,7 @@ public class AdminController {
 
         // делаем выборку из БД
         Pageable page = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), Sort.by(Sort.Direction.ASC, "name"));
+        // TODO: SoftResponse избыточен - поля картинок и файлов не нужны.
         Page<SoftResponse> soft = softService.getAllProducts(new SoftFilter(), page);
 
         model.addAttribute("menu", menuProperties);

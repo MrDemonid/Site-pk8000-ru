@@ -25,6 +25,6 @@ INSERT INTO products (name, short_description, category_id) VALUES
     ('Image view', 'Вьюнер всех известных форматов изображений для 8-битных компьютеров.', ${CATEGORY_OTHER_SOFTWARE}),
     ('STC Player', 'Плеер STC-музыки для AY-контроллера.', ${CATEGORY_OTHER_SOFTWARE}),
     ('Питон', 'Классический питон.', ${CATEGORY_ARCADE}),
-    ('Двигалка', 'Логическая игра на смекалку.', ${CATEGORY_LOGIC}),
+    ('Двигалка', 'Порт игры "Freddy''s Forest"', ${CATEGORY_LOGIC}),
     ('Bolder dash', 'Порт аналогичной DOS-игры, являющейся портом с Электроника БК-0010.', ${CATEGORY_ARCADE}),
     ('High way', 'Езда по городу. Что-то собираем и избегаем встреч с врагами.', ${CATEGORY_RACING});

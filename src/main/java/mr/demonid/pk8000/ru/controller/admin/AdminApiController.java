@@ -7,13 +7,12 @@ import mr.demonid.pk8000.ru.dto.SoftCreateRequest;
 import mr.demonid.pk8000.ru.dto.SoftResponse;
 import mr.demonid.pk8000.ru.dto.SoftUpdateRequest;
 import mr.demonid.pk8000.ru.dto.filters.SoftFilter;
-import mr.demonid.pk8000.ru.services.AdminServiceImpl;
 import mr.demonid.pk8000.ru.services.SoftService;
+import mr.demonid.pk8000.ru.services.admin.AdminServiceImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @AllArgsConstructor
@@ -66,64 +65,5 @@ public class AdminApiController {
         adminService.deleteProduct(id);
         return ResponseEntity.ok().build();
     }
-
-
-    /**
-     * Добавление нового или замена существующего изображения.
-     * @param productId       Продукт.
-     * @param file            Новый файл.
-     * @param replaceFileName Имя существующего файла или null.
-     */
-    @PreAuthorize("hasAnyRole('ADMIN', 'DEVELOPER')")
-    @PostMapping("/upload/image/{productId}")
-    public ResponseEntity<?> uploadImage(@PathVariable Long productId,
-                                         @RequestPart("file") MultipartFile file,
-                                         @RequestParam(value = "replace", required = false) String replaceFileName) {
-        adminService.updateImage(productId, file, replaceFileName);
-        return ResponseEntity.ok().build();
-    }
-
-
-    /**
-     * Удаление изображения.
-     * @param productId Продукт.
-     * @param fileName  Имя удаляемого файла
-     */
-    @PreAuthorize("hasAnyRole('ADMIN', 'DEVELOPER')")
-    @DeleteMapping("/delete/image/{productId}")
-    public ResponseEntity<?> deleteImage(@PathVariable Long productId, @RequestParam String fileName) {
-        adminService.deleteImage(productId, fileName);
-        return ResponseEntity.ok(true);
-    }
-
-
-    /**
-     * Добавление нового или замена существующего изображения.
-     * @param productId       Продукт.
-     * @param file            Новый файл.
-     * @param replaceFileName Имя существующего файла или null.
-     */
-    @PreAuthorize("hasAnyRole('ADMIN', 'DEVELOPER')")
-    @PostMapping("/upload/archive/{productId}")
-    public ResponseEntity<?> uploadArchive(@PathVariable Long productId,
-                                         @RequestPart("file") MultipartFile file,
-                                         @RequestParam(value = "replace", required = false) String replaceFileName) {
-        adminService.updateImage(productId, file, replaceFileName);
-        return ResponseEntity.ok().build();
-    }
-
-
-    /**
-     * Удаление изображения.
-     * @param productId Продукт.
-     * @param fileName  Имя удаляемого файла
-     */
-    @PreAuthorize("hasAnyRole('ADMIN', 'DEVELOPER')")
-    @DeleteMapping("/delete/arhive/{productId}")
-    public ResponseEntity<?> deleteArchive(@PathVariable Long productId, @RequestParam String fileName) {
-        adminService.deleteImage(productId, fileName);
-        return ResponseEntity.ok(true);
-    }
-
 
 }

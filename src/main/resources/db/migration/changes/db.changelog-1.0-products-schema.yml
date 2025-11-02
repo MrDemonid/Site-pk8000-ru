@@ -45,7 +45,6 @@ databaseChangeLog:
               - column:
                   name: category_id
 
-
   - changeSet:
       id: product-images-schema-1
       author: andrey
@@ -56,6 +55,24 @@ databaseChangeLog:
             tableOptions: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci"
             columns:
               - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: file_name
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: version
+                  type: BIGINT
+                  defaultValueNumeric: 1
+                  constraints:
+                    nullable: false
+              - column:
                   name: product_id
                   type: BIGINT
                   constraints:
@@ -64,12 +81,12 @@ databaseChangeLog:
                     references: products(id)
                     onDelete: CASCADE
                     onUpdate: CASCADE
+        - createIndex:
+            indexName: idx_product_images_product_id
+            tableName: product_images
+            columns:
               - column:
-                  name: image_file
-                  type: VARCHAR(255)
-                  constraints:
-                    nullable: false
-
+                  name: product_id
 
   - changeSet:
       id: product-archives-schema-1
@@ -81,6 +98,24 @@ databaseChangeLog:
             tableOptions: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci"
             columns:
               - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: file_name
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: version
+                  type: BIGINT
+                  defaultValueNumeric: 1
+                  constraints:
+                    nullable: false
+              - column:
                   name: product_id
                   type: BIGINT
                   constraints:
@@ -89,8 +124,9 @@ databaseChangeLog:
                     references: products(id)
                     onDelete: CASCADE
                     onUpdate: CASCADE
+        - createIndex:
+            indexName: idx_product_archives_product_id
+            tableName: product_archives
+            columns:
               - column:
-                  name: archive_file
-                  type: VARCHAR(255)
-                  constraints:
-                    nullable: false
+                  name: product_id

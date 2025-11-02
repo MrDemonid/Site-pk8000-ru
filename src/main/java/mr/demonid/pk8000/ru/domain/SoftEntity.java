@@ -32,22 +32,20 @@ public class SoftEntity {
     @JoinColumn(name = "category_id", nullable = false)
     private CategoryEntity category;
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "product_images", joinColumns = @JoinColumn(name = "product_id"))
-    @Column(name = "image_file")
-    private List<String> imageFiles;
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "product_archives", joinColumns = @JoinColumn(name = "product_id"))
-    @Column(name = "archive_file")
-    private List<String> archiveFiles;
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    private List<ImagesEntity> imageFiles;
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    private List<ArchivesEntity> archiveFiles;
+
 
     @Column(name = "create_at", nullable = false, updatable = false)
     @CreationTimestamp
     private LocalDateTime createAt;
 
 
-    public SoftEntity(String name, String shortDescription, CategoryEntity category, List<String> newImageFiles, List<String> newArchiveFiles) {
+    public SoftEntity(String name, String shortDescription, CategoryEntity category, List<ImagesEntity> newImageFiles, List<ArchivesEntity> newArchiveFiles) {
         this.id = null;
         this.name = name;
         this.shortDescription = shortDescription;

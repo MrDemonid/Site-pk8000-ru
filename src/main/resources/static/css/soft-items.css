@@ -1,3 +1,13 @@
+.softfile-error {
+    color: red;
+    background: #ffeeee;
+    border: 1px solid #cc0000;
+    padding: 6px 10px;
+    margin-bottom: 8px;
+    border-radius: 4px;
+    font-size: 0.9rem;
+}
+
 /* ======= Общие настройки ======= */
 #soft-list-form {
     display: grid;
@@ -122,7 +132,7 @@
 
 
 
-/* === Модальное окно управления изображениями (softimg) === */
+/* === Модальное окно управления изображениями === */
 .softimg-modal {
     position: fixed;
     inset: 0;
@@ -218,4 +228,129 @@
 
 .softimg-modal-close:hover {
     color: #000;
+}
+
+
+/* === Модальное окно управления архивами === */
+.softfile-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+}
+
+.softfile-modal-content {
+    background: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    max-width: 800px;
+    width: 90%;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+
+/* Заголовок и кнопка закрытия */
+.softfile-modal-close {
+    cursor: pointer;
+    font-size: 24px;
+    float: right;
+    color: #555;
+    transition: color 0.2s;
+}
+
+.softfile-modal-close:hover {
+    color: #000;
+}
+
+/* Контейнер для списка файлов */
+.softfile-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 15px;
+    max-height: 60vh;
+    overflow-y: auto;
+    padding-right: 5px;
+}
+
+/* Один элемент списка */
+.softfile-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px 15px;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.softfile-item:hover {
+    background: #f0f0f0;
+    transform: scale(1.01);
+}
+
+/* Имя файла */
+.softfile-name {
+    flex-grow: 1;
+    font-size: 15px;
+    color: #333;
+    word-break: break-all;
+}
+
+/* Блок с кнопками */
+.softfile-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.softfile-actions button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 6px;
+    transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.softfile-actions button:hover {
+    background: rgba(0, 0, 0, 0.05);
+    transform: scale(1.1);
+}
+
+.softfile-actions img {
+    width: 22px;
+    height: 22px;
+}
+
+/* Кнопка "Добавить файл" */
+.softfile-add {
+    margin-top: 20px;
+    text-align: right;
+}
+
+.softfile-add button {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    background: #f5f5f5;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.softfile-add button:hover {
+    background: #e8e8e8;
+    transform: scale(1.03);
+}
+
+.softfile-add img {
+    width: 20px;
+    height: 20px;
 }

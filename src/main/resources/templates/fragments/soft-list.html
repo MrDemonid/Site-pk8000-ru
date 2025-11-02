@@ -26,6 +26,7 @@
                     Краткое описание...
                 </div>
 
+                <!--                TODO: Переделать имена файлов архивов! -->
                 <!-- Список архивов -->
                 <div class="product-archive"
                      th:if="${soft.archiveUrls != null and !soft.archiveUrls.isEmpty()}">
@@ -34,7 +35,7 @@
                     <div class="single-archive"
                          th:if="${#lists.size(soft.archiveUrls) == 1}">
                         <a th:href="@{${soft.archiveUrls[0]}}"
-                           th:text="${soft.archiveUrls[0].substring(soft.archiveUrls[0].lastIndexOf('/') + 1)}"
+                           th:text="${@thymeleafUtil.fileName(soft.archiveUrls[0])}"
                            class="archive-link">
                         </a>
                     </div>
@@ -46,7 +47,7 @@
                             <option value="" disabled selected>Скачать файл</option>
                             <option th:each="url : ${soft.archiveUrls}"
                                     th:value="${url}"
-                                    th:text="${url.substring(url.lastIndexOf('/') + 1)}">
+                                    th:text="${@thymeleafUtil.fileName(url)}">
                             </option>
                         </select>
                         <div class="custom-arrow"></div>
