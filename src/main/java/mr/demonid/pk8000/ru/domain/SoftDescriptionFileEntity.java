@@ -22,14 +22,15 @@ public class SoftDescriptionFileEntity {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id", nullable = false, unique = true)
+    @ToString.Exclude
     private SoftEntity product;
 
     @Lob
     @Column(name = "description_cache")
     private String description;
 
-    @Column(name = "file_path", length = 256, nullable = false)
-    private String filePath;
+    @Column(name = "file_name", length = 256, nullable = false)
+    private String fileName;
 
     @Column(name = "file_size")
     private Long fileSize;
@@ -39,4 +40,5 @@ public class SoftDescriptionFileEntity {
 
     @Column(name = "file_modified_at")
     private Long fileModifiedAt;
+
 }

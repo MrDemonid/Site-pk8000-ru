@@ -30,7 +30,7 @@ public class ArchiveApiController {
     @PreAuthorize("hasAnyRole('ADMIN', 'DEVELOPER')")
     @GetMapping("/archives-manage/{productId}")
     public ResponseEntity<List<ArchiveResponse>> getListArchives(@PathVariable Long productId) {
-        return ResponseEntity.ok(archiveService.getArchives(productId));
+        return ResponseEntity.ok(archiveService.getFiles(productId));
     }
 
 
@@ -43,7 +43,7 @@ public class ArchiveApiController {
     @PreAuthorize("hasAnyRole('ADMIN', 'DEVELOPER')")
     @PostMapping("/archives-manage/{productId}")
     public ResponseEntity<Void> uploadArchive(@PathVariable Long productId, @RequestParam("file") MultipartFile file) {
-        archiveService.updateArchive(productId, file, null);
+        archiveService.updateFile(productId, file, null);
         return ResponseEntity.ok().build();
     }
 
@@ -58,7 +58,7 @@ public class ArchiveApiController {
     @PreAuthorize("hasAnyRole('ADMIN', 'DEVELOPER')")
     @PutMapping("/archives-manage/{productId}/{imageName}")
     public ResponseEntity<Void> replaceArchive(@PathVariable Long productId, @PathVariable String imageName, @RequestParam("file") MultipartFile file) {
-        archiveService.updateArchive(productId, file, imageName);
+        archiveService.updateFile(productId, file, imageName);
         return ResponseEntity.ok().build();
     }
 
@@ -72,7 +72,7 @@ public class ArchiveApiController {
     @PreAuthorize("hasAnyRole('ADMIN', 'DEVELOPER')")
     @DeleteMapping("/archives-manage/{productId}/{imageName}")
     public ResponseEntity<Void> deleteArchive(@PathVariable Long productId, @PathVariable String imageName) {
-        archiveService.deleteArchive(productId, imageName);
+        archiveService.deleteFile(productId, imageName);
         return ResponseEntity.ok().build();
     }
 

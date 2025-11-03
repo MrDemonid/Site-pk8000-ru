@@ -9,6 +9,7 @@ import java.util.Optional;
 
 
 @Repository
-public interface ProductArchivesRepository extends JpaRepository<ArchivesEntity, Long> {
+public interface ProductArchivesRepository extends JpaRepository<ArchivesEntity, Long>, ProductFileRepository<ArchivesEntity> {
+
     Optional<List<ArchivesEntity>> findByProductId(Long productId);
 }

@@ -17,11 +17,6 @@ import mr.demonid.pk8000.ru.repository.SoftRepository;
 import mr.demonid.pk8000.ru.services.mappers.SoftMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 
 /**
@@ -113,100 +108,5 @@ public class AdminServiceImpl {
             throw new ServiceException(ErrorCodes.UNKNOWN_ERROR_CODE, e.getMessage());
         }
     }
-
-
-    /**
-     * Обновление существующего, или добавление нового архива.
-     *
-     * @param productId       Продукт.
-     * @param file            Файл от клиента.
-     * @param replaceFileName Имя существующего файла или null.
-     */
-    public void updateArchive(Long productId, MultipartFile file, String replaceFileName) {
-        try {
-            if (file.isEmpty()) {
-                throw new ServiceException(ErrorCodes.BAD_DATA, "Поступили некорректные данные");
-            }
-            SoftEntity soft = softRepository.findById(productId).orElse(null);
-            if (soft == null) {
-                throw new ServiceException(ErrorCodes.SOFT_NOT_FOUND, "Продукт не найден");
-            }
-            // проверяем, существует ли заменяемый файл
-            if (replaceFileName != null && !replaceFileName.isEmpty()) {
-                if (!soft.getArchiveFiles().contains(replaceFileName)) {
-                    throw new ServiceException(ErrorCodes.FILE_NOT_FOUND, "Файл '" + replaceFileName + "' не найден");
-                }
-            }
-//            // сохраняем во временную папку
-//            Path tmpFile = loadToTempDirectory(file);
-//            // переносим в папку изображений
-//            String finalFileName = replaceFileName == null ? file.getOriginalFilename() : replaceFileName.isBlank() ? file.getOriginalFilename() : replaceFileName;
-//            moveToImageDirectory(tmpFile, Paths.get(aliasPaths.softPath(), productId.toString()).toString(), finalFileName);
-
-            // корректируем БД
-            if (replaceFileName == null || replaceFileName.isEmpty()) {
-                // TODO: !!!!!
-//                soft.getArchiveFiles().add(finalFileName);
-                softRepository.save(soft);
-            }
-        } catch (ServiceException e) {
-            throw e;
-        } catch (Exception e) {
-            throw new ServiceException(ErrorCodes.UNKNOWN_ERROR_CODE, e.getMessage());
-        }
-    }
-
-
-    /**
-     * Удаление архива.
-     *
-     * @param productId Продукт.
-     * @param fileName  Имя удаляемого файла. Удаляет как с БД, так и с диска.
-     */
-    @Transactional
-    public void deleteArchive(Long productId, String fileName) {
-        try {
-            if (productId == null || fileName == null || fileName.isEmpty()) {
-                throw new Exception("Некорректные данные");
-            }
-            SoftEntity soft = softRepository.findById(productId).orElse(null);
-            if (soft == null) {
-                throw new Exception("Товар не найден");
-            }
-            if (!soft.getArchiveFiles().contains(fileName)) {
-                throw new Exception("Товар не содержит такого изображения");
-            }
-            // удаляем из БД
-            soft.getArchiveFiles().remove(fileName);
-            softRepository.save(soft);
-
-            // удаляем файл с носителя
-            Path imgFile = Paths.get(aliasPaths.softPath(), productId.toString(), fileName).toAbsolutePath().normalize();
-            Files.deleteIfExists(imgFile);
-
-        } catch (Exception e) {
-            throw new ServiceException(ErrorCodes.UNKNOWN_ERROR_CODE, e.getMessage());
-        }
-    }
-
-
-
-//    /*
-//     * Удаление каталога со всем содержимым.
-//     */
-//    private void deleteDirectory(Path path) {
-//        try (Stream<Path> stream = Files.walk(path)) {
-//            stream.sorted(Comparator.reverseOrder())
-//                    .forEach(p -> {
-//                        try {
-//                            Files.delete(p);
-//                        } catch (IOException e) {
-//                            log.error("Не удалось удалить '{}': {}", p, e);
-//                        }
-//                    });
-//        } catch (IOException e) {
-//            log.error("Ошибка удаления: {}", e.getMessage());
-//        }
-//    }
 
 }

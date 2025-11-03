@@ -30,7 +30,7 @@ public class ImagesApiController {
     @PreAuthorize("hasAnyRole('ADMIN', 'DEVELOPER')")
     @GetMapping("/images-manage/{productId}")
     public ResponseEntity<List<ImageResponse>> getListImages(@PathVariable Long productId) {
-        return ResponseEntity.ok(imageService.getImages(productId));
+        return ResponseEntity.ok(imageService.getFiles(productId));
     }
 
 
@@ -43,7 +43,7 @@ public class ImagesApiController {
     @PreAuthorize("hasAnyRole('ADMIN', 'DEVELOPER')")
     @PostMapping("/images-manage/{productId}")
     public ResponseEntity<Void> uploadImage(@PathVariable Long productId, @RequestParam("file") MultipartFile file) {
-        imageService.updateImage(productId, file, null);
+        imageService.updateFile(productId, file, null);
         return ResponseEntity.ok().build();
     }
 
@@ -58,8 +58,7 @@ public class ImagesApiController {
     @PreAuthorize("hasAnyRole('ADMIN', 'DEVELOPER')")
     @PutMapping("/images-manage/{productId}/{imageName}")
     public ResponseEntity<Void> replaceImage(@PathVariable Long productId, @PathVariable String imageName, @RequestParam("file") MultipartFile file) {
-        System.out.println("replaceImage: " + imageName);
-        imageService.updateImage(productId, file, imageName);
+        imageService.updateFile(productId, file, imageName);
         return ResponseEntity.ok().build();
     }
 
@@ -73,7 +72,7 @@ public class ImagesApiController {
     @PreAuthorize("hasAnyRole('ADMIN', 'DEVELOPER')")
     @DeleteMapping("/images-manage/{productId}/{imageName}")
     public ResponseEntity<Void> deleteImage(@PathVariable Long productId, @PathVariable String imageName) {
-        imageService.deleteImage(productId, imageName);
+        imageService.deleteFile(productId, imageName);
         return ResponseEntity.ok().build();
     }
 

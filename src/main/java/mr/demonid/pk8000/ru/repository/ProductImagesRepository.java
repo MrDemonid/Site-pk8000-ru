@@ -9,6 +9,7 @@ import java.util.Optional;
 
 
 @Repository
-public interface ProductImagesRepository extends JpaRepository<ImagesEntity, Long> {
+public interface ProductImagesRepository extends JpaRepository<ImagesEntity, Long>, ProductFileRepository<ImagesEntity> {
+
     Optional<List<ImagesEntity>> findByProductId(Long productId);
 }

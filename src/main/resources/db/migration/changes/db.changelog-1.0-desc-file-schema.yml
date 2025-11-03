@@ -28,7 +28,7 @@ databaseChangeLog:
                   name: description_cache
                   type: LONGTEXT
               - column:
-                  name: file_path
+                  name: file_name
                   type: VARCHAR(256)
                   constraints:
                     nullable: false

@@ -74,7 +74,7 @@ public class DescriptionCacheRefreshService {
      * Обновление/добавление описания файла в кеш продукта.
      */
     private void updateCache(SoftDescriptionFileEntity meta) {
-        log.info("File changed, updating cache for product {}", meta.getProduct().getName());
+        log.info("File changed, updating cache for product '{}'", meta.getProduct().getName());
         Path path = getPath(meta);
         try {
             BasicFileAttributes attrs = Files.readAttributes(path, BasicFileAttributes.class);
@@ -86,7 +86,7 @@ public class DescriptionCacheRefreshService {
             meta.setFileSize(attrs.size());
             fileRepository.save(meta);
         } catch (Exception e) {
-            log.error("Cannot update cache for product {}: {}", meta.getProduct().getName(), e.getMessage());
+            log.error("Cannot update cache for product '{}': {}", meta.getProduct().getName(), e.getMessage());
         }
 
     }
@@ -124,7 +124,7 @@ public class DescriptionCacheRefreshService {
     }
 
     private Path getPath(SoftDescriptionFileEntity meta) {
-        return Path.of(aliasPaths.softPath(), aliasPaths.softDescSubdir(), meta.getFilePath());
+        return Path.of(aliasPaths.softPath(), aliasPaths.softDescSubdir(), meta.getFileName());
     }
 
     /**
