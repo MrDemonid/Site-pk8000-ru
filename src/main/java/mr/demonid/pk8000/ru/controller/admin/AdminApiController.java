@@ -60,7 +60,7 @@ public class AdminApiController {
      * Удаление продукта.
      */
     @PreAuthorize("hasAnyRole('ADMIN', 'DEVELOPER')")
-    @DeleteMapping("/delete/product/{id}")
+    @DeleteMapping("/delete/{id}")
     ResponseEntity<?> deleteProduct(@PathVariable Long id) {
         adminService.deleteProduct(id);
         return ResponseEntity.ok().build();

@@ -9,6 +9,6 @@ import java.util.Optional;
 
 @Repository
 public interface SoftDescriptionFileRepository extends JpaRepository<SoftDescriptionFileEntity, Long> {
-//    SoftDescriptionFileEntity findByProduct_Id(Long productId);
+
     Optional<SoftDescriptionFileEntity> findByProduct_Id(Long productId);
 }

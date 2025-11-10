@@ -12,6 +12,8 @@ public class ErrorCodes {
     public static final int BAD_CATEGORY = 20003;
 
     public static final int UNKNOWN_ERROR_CODE = 90000;
+    public static final int IO_ERROR = 90001;
+    public static final int CONCURRENT_MODIFICATION = 90002;
 
     public static final int BAD_META_YAML_FILE = 40000;
 

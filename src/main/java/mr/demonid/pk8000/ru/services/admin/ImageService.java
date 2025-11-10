@@ -1,7 +1,6 @@
 package mr.demonid.pk8000.ru.services.admin;
 
 
-import mr.demonid.pk8000.ru.configs.AliasPaths;
 import mr.demonid.pk8000.ru.configs.AppConfiguration;
 import mr.demonid.pk8000.ru.domain.ImagesEntity;
 import mr.demonid.pk8000.ru.domain.SoftEntity;
@@ -10,6 +9,7 @@ import mr.demonid.pk8000.ru.repository.ProductImagesRepository;
 import mr.demonid.pk8000.ru.repository.SoftRepository;
 import mr.demonid.pk8000.ru.services.mappers.SoftMapper;
 import mr.demonid.pk8000.ru.util.FileType;
+import mr.demonid.pk8000.ru.util.PathTool;
 import org.springframework.stereotype.Service;
 
 import java.nio.file.Path;
@@ -25,9 +25,9 @@ public class ImageService extends BaseFileService<ImagesEntity, ProductImagesRep
     public ImageService(SoftRepository softRepository,
                         ProductImagesRepository repository,
                         AppConfiguration config,
-                        AliasPaths aliasPaths,
+                        PathTool pathTool,
                         SoftMapper softMapper) {
-        super(softRepository, repository, config, aliasPaths, softMapper);
+        super(softRepository, repository, config, pathTool, softMapper);
     }
 
 
@@ -38,7 +38,7 @@ public class ImageService extends BaseFileService<ImagesEntity, ProductImagesRep
 
     @Override
     protected String getSubdirectory() {
-        return aliasPaths.softImagesSubdir();
+        return pathTool.getSoftImagesSubdir();
     }
 
     @Override

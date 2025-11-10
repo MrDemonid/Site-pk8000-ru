@@ -9,7 +9,7 @@ FROM catalog_db.products p
 WHERE p.name = 'Угадай число';
 
 INSERT INTO catalog_db.product_description_files (product_id, description_cache, file_name, file_size, file_created_at, file_modified_at)
-SELECT p.id, '', 'test.md', 0, 0, 0
+SELECT p.id, '', 'tect.md', 0, 0, 0
 FROM catalog_db.products p
 WHERE p.name = 'Тест';
 

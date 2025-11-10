@@ -1,28 +1,23 @@
-package mr.demonid.pk8000.ru.configs;
+package mr.demonid.pk8000.ru.util;
 
 
 /**
  * Пути к ресурсам и их псевдонимы.
  *
  * @param staticUrl        Виртуальный путь к статичным ресурсам.
- * @param staticPath       Физический путь на диске до основного каталога к статичным ресурсам.
  * @param softUrl          Виртуальный путь к динамически формируемым страницам (раздел Soft).
- * @param softPath         Физический путь на диске до основного каталога к ресурсам динамических страниц.
  * @param softImagesSubdir Подкаталог для изображений динамических страниц.
  * @param softFilesSubdir  Подкаталог для архивов динамических страниц.
  * @param softDescSubdir   Подкаталог для описаний программ динамических страниц.
  * @param menuIconUrl      Виртуальный путь до иконок меню.
- * @param menuIconPath     Физический путь на диске до основного каталога с иконками для меню.
  */
 public record AliasPaths(
         String staticUrl,
-        String staticPath,
         String softUrl,
-        String softPath,
         String softImagesSubdir,
         String softFilesSubdir,
         String softDescSubdir,
-        String menuIconUrl,
-        String menuIconPath
-) {
+        String menuIconUrl) {
 }
+
+

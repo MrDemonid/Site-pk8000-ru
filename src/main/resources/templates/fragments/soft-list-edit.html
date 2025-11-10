@@ -88,5 +88,56 @@
     </div>
 
 
+    <!-- Модальное окно для управления описанием -->
+    <div id="softdesc-modal" class="softdesc-modal" style="display: none;">
+        <div class="softdesc-modal-content">
+            <span class="softdesc-modal-close">&times;</span>
+
+            <!-- Заголовок -->
+            <h2 id="softdesc-title">Описание продукта</h2>
+
+            <!-- Список аттачей -->
+            <h3>Используемые файлы</h3>
+            <div class="softdesc-attachments-wrapper">
+                <div id="softdesc-attachments" class="softdesc-attachments">
+                    <!-- элементы списка -->
+                </div>
+
+                <!-- Кнопки под списком -->
+                <!-- Кнопки под списком -->
+                <div class="softdesc-attach-controls">
+                    <button type="button" id="softdesc-attach-add-file" title="Добавить файл">
+                        <img src="/menu/icons/add-file.png" alt="add-file">
+                        <span>Добавить файл</span>
+                    </button>
+                    <button type="button" id="softdesc-attach-add-folder" title="Добавить папку">
+                        <img src="/menu/icons/folder.png" alt="add-folder">
+                        <span>Добавить папку</span>
+                    </button>
+                    <button type="button" id="softdesc-attach-clear" title="Очистить список">
+                        <img src="/menu/icons/clear.png" alt="clear">
+                        <span>Очистить</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Нижняя панель -->
+            <div class="softdesc-footer">
+                <button type="button" id="softdesc-apply-btn" class="softdesc-apply-btn">
+                    <img src="/menu/icons/save.png" alt="apply">
+                    <span>Сохранить изменения</span>
+                </button>
+                <button type="button" id="softdesc-download-btn" class="softdesc-download-btn">
+                    <img src="/menu/icons/download.png" alt="download">
+                    <span>Скачать</span>
+                </button>
+                <button type="button" id="softdesc-delete-btn" class="softdesc-delete-btn">
+                    <img src="/menu/icons/delete.png" alt="download">
+                    <span>Удалить описание</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
 </div>
 

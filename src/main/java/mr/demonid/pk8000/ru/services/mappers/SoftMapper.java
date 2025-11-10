@@ -2,16 +2,17 @@ package mr.demonid.pk8000.ru.services.mappers;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import mr.demonid.pk8000.ru.configs.AliasPaths;
 import mr.demonid.pk8000.ru.domain.*;
 import mr.demonid.pk8000.ru.dto.ArchiveResponse;
 import mr.demonid.pk8000.ru.dto.ImageResponse;
 import mr.demonid.pk8000.ru.dto.SoftCreateRequest;
 import mr.demonid.pk8000.ru.dto.SoftResponse;
 import mr.demonid.pk8000.ru.services.markdown.MarkdownService;
+import mr.demonid.pk8000.ru.util.AliasPaths;
 import mr.demonid.pk8000.ru.util.PathUtil;
 import org.springframework.stereotype.Service;
 
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
@@ -57,7 +58,8 @@ public class SoftMapper {
         if (entity == null) {
             return "";
         }
-        return markdownService.toHtmlSoft(entity.getDescription(), aliasPaths.softDescSubdir());
+        return markdownService.toHtmlSoft(entity.getDescription(),
+                Path.of(aliasPaths.softDescSubdir(), entity.getProduct().getId().toString()).toString());
     }
 
 

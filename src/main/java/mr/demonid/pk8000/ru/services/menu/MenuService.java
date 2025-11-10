@@ -4,9 +4,9 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import lombok.extern.log4j.Log4j2;
-import mr.demonid.pk8000.ru.configs.AliasPaths;
 import mr.demonid.pk8000.ru.exceptions.ErrorCodes;
 import mr.demonid.pk8000.ru.exceptions.MenuException;
+import mr.demonid.pk8000.ru.util.PathTool;
 import mr.demonid.pk8000.ru.util.PathUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -28,18 +28,18 @@ public class MenuService {
     private final ObjectMapper yamlMapper;
 
     private final MenuProperties menuProperties;
-    private final AliasPaths aliasPaths;
+    private final PathTool pathTool;
 
 
-    public MenuService(MenuProperties properties, AliasPaths aliasPaths) throws IOException {
+    public MenuService(MenuProperties properties, PathTool pathTool) throws IOException {
         this.menuProperties = properties;
-        this.aliasPaths = aliasPaths;
+        this.pathTool = pathTool;
         this.yamlMapper = new ObjectMapper(new YAMLFactory());
     }
 
     public List<MenuItem> buildMenu(boolean isAdmin) {
         List<MenuItem> menu;
-        Path root = PathUtil.getRootPath().resolve(aliasPaths.staticPath());
+        Path root = pathTool.getStaticPath();
         try (Stream<Path> files = Files.list(root)) {
             menu = files.toList().stream()
                     .filter(Files::isDirectory)

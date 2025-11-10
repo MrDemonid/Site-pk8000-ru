@@ -3,9 +3,10 @@ package mr.demonid.pk8000.ru.services;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import mr.demonid.pk8000.ru.configs.AliasPaths;
 import mr.demonid.pk8000.ru.domain.SoftDescriptionFileEntity;
 import mr.demonid.pk8000.ru.repository.SoftDescriptionFileRepository;
+import mr.demonid.pk8000.ru.util.PathTool;
+import org.apache.commons.io.FileUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -34,7 +35,7 @@ public class DescriptionCacheRefreshService {
     }
 
     private final SoftDescriptionFileRepository fileRepository;
-    private final AliasPaths aliasPaths;
+    private final PathTool pathTool;
 
 
     @Transactional
@@ -46,6 +47,7 @@ public class DescriptionCacheRefreshService {
         for (SoftDescriptionFileEntity meta : files) {
             switch (isDescriptionCacheOutdated(meta)) {
                 case FILE_NOT_FOUND:
+                    log.info("File {} not found. Delete cache.", getPath(meta));
                     deleteCache(meta);
                     break;
                 case CHANGES:
@@ -60,20 +62,28 @@ public class DescriptionCacheRefreshService {
     /**
      * Удаление описания файла из кеша продукта.
      */
-    private void deleteCache(SoftDescriptionFileEntity meta) {
-        log.info("File {} not found. Delete cache.", getPath(meta));
-        meta.setDescription("");
-        // обновляем метаданные, чтобы гарантированно не совпали с добавляемым впоследствии файлом.
-        meta.setFileModifiedAt(0L);
-        meta.setFileCreatedAt(0L);
-        meta.setFileSize(0L);
-        fileRepository.save(meta);
+    public void deleteCache(SoftDescriptionFileEntity meta) {
+        if (meta != null && meta.getId() != null) {
+            log.info("Deleting cache for {}", meta);
+            fileRepository.deleteById(meta.getId());
+            try {
+                Path baseDir = getPath(meta).getParent();
+                FileUtils.deleteDirectory(baseDir.toFile());
+            } catch (Exception e) {
+                log.warn("Error deleting cache file '{}': {}", meta, e.getMessage());
+            }
+        }
     }
+
+    public void deleteCache(Long productId) {
+        deleteCache(fileRepository.findByProduct_Id(productId).orElse(null));
+    }
+
 
     /**
      * Обновление/добавление описания файла в кеш продукта.
      */
-    private void updateCache(SoftDescriptionFileEntity meta) {
+    public void updateCache(SoftDescriptionFileEntity meta) {
         log.info("File changed, updating cache for product '{}'", meta.getProduct().getName());
         Path path = getPath(meta);
         try {
@@ -124,8 +134,11 @@ public class DescriptionCacheRefreshService {
     }
 
     private Path getPath(SoftDescriptionFileEntity meta) {
-        return Path.of(aliasPaths.softPath(), aliasPaths.softDescSubdir(), meta.getFileName());
+        return pathTool.getSoftDescSubdirPath()
+                .resolve(meta.getProduct().getId().toString())
+                .resolve(meta.getFileName());
     }
+
 
     /**
      * Очищает HTML от потенциально опасного кода.

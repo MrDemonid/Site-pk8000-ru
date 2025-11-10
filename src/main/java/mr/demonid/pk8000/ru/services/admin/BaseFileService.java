@@ -1,7 +1,6 @@
 package mr.demonid.pk8000.ru.services.admin;
 
 import lombok.extern.log4j.Log4j2;
-import mr.demonid.pk8000.ru.configs.AliasPaths;
 import mr.demonid.pk8000.ru.configs.AppConfiguration;
 import mr.demonid.pk8000.ru.domain.ProductFileBase;
 import mr.demonid.pk8000.ru.domain.SoftEntity;
@@ -10,11 +9,13 @@ import mr.demonid.pk8000.ru.exceptions.ServiceException;
 import mr.demonid.pk8000.ru.repository.ProductFileRepository;
 import mr.demonid.pk8000.ru.repository.SoftRepository;
 import mr.demonid.pk8000.ru.services.mappers.SoftMapper;
+import mr.demonid.pk8000.ru.util.PathTool;
 import mr.demonid.pk8000.ru.util.PathUtil;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -31,19 +32,19 @@ public abstract class BaseFileService<
     protected final SoftRepository softRepository;
     protected final R repository;
     protected final AppConfiguration config;
-    protected final AliasPaths aliasPaths;
+    protected final PathTool pathTool;
     protected final SoftMapper softMapper;
 
 
     protected BaseFileService(SoftRepository softRepository,
                               R repository,
                               AppConfiguration config,
-                              AliasPaths aliasPaths,
+                              PathTool pathTool,
                               SoftMapper softMapper) {
         this.softRepository = softRepository;
         this.repository = repository;
         this.config = config;
-        this.aliasPaths = aliasPaths;
+        this.pathTool = pathTool;
         this.softMapper = softMapper;
     }
 
@@ -120,7 +121,8 @@ public abstract class BaseFileService<
             entity.setFileName(file.getOriginalFilename());
 
             // сохраняем во временную папку
-            Path tmpFile = PathUtil.loadToTempDirectory(Paths.get(config.getTempDirectory()).toAbsolutePath().normalize(), file);
+            Path tmpFile = PathUtil.loadToTempDirectory(getAbsoluteTempDirectory(), file);
+
             // валидация
             if (!isValidFileType(tmpFile)) {
                 Files.deleteIfExists(tmpFile);
@@ -128,7 +130,7 @@ public abstract class BaseFileService<
             }
 
             // перенос в конечную папку
-            String targetDir = Paths.get(aliasPaths.softPath(), getSubdirectory()).toString();
+            String targetDir = getAbsoluteSubdirectory().toString();
             PathUtil.moveTempFileTo(tmpFile, targetDir, entity.getFileName());
 
             // сохраняем запись
@@ -164,18 +166,16 @@ public abstract class BaseFileService<
             if (productId == null || fileName == null || fileName.isBlank()) {
                 throw new ServiceException(ErrorCodes.BAD_DATA, "Некорректные данные");
             }
-
             List<T> files = repository.findByProductId(productId).orElse(new ArrayList<>());
             T entity = files.stream()
                     .filter(f -> fileName.equals(f.getFileName()))
                     .findFirst()
                     .orElseThrow(() ->
                             new ServiceException(ErrorCodes.FILE_NOT_FOUND, "Файл '" + fileName + "' не найден"));
-
             // удаляем из БД
             repository.deleteById(entity.getId());
 
-            Path targetPath = Paths.get(aliasPaths.softPath(), getSubdirectory(), fileName).toAbsolutePath().normalize();
+            Path targetPath = getAbsoluteSubdirectory().resolve(fileName);
             Files.deleteIfExists(targetPath);
             log.info("Delete file: [{}]", fileName);
 
@@ -186,4 +186,27 @@ public abstract class BaseFileService<
         }
     }
 
+    public void removePhysicFiles(Long productId) {
+        if (productId == null) {
+            throw new ServiceException(ErrorCodes.BAD_DATA, "Некорректные данные");
+        }
+        List<T> files = repository.findByProductId(productId).orElse(new ArrayList<>());
+        files.forEach(f -> {
+            Path targetPath = getAbsoluteSubdirectory().resolve(f.getFileName());
+            try {
+                Files.deleteIfExists(targetPath);
+                log.info("Remove file: [{}]", targetPath);
+            } catch (IOException e) {
+                log.error("Can't remove file: {}", e.getMessage());
+            }
+        });
+    }
+
+    private Path getAbsoluteSubdirectory() {
+        return pathTool.getSoftPath().resolve(getSubdirectory()).normalize();
+    }
+
+    private Path getAbsoluteTempDirectory() {
+        return pathTool.getTempPath();
+    }
 }

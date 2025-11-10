@@ -54,6 +54,6 @@
 заставка названия игры, после чего Вы можете попытаться превысить рекорд
 еще раз. Для выхода из игры нажмите клавишу "К".
 
-[key_right]: images/right-arrow.png
-[key_left]: images/left-arrow.png
-[key_enter]: images/bk.png
+[key_right]: ../common/right-arrow.png
+[key_left]: ../common/left-arrow.png
+[key_enter]: ../common/bk.png

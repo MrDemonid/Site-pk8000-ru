@@ -1,8 +1,6 @@
 package mr.demonid.pk8000.ru.util;
 
 import lombok.extern.log4j.Log4j2;
-import org.springframework.boot.system.ApplicationHome;
-import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -11,26 +9,13 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.Comparator;
 import java.util.Objects;
 import java.util.UUID;
 
-@Service
+
 @Log4j2
 public class PathUtil {
-
-    private static Path root;
-
-    PathUtil() {
-        findRootPath();
-        log.info("-- Root Path: {}", root);
-    }
-
-    public static Path getRootPath() {
-        if (root == null) {
-            return Paths.get(System.getProperty("user.dir")).toAbsolutePath();
-        }
-        return root;
-    }
 
     /**
      * Приводит путь к единому виду (UNIX-стиль, с ведущим "/").
@@ -61,17 +46,48 @@ public class PathUtil {
     public static Path toSystemPath(String path) {
         return Paths.get(path.replace("/", File.separator));
     }
+    public static Path toSystemPath(Path path) {
+        return Paths.get(path.toString().replace("/", File.separator));
+    }
+
+
+    /**
+     * Перевод пути в абсолютный.
+     * @param root Корень.
+     * @param path Относительный путь (если абсолютный, то просто нормализуется).
+     */
+    public static Path toAbsolutePath(Path root, Path path) {
+        Path local = toSystemPath(path.toString()).normalize();
+        return local.isAbsolute() ? local : root.resolve(local).normalize();
+    }
 
 
     /**
      * Извлекает имя файла из пути.
+     *
      * @param path Путь (абсолютный или относительный).
      * @return Имя файла, или пустую строку.
      */
     public static String extractFileName(String path) {
-        if (path == null || path.isBlank()) return "";
+        if (path == null || path.isBlank())
+            return "";
         Path p = Paths.get(path);
         return p.getFileName().toString();
+    }
+
+
+    /**
+     * Извлекает имя файла из пути, без расширения.
+     *
+     * @param path Путь (абсолютный или относительный).
+     * @return Имя файла, или пустую строку.
+     */
+    public static String extractFileNameWithoutExtension(String path) {
+        if (path == null || path.isBlank())
+            return "";
+        String name = Paths.get(path).getFileName().toString();
+        int dotIndex = name.lastIndexOf('.');
+        return (dotIndex != -1) ? name.substring(0, dotIndex) : name;
     }
 
 
@@ -101,28 +117,19 @@ public class PathUtil {
         Path tmpFile = tmpDir.resolve(UUID.randomUUID() + "_" + file.getOriginalFilename());
         file.transferTo(tmpFile.toFile());
         return tmpFile;
-
-//        // проверяем тип файла
-//        if (!FileType.isImage(tmpFile) && !FileType.isArchive(tmpFile)) {
-//            // удаляем и возвращаем ошибку
-//            Files.deleteIfExists(tmpFile);
-//            throw new Exception("Файл '" + tmpFile.toFile() + "' не является изображением");
-//        }
-//        return tmpFile;
     }
 
-
-
-    /*
-    Определяем путь к папке проекта/jar-файла
+    /**
+     * Удаление каталога со всем содержимым.
      */
-    private void findRootPath() {
-        ApplicationHome home = new ApplicationHome(PathUtil.class);
-        File source = home.getSource();
-        if (source != null && source.isFile() && source.getName().endsWith(".jar")) {
-            root = Paths.get(home.getDir().getAbsolutePath());
-        } else {
-            root = Paths.get(System.getProperty("user.dir")).toAbsolutePath();
+    public static void deleteDirectory(Path path) throws IOException {
+        if (Files.exists(path)) {
+            try (var stream = Files.walk(path)) {
+                var sorted = stream.sorted(Comparator.reverseOrder());
+                for (Path elem : (Iterable<Path>) sorted::iterator) {
+                    Files.delete(elem);
+                }
+            }
         }
     }
 

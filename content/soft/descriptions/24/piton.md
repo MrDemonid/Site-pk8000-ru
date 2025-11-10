@@ -54,6 +54,6 @@ PAUSE            - пауза.
 
 Выход из программы производится нажатием кнопки "СБРОС".
 
-[key_right]: images/right-dn-arrow.png
-[key_down]: images/down-arrow.png
-[key_left]: images/left-dn-arrow.png
+[key_right]: ../common/right-dn-arrow.png
+[key_down]: ../common/down-arrow.png
+[key_left]: ../common/left-dn-arrow.png

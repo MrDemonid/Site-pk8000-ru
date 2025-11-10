@@ -2,9 +2,9 @@ package mr.demonid.pk8000.ru.services.markdown.linkmap;
 
 
 import lombok.AllArgsConstructor;
-import mr.demonid.pk8000.ru.configs.AliasPaths;
 import mr.demonid.pk8000.ru.configs.AppConfiguration;
 import mr.demonid.pk8000.ru.dto.ContentType;
+import mr.demonid.pk8000.ru.util.AliasPaths;
 import org.springframework.stereotype.Component;
 
 

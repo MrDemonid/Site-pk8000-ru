@@ -26,7 +26,7 @@ public class MarkdownService {
     private final Parser parser;
     private final MutableDataSet baseOptions;
 
-    private LinkMapperFactory linkMapperFactory;
+    private final LinkMapperFactory linkMapperFactory;
 
 
     public MarkdownService(LinkMapperFactory linkMapperFactory) {

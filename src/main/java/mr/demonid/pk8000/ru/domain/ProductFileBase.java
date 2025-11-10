@@ -14,7 +14,6 @@ import java.util.Objects;
 @MappedSuperclass
 @Getter
 @Setter
-@ToString
 public abstract class ProductFileBase {
 
     @Id
@@ -49,5 +48,14 @@ public abstract class ProductFileBase {
     @Override
     public int hashCode() {
         return Objects.hashCode(id);
+    }
+
+    @Override
+    public String toString() {
+        return "ProductFileBase{" +
+                "id=" + id +
+                ", fileName='" + fileName + '\'' +
+                ", version=" + version +
+                '}';
     }
 }

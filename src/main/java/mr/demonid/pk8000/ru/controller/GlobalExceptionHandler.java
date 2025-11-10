@@ -6,6 +6,7 @@ import lombok.extern.log4j.Log4j2;
 import mr.demonid.pk8000.ru.exceptions.ErrorResponse;
 import mr.demonid.pk8000.ru.exceptions.ServiceException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -31,11 +32,13 @@ public class GlobalExceptionHandler {
         // Проверяем, был ли AJAX-запрос
         if ("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
             // Для AJAX-запроса возвращаем JSON (как у @RestController)
-            return ResponseEntity.status(errorResponse.getStatus()).body(errorResponse);
+            return ResponseEntity.status(errorResponse.getStatus())
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .body(errorResponse);
         }
         // Для обычного запроса возвращаем HTML-фрагмент
         model.addAttribute("error", errorResponse);
-        return "templates/error/error :: errorFragment";
+        return "/error/error :: errorFragment";
     }
 
     /**

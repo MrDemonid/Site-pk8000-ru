@@ -12,7 +12,6 @@ import lombok.ToString;
 @Entity
 @Getter
 @Setter
-@ToString
 @Table(name = "product_description_files")
 public class SoftDescriptionFileEntity {
 
@@ -40,5 +39,16 @@ public class SoftDescriptionFileEntity {
 
     @Column(name = "file_modified_at")
     private Long fileModifiedAt;
+
+    @Override
+    public String toString() {
+        return "SoftDescriptionFileEntity{" +
+                "id=" + id +
+                ", fileName='" + fileName + '\'' +
+                ", fileSize=" + fileSize +
+                ", fileCreatedAt=" + fileCreatedAt +
+                ", fileModifiedAt=" + fileModifiedAt +
+                '}';
+    }
 
 }

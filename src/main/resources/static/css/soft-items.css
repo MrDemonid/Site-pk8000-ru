@@ -354,3 +354,250 @@
     width: 20px;
     height: 20px;
 }
+
+
+/* === Модальное окно управления описанием === */
+.softdesc-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2100;
+}
+
+.softdesc-modal-content {
+    background: #fff;
+    padding: 20px 24px;
+    border-radius: 12px;
+    max-width: 850px;
+    width: 80%;
+    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.3);
+    position: relative;
+}
+
+/* Кнопка закрытия */
+.softdesc-modal-close {
+    cursor: pointer;
+    font-size: 26px;
+    float: right;
+    color: #555;
+    transition: color 0.2s;
+}
+.softdesc-modal-close:hover {
+    color: #000;
+}
+
+/* Заголовок */
+.softdesc-modal-content h2 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 22px;
+    color: #222;
+}
+
+/* Информация о файле */
+.softdesc-file-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 12px 15px;
+    margin-bottom: 20px;
+}
+.softdesc-file-name {
+    font-size: 16px;
+    color: #333;
+    word-break: break-all;
+}
+.softdesc-actions {
+    display: flex;
+    gap: 8px;
+}
+.softdesc-actions button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 6px;
+    transition: background 0.2s ease, transform 0.15s ease;
+}
+.softdesc-actions button:hover {
+    background: rgba(0, 0, 0, 0.05);
+    transform: scale(1.1);
+}
+.softdesc-actions img {
+    width: 22px;
+    height: 22px;
+}
+
+
+/* Контейнер списка и кнопок */
+.softdesc-attachments-wrapper {
+    border-radius: 10px;
+    padding: 12px 14px;
+    /*border: 1px solid #ccc;*/
+    /*background: #fdfdfd;*/
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.08);
+    width: 90%;
+    margin: 0 auto 20px;
+    border: 1px solid #b0c4de;
+    background: #f9fbff;
+}
+
+/* Список аттачей */
+.softdesc-attachments {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    max-height: 30vh;
+    padding: 6px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: #fafafa;
+    overflow-y: auto;
+    font-size: 14px;
+}
+
+.softdesc-attach-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 6px 8px;
+    line-height: 1.2;
+}
+.softdesc-attach-item:hover {
+    background: #f3f3f3;
+}
+.softdesc-attach-name {
+    font-size: 15px;
+    color: #333;
+    word-break: break-all;
+}
+.softdesc-attach-delete {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 6px;
+    transition: background 0.2s ease, transform 0.15s ease;
+}
+.softdesc-attach-delete:hover {
+    background: rgba(0, 0, 0, 0.05);
+    transform: scale(1.1);
+}
+.softdesc-attach-delete img {
+    width: 18px;
+    height: 18px;
+}
+
+/* Нижние кнопки под списком */
+.softdesc-attach-controls {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 10px;
+}
+.softdesc-attach-controls button {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    background: #f5f5f5;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.15s ease;
+}
+.softdesc-attach-controls button:hover {
+    background: #e8e8e8;
+    transform: scale(1.03);
+}
+.softdesc-attach-controls img {
+    width: 20px;
+    height: 20px;
+}
+
+/* Нижняя панель */
+.softdesc-footer {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+    padding-top: 15px;
+}
+
+.softdesc-apply-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 18px;
+    background: #e0f3e0;
+    border: 1px solid #8bc34a;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.25s ease, transform 0.15s ease;
+    margin-right: 12px;
+}
+.softdesc-apply-btn:hover {
+    background: #d2ebd2;
+    transform: scale(1.03);
+}
+.softdesc-apply-btn img {
+    width: 22px;
+    height: 22px;
+}
+
+.softdesc-download-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 18px;
+    background: #e0f0f8;
+    border: 1px solid #4a90e2;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.25s ease, transform 0.15s ease;
+    margin-right: 12px;
+}
+.softdesc-download-btn:hover {
+    background: #d6e8f6;
+    transform: scale(1.03);
+}
+.softdesc-download-btn img {
+    width: 22px;
+    height: 22px;
+}
+
+
+.softdesc-delete-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 18px;
+    background: #f1e0f8;
+    border: 1px solid #d683f6;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.25s ease, transform 0.15s ease;
+    margin-right: 12px;
+}
+.softdesc-delete-btn:hover {
+    background: #f1dcfa;
+    transform: scale(1.03);
+}
+.softdesc-delete-btn img {
+    width: 22px;
+    height: 22px;
+}
+

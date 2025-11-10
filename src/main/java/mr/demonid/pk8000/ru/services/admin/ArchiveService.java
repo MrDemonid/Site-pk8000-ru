@@ -1,6 +1,5 @@
 package mr.demonid.pk8000.ru.services.admin;
 
-import mr.demonid.pk8000.ru.configs.AliasPaths;
 import mr.demonid.pk8000.ru.configs.AppConfiguration;
 import mr.demonid.pk8000.ru.domain.ArchivesEntity;
 import mr.demonid.pk8000.ru.domain.SoftEntity;
@@ -9,6 +8,7 @@ import mr.demonid.pk8000.ru.repository.ProductArchivesRepository;
 import mr.demonid.pk8000.ru.repository.SoftRepository;
 import mr.demonid.pk8000.ru.services.mappers.SoftMapper;
 import mr.demonid.pk8000.ru.util.FileType;
+import mr.demonid.pk8000.ru.util.PathTool;
 import org.springframework.stereotype.Service;
 
 import java.nio.file.Path;
@@ -24,9 +24,9 @@ public class ArchiveService extends BaseFileService<ArchivesEntity, ProductArchi
     public ArchiveService(SoftRepository softRepository,
                           ProductArchivesRepository repository,
                           AppConfiguration config,
-                          AliasPaths aliasPaths,
+                          PathTool pathTool,
                           SoftMapper softMapper) {
-        super(softRepository, repository, config, aliasPaths, softMapper);
+        super(softRepository, repository, config, pathTool, softMapper);
     }
 
 
@@ -37,7 +37,7 @@ public class ArchiveService extends BaseFileService<ArchivesEntity, ProductArchi
 
     @Override
     protected String getSubdirectory() {
-        return aliasPaths.softFilesSubdir();
+        return pathTool.getSoftFilesSubdir();
     }
 
     @Override

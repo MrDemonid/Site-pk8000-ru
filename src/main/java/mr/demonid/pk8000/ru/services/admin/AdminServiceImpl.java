@@ -2,8 +2,6 @@ package mr.demonid.pk8000.ru.services.admin;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import mr.demonid.pk8000.ru.configs.AliasPaths;
-import mr.demonid.pk8000.ru.configs.AppConfiguration;
 import mr.demonid.pk8000.ru.domain.CategoryEntity;
 import mr.demonid.pk8000.ru.domain.SoftEntity;
 import mr.demonid.pk8000.ru.dto.SoftCreateRequest;
@@ -11,10 +9,10 @@ import mr.demonid.pk8000.ru.dto.SoftUpdateRequest;
 import mr.demonid.pk8000.ru.exceptions.ErrorCodes;
 import mr.demonid.pk8000.ru.exceptions.ServiceException;
 import mr.demonid.pk8000.ru.repository.CategoryRepository;
-import mr.demonid.pk8000.ru.repository.ProductArchivesRepository;
-import mr.demonid.pk8000.ru.repository.ProductImagesRepository;
 import mr.demonid.pk8000.ru.repository.SoftRepository;
+import mr.demonid.pk8000.ru.services.DescriptionCacheRefreshService;
 import mr.demonid.pk8000.ru.services.mappers.SoftMapper;
+import mr.demonid.pk8000.ru.util.PathTool;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,13 +26,13 @@ import org.springframework.transaction.annotation.Transactional;
 public class AdminServiceImpl {
 
     private SoftRepository softRepository;
-    private ProductImagesRepository imagesRepository;
-    private ProductArchivesRepository archivesRepository;
-
     private CategoryRepository categoryRepository;
-    private AppConfiguration config;
-    private AliasPaths aliasPaths;
+    private DescriptionCacheRefreshService descriptionCacheRefreshService;
+    private ArchiveService archiveService;
+    private ImageService imageService;
+
     private SoftMapper softMapper;
+    private PathTool pathTool;
 
 
     /**
@@ -101,12 +99,28 @@ public class AdminServiceImpl {
      * Удаление продукта.
      */
     @Transactional
-    public void deleteProduct(Long id) {
+    public void deleteProduct(Long productId) {
         try {
-            softRepository.deleteById(id);
+            SoftEntity soft = softRepository.findById(productId).orElse(null);
+            if (soft == null) {
+                throw new ServiceException(ErrorCodes.SOFT_NOT_FOUND, "Продукт с id={} не найден" + productId);
+            }
+            log.info("Delete product [ id = {}]", soft);
+            deleteImages(soft);
+            deleteAttaches(soft);
+            descriptionCacheRefreshService.deleteCache(productId);
+            softRepository.delete(soft);
+
         } catch (Exception e) {
             throw new ServiceException(ErrorCodes.UNKNOWN_ERROR_CODE, e.getMessage());
         }
     }
 
+    private void deleteAttaches(SoftEntity soft) {
+        archiveService.removePhysicFiles(soft.getId());
+    }
+
+    private void deleteImages(SoftEntity soft) {
+        imageService.removePhysicFiles(soft.getId());
+    }
 }
