@@ -105,6 +105,8 @@ table, th, td {
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 1em;
     justify-items: center;
+    margin-bottom: 1em;
+    margin-top: 1em;
 }
 
 /* Изображения внутри такой группы занимают всю ширину ячейки */

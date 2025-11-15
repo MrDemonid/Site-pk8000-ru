@@ -7,7 +7,6 @@
 
 ![Плата контроллера][board_top]
 
-{.no-indent}
 В схеме устранена ошибка сигналов /IOW и /IOR, снижено количество переходных отверстий на плате,
 уменьшена общая длина дорожек.
 
@@ -21,10 +20,16 @@
 ![Разводка платы][layout_board]
 
 {.no-indent}
-Само решение проблемы, а также назначение перемычек можно посмотреть [здесь](../rev-1_0/index.md)
+Само решение проблемы /RESET, а также назначение перемычек можно посмотреть [здесь](../rev-1_0/index.md)
 
+
+### Ресурсы.
+
+[Схема и разводка платы в DipTrace][original_scheme]
 
 [board_top]: images/HDD_Ctrl_1_1.jpg
 [scheme_board]: images/schema-hdd-rev-1_1.png
 [scheme_board_spec]: images/schema-hdd-rev-1_1-power.png
 [layout_board]: images/hdd-layout-rev-1_1.png
+
+[original_scheme]: files/hdd-vv55-rev-1_1.zip

@@ -164,8 +164,8 @@
 
 
 
-[board_top]: images/hdd-top-rev-1_0.png
-[board_bottom]: images/hdd-bottom-rev-1_0.png
+[board_top]: images/hdd-top-rev-1_0.jpg
+[board_bottom]: images/hdd-bottom-rev-1_0.jpg
 [scheme_board]: images/schema-hdd-rev-1_0.png
 [scheme_board_spec]: images/schema-hdd-rev-1_0-power.png
 [jumpers]: images/jumpers.jpg

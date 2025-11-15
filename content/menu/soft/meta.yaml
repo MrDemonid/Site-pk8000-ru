@@ -1,5 +1,5 @@
 title: "Софт"
-icon: "diskette.png"
+icon: "soft.png"
 order: 5
 children:
   - title: "Игры"
